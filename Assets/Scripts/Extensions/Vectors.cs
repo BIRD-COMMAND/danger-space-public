@@ -141,21 +141,21 @@ namespace Extensions
 		}
 
 		/// <summary>
-		/// Returns true if this Vector2 is within 30° of <paramref name="otherVector"/>
+		/// Returns true if this Vector2 is within 30ï¿½ of <paramref name="otherVector"/>
 		/// </summary>
 		public static bool IsWithin30DegreesOf(this Vector2 vec, Vector2 otherVector)
 		{
 			return Vector2.Dot(vec.normalized, otherVector.normalized) > 0.8659f;
 		}
 		/// <summary>
-		/// Returns true if this Vector2 is within 45° of <paramref name="otherVector"/>
+		/// Returns true if this Vector2 is within 45ï¿½ of <paramref name="otherVector"/>
 		/// </summary>
 		public static bool IsWithin45DegreesOf(this Vector2 vec, Vector2 otherVector)
 		{
 			return Vector2.Dot(vec.normalized, otherVector.normalized) > 0.707f;
 		}
 		/// <summary>
-		/// Returns true if this Vector2 is within 90° of <paramref name="otherVector"/>
+		/// Returns true if this Vector2 is within 90ï¿½ of <paramref name="otherVector"/>
 		/// </summary>
 		public static bool IsWithin90DegreesOf(this Vector2 vec, Vector2 otherVector)
 		{
