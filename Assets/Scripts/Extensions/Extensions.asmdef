@@ -2,7 +2,8 @@
     "name": "Extensions",
     "rootNamespace": "Extensions",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:938a01d9553594744b39eff3ece1bba8"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
