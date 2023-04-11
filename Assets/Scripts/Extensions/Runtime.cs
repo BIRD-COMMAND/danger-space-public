@@ -29,7 +29,7 @@ namespace Extensions
 			}
 			else { 
 				s_Instance = new GameObject("RuntimeManager", typeof(Runtime)).GetComponent<Runtime>(); 
-				s_Instance.hideFlags = HideFlags.HideAndDontSave;
+				s_Instance.gameObject.hideFlags = HideFlags.HideAndDontSave;
 			}
 
 		}
