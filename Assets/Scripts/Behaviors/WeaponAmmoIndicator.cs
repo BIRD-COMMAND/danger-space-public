@@ -1,8 +1,5 @@
 using Shapes;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 [ExecuteInEditMode, RequireComponent(typeof(Module))]
 public class WeaponAmmoIndicator : MonoBehaviour
@@ -17,21 +14,17 @@ public class WeaponAmmoIndicator : MonoBehaviour
 
 	private void Update()
 	{
-		if (module.projectileCurrentAmmo < indicators.Length) {
-			for (int i = max; i >= 0; i--) {
-				if (module.projectileCurrentAmmo > i) {
+		for (int i = max; i > -1; i--) {
+			if (module.projectileAmmoCurrent > i) {
+				if (indicators[i].Color != activeColor) {
 					indicators[i].Color = activeColor;
 					indicators[i].transform.GetChild(0).gameObject.SetActive(true);
 				}
-				else {
-					indicators[i].Color = inactiveColor;
-					indicators[i].transform.GetChild(0).gameObject.SetActive(false);
-				}
 			}
-		}
-		else if (indicators[max].Color != activeColor) {
-			indicators[max].Color = activeColor;
-			indicators[max].transform.GetChild(0).gameObject.SetActive(true); 
+			else if (indicators[i].Color != inactiveColor) {
+				indicators[i].Color = inactiveColor;
+				indicators[i].transform.GetChild(0).gameObject.SetActive(false);
+			}
 		}
 	}
 

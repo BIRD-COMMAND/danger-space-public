@@ -9,6 +9,8 @@ using Shapes;
 public class Core : Module
 {
 
+	public bool isPlayer = false;
+
 	[SerializeField, HideInInspector] private float rotationSpeed = 200.0f;
     public Rigidbody2D body;
 
@@ -21,11 +23,16 @@ public class Core : Module
 
 	// Update is called once per frame
 	void Update() {
-		body.drag = Mathf.Lerp(0f, 4f, Pad.LTrigger);
-		movementInput = Mathf.Lerp(0f, thrust, Pad.RTrigger);
-		rotationInput = Pad.RStick.DeadZone(0.1f).x;
+		if (isPlayer) { PlayerActions(); }
 	}
 
+	private void PlayerActions()
+	{
+		body.drag = Mathf.Lerp(0f, 4f, Pad.LTrigger);
+		//movementInput = Mathf.Lerp(0f, thrust, Pad.RTrigger);
+		rotationInput = Pad.RStick.DeadZone(0.1f).x;
+		if (Pad.RTriggerDown) { FireModules(); }
+	}
 
 	void FixedUpdate() {
 		Move();

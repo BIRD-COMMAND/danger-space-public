@@ -1,7 +1,8 @@
+using Shapes;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Module : MonoBehaviour
@@ -24,6 +25,8 @@ public class Module : MonoBehaviour
     public Placement slots;
 	public Placement slotsCurrent;
 
+	public new Collider2D collider;
+
     public bool effectCenterOfMass = false;
 	public bool centerCentroidHorizontally = false;
 	public bool centerCentroidVertically = false;
@@ -31,8 +34,8 @@ public class Module : MonoBehaviour
 	public float mass = 1000f;
     public float massCurrent = 1000f;
 
-    public int health = 10;
-    public int healthCurrent = 10;
+    public int health = 100;
+    public int healthCurrent = 100;
     
     public float thrust = 1000f;
 
@@ -41,18 +44,20 @@ public class Module : MonoBehaviour
 
     // Weapon related variables
     public GameObject projectile;
-    public float projectileSpeed = 0f;
-    public float projectileLifetime = 0f;
+	public Transform projectileSpawn;
+    public float projectileSpeed = 10f;
+    public float projectileLifetime = 20f;
     public float projectileSize = 0f;
-    public float projectileDamage = 0f;
+    public float projectileDamage = 2f;
     public float projectileRange = 0f;
-    public float projectileRateOfFire = 0f;
+    public float projectileRateOfFire = 0.2f;
     public float projectileRateOfFireCurrent = 0f;
-    public float projectileMaxAmmo = 0f;
-    public float projectileCurrentAmmo = 0f;
-    public float projectileAmmoPerShot = 0f;
-    public float projectileReloadTime = 0f;
+    public float projectileAmmo = 100f;
+    public float projectileAmmoCurrent = 100f;
+    public float projectileAmmoPerShot = 1f;
+    public float projectileReloadTime = 3f;
     public float projectileReloadTimeCurrent = 0f;
+	public float ProjectileAmmoCurrentPercent => projectileAmmoCurrent / projectileAmmo;
 
 	// Shield related variables
 	public int shield = 0;
@@ -85,17 +90,43 @@ public class Module : MonoBehaviour
     public float powerRechargeDelayCurrent = 0f;
 
 
-	// Start is called before the first frame update
-	void Start()
-    {
-        
-    }
+	public void FireModules() { 
+		foreach (Module m in modules) { 
+			if (m.type.HasFlag(Type.Weapon)) { m.Fire(); }
+			m.FireModules();
+		}
+	}
+	public void Fire()
+	{
+		if (projectileRateOfFireCurrent == 0f && projectileAmmoCurrent > 0f) { 
+			projectileRateOfFireCurrent = projectileRateOfFire; 
+			projectileAmmoCurrent -= projectileAmmoPerShot;
+			ProjectilePool.GetProjectile(this).Launch(this);
+		}
+	}
 
-    // Update is called once per frame
-    void Update()
+	public void Hit(Projectile p)
+	{
+		//GetComponent<ShapeRenderer>().DrawShapeHighlight(Color.red.WithAlpha(0.3f));
+		healthCurrent -= (int)p.launcher.projectileDamage;
+		if (healthCurrent < 0) {
+			DetachModules();
+			if (parent) { parent.RemoveModule(this); }
+			Destroy(gameObject);
+		}
+	}
+
+	// Start is called before the first frame update
+	private void Awake() { collider = GetComponent<Collider2D>(); }
+	private void Start() { if (!parent) { parent = GetComponentInParent<Module>(); } }
+
+	// Update is called once per frame
+	void Update()
     {
-        
-    }
+		projectileRateOfFireCurrent = Mathf.Max(projectileRateOfFireCurrent - Time.deltaTime, 0f);
+		projectileReloadTimeCurrent = Mathf.Max(projectileReloadTimeCurrent - Time.deltaTime, 0f);
+		if (projectileAmmoCurrent == 0f && projectileReloadTimeCurrent == 0f) { projectileAmmoCurrent = projectileAmmo; }
+	}
 
 	public float SumMass(Module m, float sum)
 	{
@@ -128,6 +159,13 @@ public class Module : MonoBehaviour
 		}
 	}
 
+	public void Detach() { transform.SetParent(null); parent = null; core = null; }
+	public void DetachModules()
+	{
+		foreach (Module m in modules) { if (m.parent == transform) { m.Detach(); } slots |= m.slot; }
+		modules.Clear();
+	}
+
 	public void RemoveModules(bool deactivateGameObjects)
 	{
 		foreach (Module m in modules) {
@@ -135,6 +173,12 @@ public class Module : MonoBehaviour
 			slots |= m.slot; m.RemoveModules(deactivateGameObjects);
 		}
 		modules.Clear();
+	}
+
+	public void RemoveModule(Module m)
+	{
+		if (modules.Contains(m)) { modules.Remove(m); }
+		slots |= m.slot;
 	}
 
 	[Flags]
