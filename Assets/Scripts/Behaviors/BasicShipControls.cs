@@ -7,6 +7,7 @@ using Extensions;
 public class BasicShipControls : MonoBehaviour
 {
 
+	public float brakeFactor = 0.1f;
 	public float maxThrust = 10000f;
 	public Rigidbody2D body;
 
@@ -45,12 +46,12 @@ public class BasicShipControls : MonoBehaviour
 		body.AddForce(force);
 
 		// reduce velocity if key is not held down
-		if (!KeyW && body.velocity.y > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), 0.1f); }
-		if (!KeyS && body.velocity.y < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), 0.1f); }
+		if (!KeyW && body.velocity.y > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), brakeFactor); }
+		if (!KeyS && body.velocity.y < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), brakeFactor); }
 
 		// reduce velocity if key is not held down
-		if (!KeyD && body.velocity.x > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), 0.1f); }
-		if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), 0.1f); }
+		if (!KeyD && body.velocity.x > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
+		if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 	}
 
 }
