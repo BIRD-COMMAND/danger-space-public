@@ -101,7 +101,7 @@ public class Module : MonoBehaviour
 		if (projectileRateOfFireCurrent == 0f && projectileAmmoCurrent > 0f) { 
 			projectileRateOfFireCurrent = projectileRateOfFire; 
 			projectileAmmoCurrent -= projectileAmmoPerShot;
-			ProjectilePool.GetProjectile(this).Launch(this);
+			Projectiles.Get(this).Launch(this);
 		}
 	}
 

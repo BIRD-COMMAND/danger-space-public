@@ -1,0 +1,1264 @@
+fileFormatVersion: 2
+guid: f25779fe23ce8324481412b2de0f5b52
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8135885218976927388
+    second: PlaceholderShipSprites_0
+  - first:
+      213: 34761544108291143
+    second: PlaceholderShipSprites_1
+  - first:
+      213: 5541660059242920518
+    second: PlaceholderShipSprites_2
+  - first:
+      213: -2906262130032994204
+    second: PlaceholderShipSprites_3
+  - first:
+      213: 2402439636628537325
+    second: PlaceholderShipSprites_4
+  - first:
+      213: 1226513286361594516
+    second: PlaceholderShipSprites_5
+  - first:
+      213: -1543623240384805941
+    second: PlaceholderShipSprites_6
+  - first:
+      213: -198827258558261683
+    second: PlaceholderShipSprites_7
+  - first:
+      213: -2488050412036495009
+    second: PlaceholderShipSprites_8
+  - first:
+      213: -351389427008806885
+    second: PlaceholderShipSprites_9
+  - first:
+      213: 906743938649926575
+    second: PlaceholderShipSprites_10
+  - first:
+      213: -2971466727769429381
+    second: PlaceholderShipSprites_11
+  - first:
+      213: 1870485504310874278
+    second: PlaceholderShipSprites_12
+  - first:
+      213: -2186616902749484187
+    second: PlaceholderShipSprites_13
+  - first:
+      213: -7443114693532620200
+    second: PlaceholderShipSprites_14
+  - first:
+      213: 6570611821265148379
+    second: PlaceholderShipSprites_15
+  - first:
+      213: 5777080639286696010
+    second: PlaceholderShipSprites_16
+  - first:
+      213: -5528163697858970776
+    second: PlaceholderShipSprites_17
+  - first:
+      213: 1034755556028237258
+    second: PlaceholderShipSprites_18
+  - first:
+      213: -7715228770871666000
+    second: PlaceholderShipSprites_19
+  - first:
+      213: -2030951228567787729
+    second: PlaceholderShipSprites_20
+  - first:
+      213: -8834683278737827600
+    second: PlaceholderShipSprites_21
+  - first:
+      213: 7204708759341419159
+    second: PlaceholderShipSprites_22
+  - first:
+      213: 1841669177162634615
+    second: PlaceholderShipSprites_23
+  - first:
+      213: 3089432328992444689
+    second: PlaceholderShipSprites_24
+  - first:
+      213: -1032927027984352486
+    second: PlaceholderShipSprites_25
+  - first:
+      213: -7630890241185030543
+    second: PlaceholderShipSprites_26
+  - first:
+      213: -5389182329289656888
+    second: PlaceholderShipSprites_27
+  - first:
+      213: 1567974393449652405
+    second: PlaceholderShipSprites_28
+  - first:
+      213: -8861799988845777896
+    second: PlaceholderShipSprites_29
+  - first:
+      213: 5818918709904537956
+    second: PlaceholderShipSprites_30
+  - first:
+      213: -8207183707088232485
+    second: PlaceholderShipSprites_31
+  - first:
+      213: 3128155594250524051
+    second: PlaceholderShipSprites_32
+  - first:
+      213: -2400136715455340195
+    second: PlaceholderShipSprites_33
+  - first:
+      213: -3400463436645360613
+    second: PlaceholderShipSprites_34
+  - first:
+      213: -2006605203166212179
+    second: PlaceholderShipSprites_35
+  - first:
+      213: 280462417278789562
+    second: PlaceholderShipSprites_36
+  - first:
+      213: 7791204843745185058
+    second: PlaceholderShipSprites_37
+  - first:
+      213: -6912626468072275798
+    second: PlaceholderShipSprites_38
+  - first:
+      213: -4745943585327146662
+    second: PlaceholderShipSprites_39
+  - first:
+      213: 7557295079492158371
+    second: PlaceholderShipSprites_40
+  - first:
+      213: 2509359150158927749
+    second: PlaceholderShipSprites_41
+  - first:
+      213: -2087942406055987239
+    second: PlaceholderShipSprites_42
+  - first:
+      213: -2430696709693513141
+    second: PlaceholderShipSprites_43
+  - first:
+      213: -9101710547373783231
+    second: PlaceholderShipSprites_44
+  - first:
+      213: -2270109415970948455
+    second: PlaceholderShipSprites_45
+  - first:
+      213: -3405045440689524227
+    second: PlaceholderShipSprites_46
+  - first:
+      213: 647113700113714113
+    second: PlaceholderShipSprites_47
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_0
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 735
+        width: 68
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4617785cf77871f80800000000000000
+      internalID: -8135885218976927388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_1
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 730
+        width: 74
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7443b60b07f7b7000800000000000000
+      internalID: 34761544108291143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_2
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 734
+        width: 66
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64af421867ee7ec40800000000000000
+      internalID: 5541660059242920518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_3
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 729
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4689633adf1eaa7d0800000000000000
+      internalID: -2906262130032994204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 737
+        width: 63
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: defff8fee1e275120800000000000000
+      internalID: 2402439636628537325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_5
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 732
+        width: 76
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49a31e9e553750110800000000000000
+      internalID: 1226513286361594516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_6
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 732
+        width: 77
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc383d167d2f39ae0800000000000000
+      internalID: -1543623240384805941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_7
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 738
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4658f969af9d3df0800000000000000
+      internalID: -198827258558261683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_8
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 675
+        width: 59
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f59ec4f155ba87dd0800000000000000
+      internalID: -2488050412036495009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_9
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 670
+        width: 39
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b10ef498d2d9f1bf0800000000000000
+      internalID: -351389427008806885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_10
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 677
+        width: 55
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faba77ddec6659c00800000000000000
+      internalID: 906743938649926575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_11
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 673
+        width: 50
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7a296d21ca33c6d0800000000000000
+      internalID: -2971466727769429381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_12
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 669
+        width: 45
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a097f9e7ac45f910800000000000000
+      internalID: 1870485504310874278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 556
+        width: 69
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56b80cb138397a1e0800000000000000
+      internalID: -2186616902749484187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_14
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 552
+        width: 107
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85a6f7d1f9eb4b890800000000000000
+      internalID: -7443114693532620200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_15
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 543
+        width: 112
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd9dd7b83a08f2b50800000000000000
+      internalID: 6570611821265148379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_16
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 568
+        width: 71
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a48587fab305c2050800000000000000
+      internalID: 5777080639286696010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_17
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 560
+        width: 89
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86bf7e008640843b0800000000000000
+      internalID: -5528163697858970776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_18
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 464
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac5cc6222b03c5e00800000000000000
+      internalID: 1034755556028237258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_19
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 458
+        width: 91
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ba12575f400ee490800000000000000
+      internalID: -7715228770871666000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_20
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 488
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f27e2193e9c90d3e0800000000000000
+      internalID: -2030951228567787729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_21
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 463
+        width: 76
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f89fbbbd56e46580800000000000000
+      internalID: -8834683278737827600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_22
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 456
+        width: 76
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79ac0b6c1744cf360800000000000000
+      internalID: 7204708759341419159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_23
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 368
+        width: 45
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 775909aeb5cee8910800000000000000
+      internalID: 1841669177162634615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_24
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 370
+        width: 72
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 111d33fa55edfda20800000000000000
+      internalID: 3089432328992444689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_25
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 371
+        width: 106
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1bb71a375e4aa1f0800000000000000
+      internalID: -1032927027984352486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_26
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 370
+        width: 51
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17edb2e71c1a91690800000000000000
+      internalID: -7630890241185030543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_27
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 361
+        width: 57
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c5b0e08937c535b0800000000000000
+      internalID: -5389182329289656888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_28
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 277
+        width: 89
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b0a972476092c510800000000000000
+      internalID: 1567974393449652405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_29
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 308
+        width: 42
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81c694aacdf840580800000000000000
+      internalID: -8861799988845777896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_30
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 325
+        width: 42
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 469fbb89cb3f0c050800000000000000
+      internalID: 5818918709904537956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_31
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 308
+        width: 41
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdfd1a4e6e93a1e80800000000000000
+      internalID: -8207183707088232485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_32
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 225
+        width: 143
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 395147570f0796b20800000000000000
+      internalID: 3128155594250524051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_33
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 253
+        width: 28
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5169eeaf5001bed0800000000000000
+      internalID: -2400136715455340195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_34
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 253
+        width: 27
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1c9c0355802fc0d0800000000000000
+      internalID: -3400463436645360613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_35
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 266
+        width: 41
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dafc3dcf23b1724e0800000000000000
+      internalID: -2006605203166212179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_36
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 255
+        width: 66
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab7efb2251764e300800000000000000
+      internalID: 280462417278789562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_37
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 266
+        width: 42
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22d0cbb968bef1c60800000000000000
+      internalID: 7791204843745185058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_38
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 225
+        width: 42
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa0c6991ada6110a0800000000000000
+      internalID: -6912626468072275798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_39
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 209
+        width: 42
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5918884475032eb0800000000000000
+      internalID: -4745943585327146662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_40
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 226
+        width: 40
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a300f3a5d7e0e860800000000000000
+      internalID: 7557295079492158371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_41
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 117
+        width: 123
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58759171ad803d220800000000000000
+      internalID: 2509359150158927749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_42
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 2
+        width: 212
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d7fe8fa1732603e0800000000000000
+      internalID: -2087942406055987239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_43
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 147
+        width: 66
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b42e10e883e644ed0800000000000000
+      internalID: -2430696709693513141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_44
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 33
+        width: 121
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1470c57ea7a30b180800000000000000
+      internalID: -9101710547373783231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_45
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 23
+        width: 59
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99a38c38383fe70e0800000000000000
+      internalID: -2270109415970948455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_46
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 6
+        width: 150
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df133af5639deb0d0800000000000000
+      internalID: -3405045440689524227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderShipSprites_47
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 19
+        width: 61
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cb01905b720bf800800000000000000
+      internalID: 647113700113714113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -189,6 +189,49 @@ namespace Extensions
 
 		#endregion
 
+		#region Relative Position Queries
+
+		/// <summary>
+		/// Returns a Vector2 from position to the mouse worldspace position.
+		/// </summary>
+		public static Vector2 ToMouse(this Transform t) { return WorldPosition - (Vector2)t.position; }
+		/// <summary>
+		/// Returns a Vector2 from this vector to the mouse worldspace position.
+		/// </summary>
+		public static Vector2 ToMouse(this Vector2 vec) { return WorldPosition - vec; }
+		/// <summary>
+		/// Returns a Vector2 from this vector to the mouse worldspace position.
+		/// </summary>
+		public static Vector2 ToMouse(this Vector3 vec) { return WorldPosition - (Vector2)vec; }
+
+		/// <summary>
+		/// Returns the normalized direction from position to the mouse worldspace position.
+		/// </summary>
+		public static Vector2 DirToMouse(this Transform t) { return (WorldPosition - (Vector2)t.position).normalized; }
+		/// <summary>
+		/// Returns the normalized direction from this vector to the mouse worldspace position.
+		/// </summary>
+		public static Vector2 DirToMouse(this Vector2 vec) { return (WorldPosition - vec).normalized; }
+		/// <summary>
+		/// Returns the normalized direction from this vector to the mouse worldspace position.
+		/// </summary>
+		public static Vector2 DirToMouse(this Vector3 vec) { return (WorldPosition - (Vector2)vec).normalized; }
+
+		/// <summary>
+		/// Returns the distance from position to the mouse worldspace position.
+		/// </summary>
+		public static float DistToMouse(this Transform t) { return (WorldPosition - (Vector2)t.position).magnitude; }
+		/// <summary>
+		/// Returns the distance from this vector to the mouse worldspace position.
+		/// </summary>
+		public static float DistToMouse(this Vector2 vec) { return (WorldPosition - vec).magnitude; }
+		/// <summary>
+		/// Returns the distance from this vector to the mouse worldspace position.
+		/// </summary>
+		public static float DistToMouse(this Vector3 vec) { return (WorldPosition - (Vector2)vec).magnitude; }
+
+		#endregion
+
 		#region Mouse Utilities and Scene Queries
 
 		/// <summary>
