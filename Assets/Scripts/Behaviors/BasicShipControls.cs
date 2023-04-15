@@ -7,8 +7,10 @@ using Extensions;
 public class BasicShipControls : MonoBehaviour
 {
 
-	public float brakeFactor = 0.1f;
+	public float maxSpeed = 20f;
+	public float maxSpeedBrakeFactor = 0.025f;
 	public float maxThrust = 10000f;
+	public float brakeFactor = 0.1f;
 	public Rigidbody2D body;
 
 	private Vector2 MoveVector =>
@@ -44,6 +46,9 @@ public class BasicShipControls : MonoBehaviour
 		// get input from WASD and apply as a force to body
 		Vector2 force = MoveVector * maxThrust;
 		body.AddForce(force);
+
+		// limit max speed
+		if (body.velocity.magnitude > maxSpeed) { body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, maxSpeedBrakeFactor); }
 
 		// reduce velocity if key is not held down
 		if (!KeyW && body.velocity.y > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), brakeFactor); }
