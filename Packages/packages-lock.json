@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.acegikmo.mathfs": {
+      "version": "https://github.com/FreyaHolmer/Mathfs.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "3401762b4a09bae2b8f35cde7fb9cd91a5c628e6"
+    },
     "com.unity.2d.animation": {
       "version": "10.0.0",
       "depth": 1,
@@ -153,13 +160,6 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.9"
       },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ide.vscode": {
-      "version": "1.2.5",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
