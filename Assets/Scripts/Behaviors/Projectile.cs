@@ -1,4 +1,5 @@
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -33,6 +34,12 @@ public class Projectile : MonoBehaviour
 		launchCollider = m.collider;
 		timer = m.projectileLifetime;
 	}
+	public void Launch(Weapon m)
+	{
+		transform.SetPositionAndRotation(m.projectileSpawn.position, m.projectileSpawn.rotation);
+		body.velocity = transform.up * m.projectileSpeed;
+		timer = m.projectileLifetime;
+	}
 
 	private void Update()
 	{
@@ -48,6 +55,10 @@ public class Projectile : MonoBehaviour
 	{ 
 		if (collision.collider.TryGetComponent(out Module m)) { 
 			m.Hit(this); Debug.Log(m.name, m.gameObject); Return();
+		}
+		else if (collision.transform.GetComponent<AI>() || collision.transform.GetComponentInParent<AI>()) { 
+			//TODO do some damage when a projectile hits an AI unit
+			Return();
 		}
 	}
 }

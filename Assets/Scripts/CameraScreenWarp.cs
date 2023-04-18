@@ -1,5 +1,4 @@
 using Extensions;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -57,13 +56,38 @@ public class CameraScreenWarp : MonoBehaviour
 		for (int i = 0; i < dummies.Length; i++) {
 			if (screenTrigger.OverlapPoint(dummies[i].transform.position)) {
 				Vector3 endPos = dummies[i].transform.position;
-				dummies[i].transform.position = transform.position.WithZ(-20f);
+				TrailRenderer trail = null, dummyTrail = null,  oppositeTrail = null;
+				if (player.GetComponentInChildren<TrailRenderer>(true)) {
+					trail = player.GetComponentInChildren<TrailRenderer>(); //.Where(t => t.emitting).FirstOrDefault();
+					dummyTrail = dummies[i].GetComponentInChildren<TrailRenderer>();
+					oppositeTrail = dummies[7 - i].GetComponentInChildren<TrailRenderer>();
+					if (trail && dummyTrail && oppositeTrail) {
+						//dummies[i].transform.position = transform.position.WithZ(-20f);
+						trail.transform.SetParent(null);
+						dummyTrail.transform.SetParent(null);
+						oppositeTrail.transform.SetParent(null);
+						oppositeTrail.Clear();
+						oppositeTrail.emitting = false;
+						player.transform.position = endPos;
+						dummyTrail.gameObject.transform.SetParent(player.transform);
+						Update();
+						trail.transform.SetParent(dummies[7 - i].transform);
+						oppositeTrail.transform.SetParent(dummies[i].transform);
+						StartCoroutine(ReactivateTrail(oppositeTrail));
+						break;
+					}
+				}
+				//dummies[i].transform.position = transform.position.WithZ(-20f);
 				player.transform.position = endPos;
 				Update();
-				break;
 			}
 		}
 
+	}
+
+	private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
+	private System.Collections.IEnumerator ReactivateTrail(TrailRenderer trail) { 
+		yield return endOfFrame; yield return endOfFrame; trail.emitting = true; 
 	}
 
 }

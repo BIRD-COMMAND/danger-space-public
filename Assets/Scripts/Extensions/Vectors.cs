@@ -225,6 +225,18 @@ namespace Extensions
 		#region Spacial Operations
 
 		/// <summary>
+		/// Returns the normalized Vector representing the direction toward the <paramref name="target"/>.
+		/// </summary>
+		public static Vector2 DirTo(this Transform t, GameObject target){ return t.position.DirTo(target.transform.position); }
+		/// <summary>
+		/// Returns the normalized Vector representing the direction toward the <paramref name="target"/>.
+		/// </summary>
+		public static Vector2 DirTo(this Transform t, Transform target) { return t.position.DirTo(target.position); }
+		/// <summary>
+		/// Returns the normalized Vector representing the direction toward the <paramref name="target"/>.
+		/// </summary>
+		public static Vector2 DirTo(this Transform t, Vector2 target)	{ return t.position.DirTo(target); }
+		/// <summary>
 		/// Returns the normalized Vector representing the direction from this Vector toward the <paramref name="target"/> Vector.
 		/// </summary>
 		public static Vector2 DirTo(this Vector2 vec, Vector2 target) { return (target - vec).normalized; }
@@ -234,6 +246,18 @@ namespace Extensions
 		public static Vector3 DirTo(this Vector3 vec, Vector3 target) { return (target - vec).normalized; }
 
 		/// <summary>
+		/// Returns the distance to the <paramref name="target"/>
+		/// </summary>
+		public static float DistTo(this Transform t, GameObject target) { return t.position.DistTo(target.transform.position); }
+		/// <summary>
+		/// Returns the distance to the <paramref name="target"/>
+		/// </summary>
+		public static float DistTo(this Transform t, Transform target) { return t.position.DistTo(target.position); }
+		/// <summary>
+		/// Returns the distance to the <paramref name="target"/>
+		/// </summary>
+		public static float DistTo(this Transform t, Vector2 target) { return t.position.DistTo(target); }
+		/// <summary>
 		/// Returns the distance from this Vector to the <paramref name="target"/> Vector. Distance is always positive or 0.
 		/// </summary>
 		public static float DistTo(this Vector2 vec, Vector2 target) { return (target - vec).magnitude; }
@@ -242,6 +266,18 @@ namespace Extensions
 		/// </summary>
 		public static float DistTo(this Vector3 vec, Vector3 target) { return (target - vec).magnitude; }
 
+		/// <summary>
+		/// Returns the offset from this Vector to the <paramref name="target"/>
+		/// </summary>
+		public static Vector2 To(this Transform t, GameObject target) { return t.position.To(target.transform.position); }
+		/// <summary>
+		/// Returns the offset from this Vector to the <paramref name="target"/>
+		/// </summary>
+		public static Vector2 To(this Transform t, Transform target) { return t.position.To(target.position); }
+		/// <summary>
+		/// Returns the offset from this Vector to the <paramref name="target"/>
+		/// </summary>
+		public static Vector2 To(this Transform t, Vector2 target) { return t.position.To(target); }
 		/// <summary>
 		/// Returns the offset from this Vector to the <paramref name="target"/> Vector.
 		/// </summary>
