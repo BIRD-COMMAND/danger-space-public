@@ -22,6 +22,7 @@ public class Weapon : MonoBehaviour
 	// Weapon related variables
 	public Emanation emanation;
 	public GameObject projectile;
+	public GameObject impactEffect;
 	public Transform projectileSpawn;
 	public float projectileSpawnRadius = 0f;
 	public int projectilesPerShot = 1;

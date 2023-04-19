@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
 	[HideInInspector] public Collider2D launchCollider;
 	[HideInInspector] public Rigidbody2D body;
 	[HideInInspector] public new Collider2D collider;
+	[HideInInspector] public TrailRenderer trail;
 	[HideInInspector] public float timer;
 
 	public bool IsTrigger { 
@@ -18,10 +19,11 @@ public class Projectile : MonoBehaviour
 		set { foreach (Collider2D c in GetComponentsInChildren<Collider2D>()) { c.isTrigger = value; } }
 	}
 
-	public Projectile Activate() { gameObject.SetActive(true); return this; }
+	public Projectile Activate() { if (trail) { trail.Clear(); } gameObject.SetActive(true); return this; }
 	public Projectile Initialize(System.Collections.Generic.Queue<Projectile> pool) {
 		body = GetComponent<Rigidbody2D>();
 		collider = GetComponent<Collider2D>();
+		trail = GetComponent<TrailRenderer>();
 		gameObject.SetActive(false);
 		this.pool = pool;
 		return this;
@@ -56,6 +58,7 @@ public class Projectile : MonoBehaviour
 		}
 		else if (collision.transform.GetComponent<AI>() || collision.transform.GetComponentInParent<AI>()) { 
 			//TODO do some damage when a projectile hits an AI unit
+			if (weapon && weapon.impactEffect) { Destroy(Instantiate(weapon.impactEffect, transform.position, transform.rotation), 1f); }
 			Return();
 		}
 	}
