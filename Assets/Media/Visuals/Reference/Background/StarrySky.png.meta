@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      StarrySky_0: 4274262098231656454
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

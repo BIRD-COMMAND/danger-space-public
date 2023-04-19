@@ -63,16 +63,20 @@ public class CameraScreenWarp : MonoBehaviour
 					oppositeTrail = dummies[7 - i].GetComponentInChildren<TrailRenderer>();
 					if (trail && dummyTrail && oppositeTrail) {
 						//dummies[i].transform.position = transform.position.WithZ(-20f);
+						Vector2 localPosition = trail.transform.localPosition;
 						trail.transform.SetParent(null);
 						dummyTrail.transform.SetParent(null);
 						oppositeTrail.transform.SetParent(null);
 						oppositeTrail.Clear();
 						oppositeTrail.emitting = false;
 						player.transform.position = endPos;
-						dummyTrail.gameObject.transform.SetParent(player.transform);
+						dummyTrail.transform.SetParent(player.transform);
+						dummyTrail.transform.localPosition = localPosition;
 						Update();
 						trail.transform.SetParent(dummies[7 - i].transform);
 						oppositeTrail.transform.SetParent(dummies[i].transform);
+						trail.transform.localPosition = localPosition;
+						oppositeTrail.transform.localPosition = localPosition;
 						StartCoroutine(ReactivateTrail(oppositeTrail));
 						break;
 					}
