@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 	public float maxSpeedBrakeFactor = 0.025f;
 	public float maxThrust = 10000f;
 	public float brakeFactor = 0.1f;
+	public float turnFactor = 0.2f;
 
 	private Vector2 MoveVector =>
 		new Vector2(
@@ -48,11 +49,13 @@ public class PlayerController : MonoBehaviour
 	{
 		// Look at mouse position
 		// transform.LookUp(Mouse.WorldPosition);
-		transform.rotation = Quaternion.Slerp(
-			transform.rotation, 
-			Quaternion.FromToRotation(transform.up, (Vector3)Mouse.WorldPosition - transform.position) * transform.rotation, 
-			0.1f
-		);			
+		//transform.rotation = Quaternion.Slerp(
+		//	transform.rotation, 
+		//	Quaternion.FromToRotation(transform.up, (Vector3)Mouse.WorldPosition - transform.position) * transform.rotation, 
+		//	0.1f
+		//);
+		Vector2 mouseDirection = Mouse.WorldPosition - (Vector2)transform.position;
+		body.rotation = Mathf.LerpAngle(body.rotation, (Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg) - 90f, turnFactor) ;
 
 		// Movement
 		// get input from WASD and apply as a force to body

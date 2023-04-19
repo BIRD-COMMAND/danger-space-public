@@ -13,14 +13,12 @@ namespace Extensions
 		public static void LookUp(this Transform t, Transform target)
 		{
 			t.rotation = Quaternion.FromToRotation(t.up, target.position - t.position) * t.rotation;
-			return;
 		}
 		/// <summary>
 		/// Equivalent to Transform.LookAt, but points the transform's Up vector at the target
 		/// </summary>
 		public static void LookUp(this Transform t, Vector3 target) {
-			t.rotation = Quaternion.FromToRotation(t.up, target - t.position) * t.rotation; 
-			return;
+			t.rotation = Quaternion.FromToRotation(t.up, target - t.position) * t.rotation;
 		}
 
 		/// <summary>
