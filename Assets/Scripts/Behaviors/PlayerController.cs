@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 		//	Quaternion.FromToRotation(transform.up, (Vector3)Mouse.WorldPosition - transform.position) * transform.rotation, 
 		//	0.1f
 		//);
-		Vector2 mouseDirection = Mouse.WorldPosition - (Vector2)transform.position;
+		Vector2 mouseDirection = (Mouse.WorldPosition - (Vector2)transform.position).normalized;
 		body.rotation = Mathf.LerpAngle(body.rotation, (Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg) - 90f, turnFactor) ;
 
 		// Movement
