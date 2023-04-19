@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c09bb81d01f7ef14987cc107b600d6d3
+guid: f1e708a147d79ae47a438d2f2c8d302f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1581217361680843609
-    second: targetDummy_0
+      213: 614198643701756748
+    second: BatWingCore_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -98,13 +98,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: targetDummy_0
+      name: BatWingCore_0
       rect:
         serializedVersion: 2
-        x: 803
-        y: 450
-        width: 314
-        height: 142
+        x: 87
+        y: 287
+        width: 460
+        height: 291
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 953caa310dc91f510800000000000000
-      internalID: 1581217361680843609
+      spriteID: c43be5b8962168800800000000000000
+      internalID: 614198643701756748
       vertices: []
       indices: 
       edges: []
@@ -128,8 +128,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      targetDummy_0: 1581217361680843609
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
