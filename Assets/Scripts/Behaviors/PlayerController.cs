@@ -48,14 +48,7 @@ public class PlayerController : MonoBehaviour
 	void FixedUpdate()
 	{
 		// Look at mouse position
-		// transform.LookUp(Mouse.WorldPosition);
-		//transform.rotation = Quaternion.Slerp(
-		//	transform.rotation, 
-		//	Quaternion.FromToRotation(transform.up, (Vector3)Mouse.WorldPosition - transform.position) * transform.rotation, 
-		//	0.1f
-		//);
-		Vector2 mouseDirection = (Mouse.WorldPosition - (Vector2)transform.position).normalized;
-		body.rotation = Mathf.LerpAngle(body.rotation, (Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg) - 90f, turnFactor) ;
+		body.LookAt(Mouse.WorldPosition, turnFactor);
 
 		// Movement
 		// get input from WASD and apply as a force to body

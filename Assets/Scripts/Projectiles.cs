@@ -25,7 +25,7 @@ public class Projectiles : ScriptableSingleton<Projectiles>
 	protected void OnDisable() { EditorApplication.playModeStateChanged -= OnPlayStateChange; }
 	void OnPlayStateChange(PlayModeStateChange state) {
 		if (state == PlayModeStateChange.EnteredPlayMode) { OnBegin(); }
-		else if (state == PlayModeStateChange.ExitingPlayMode) { OnEnd(); }
+		//else if (state == PlayModeStateChange.ExitingPlayMode) { OnEnd(); }
 	}
 #else
         protected void OnEnable() { OnBegin(); } 

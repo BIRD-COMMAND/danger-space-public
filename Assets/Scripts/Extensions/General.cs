@@ -7,6 +7,41 @@ namespace Extensions
 	public static class General
 	{
 
+		// Used in LookAt methods
+		private static Vector2 lookDirection; private static float lookRotation;
+		/// <summary>
+		/// Points the Rigidbody2D's Up vector at the target. If a lerpFactor is supplied it will lerp the body's rotation by that amount toward the target.
+		/// </summary>
+		public static void LookAt(this Rigidbody2D body, Rigidbody2D target, float lerpFactor = 1.0f) { 
+			lookDirection = (target.position - body.position).normalized;
+			lookRotation = (Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg) - 90f;
+			body.rotation = Mathf.LerpAngle(body.rotation, lookRotation, lerpFactor);
+		}
+		/// <summary>
+		/// Points the Rigidbody2D's Up vector at the target. If a lerpFactor is supplied it will lerp the body's rotation by that amount toward the target.
+		/// </summary>
+		public static void LookAt(this Rigidbody2D body, Transform target, float lerpFactor = 1.0f) {
+			lookDirection = ((Vector2)target.position - body.position).normalized;
+			lookRotation = (Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg) - 90f;
+			body.rotation = Mathf.LerpAngle(body.rotation, lookRotation, lerpFactor);
+		}
+		/// <summary>
+		/// Points the Rigidbody2D's Up vector at the target. If a lerpFactor is supplied it will lerp the body's rotation by that amount toward the target.
+		/// </summary>
+		public static void LookAt(this Rigidbody2D body, Vector3 target, float lerpFactor = 1.0f) {
+			lookDirection = ((Vector2)target - body.position).normalized;
+			lookRotation = (Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg) - 90f;
+			body.rotation = Mathf.LerpAngle(body.rotation, lookRotation, lerpFactor);
+		}
+		/// <summary>
+		/// Points the Rigidbody2D's Up vector at the target. If a lerpFactor is supplied it will lerp the body's rotation by that amount toward the target.
+		/// </summary>
+		public static void LookAt(this Rigidbody2D body, Vector2 target, float lerpFactor = 1.0f) {
+			lookDirection = (target - body.position).normalized;
+			lookRotation = (Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg) - 90f;
+			body.rotation = Mathf.LerpAngle(body.rotation, lookRotation, lerpFactor);
+		}
+
 		/// <summary>
 		/// Equivalent to Transform.LookAt, but points the transform's Up vector at the target
 		/// </summary>

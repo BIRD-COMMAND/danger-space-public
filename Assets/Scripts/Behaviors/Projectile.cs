@@ -1,3 +1,4 @@
+using Shapes;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -54,11 +55,17 @@ public class Projectile : MonoBehaviour
 	{ 
 		if (!enableCollision) { return; }
 		if (collision.collider.TryGetComponent(out Module m)) { 
-			m.Hit(this); Debug.Log(m.name, m.gameObject); Return();
+			m.Hit(this); Debug.Log(m.name, m.gameObject); Return(); return;
 		}
-		else if (collision.transform.GetComponent<AI>() || collision.transform.GetComponentInParent<AI>()) { 
+		AI ai = collision.transform.GetComponent<AI>();
+		if (!ai) { ai = collision.transform.GetComponentInParent<AI>(); }
+		if (ai) { 
 			//TODO do some damage when a projectile hits an AI unit
-			if (weapon && weapon.impactEffect) { Destroy(Instantiate(weapon.impactEffect, transform.position, transform.rotation), 1f); }
+			ai.GetComponentsInChildren<ShapeRenderer>().ToList().ForEach(d => d.FlashColor(Color.red));
+			if (weapon) {
+				ai.Damage((int)weapon.projectileDamage);
+				if (weapon.impactEffect) { Destroy(Instantiate(weapon.impactEffect, transform.position, transform.rotation), 1f); }
+			}
 			Return();
 		}
 	}
