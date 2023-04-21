@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Extensions;
+using Shapes;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class AI : MonoBehaviour
@@ -66,6 +67,14 @@ public class AI : MonoBehaviour
 		Enemy_Repair,
 		Enemy_Buff,
 
+
+		Zone_ApproachRally,
+		Zone_ApproachFallback,
+		Zone_Approach1,
+		Zone_Approach2,
+		Zone_Approach3,
+		Zone_Approach4,
+
 	}
 
 	//public Class _Class;
@@ -73,11 +82,11 @@ public class AI : MonoBehaviour
 	protected bool Idle => _State == State.Self_Idle;
 	protected bool NotIdle => _State != State.Self_Idle;
 
-
-	public Approach.Type _ApproachType;
-
+	public List<Zone> patrol = new List<Zone>();
+	private int patrolIndex = 0;
 	public int health = 30;
 	public bool pathing;
+	public bool visualizePath;
 	public bool useTargetPosition;
 	public Transform targetTransform;
 	public Rigidbody2D targetBody;
@@ -100,7 +109,11 @@ public class AI : MonoBehaviour
 
 	protected static RaycastHit2D query;
 
-	void Start() { body = GetComponent<Rigidbody2D>(); StartCoroutine(ManageVelocity()); }
+	void Start() { 
+		body = GetComponent<Rigidbody2D>(); 
+		StartCoroutine(ManageVelocity());
+		PathSetNextPosition(true);
+	}
 
 	private static float velocityMagnitude;
 	private static WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
@@ -132,132 +145,80 @@ public class AI : MonoBehaviour
 	public void PathSetNextPosition(bool forceSet = false) {		
 		if (forceSet || (pathing && DistToTarget < arrivalRadius)) {
 			if (path.Count > 0) { pathTargetPosition = path[0]; path.RemoveAt(0); }
-			else { pathing = false; _State = State.Self_Idle; }
+			else { 
+				if (patrol.Count > 0) {
+					if (patrolIndex >= patrol.Count) { patrolIndex = 0; }
+					targetPosition = patrol[patrolIndex].RandomPointInZone();
+					patrolIndex++;
+					GeneratePath();
+					if (path.Count > 0) {
+						pathing = true; _State = State.Self_Patrol;
+						pathTargetPosition = path[0]; path.RemoveAt(0); 
+					}
+				}
+				else { pathing = false; _State = State.Self_Idle; }
+			}
 		}
+	}
+
+	public enum Pattern
+	{
+		None,
+		Sine,
+		Spiral,
+		Orbit,
+	}
+	public Pattern pattern;
+	public float radius = 16f;
+	public float sineWaveAmplitude = 1.0f;
+	public float sineWaveFrequency = 1.0f;
+	private void GeneratePath()
+	{
+		switch (pattern) {
+			default: case Pattern.None: break;
+			case Pattern.Sine:
+				path.Clear();
+				Vector2 start = transform.position, end = targetPosition;
+				float distance = Vector2.Distance(start, end);
+				int numberOfPoints = Mathf.CeilToInt(distance / 0.5f);
+				Vector2 direction = (end - start).normalized;
+				float angle = Mathf.Atan2(direction.y, direction.x), t, yOffset;
+				int numberOfCycles = Mathf.FloorToInt(distance / (Mathf.PI * sineWaveAmplitude * 2f));
+				for (int i = 0; i <= numberOfPoints; i++) {
+					t = (float)i / numberOfPoints;
+					yOffset = sineWaveAmplitude * Mathf.Sin(t * Mathf.PI * numberOfCycles * 2f);
+					path.Add(Vector2.Lerp(start, end, t) + new Vector2(yOffset * Mathf.Cos(angle - Mathf.PI / 2), yOffset * Mathf.Sin(angle - Mathf.PI / 2)));
+				}
+				break;
+			case Pattern.Spiral: break;
+			case Pattern.Orbit:
+				numberOfPoints = Mathf.Max(1, Mathf.CeilToInt(2 * Mathf.PI * radius / 0.5f));
+				for (int i = 0; i < numberOfPoints; i++) {
+					angle = (float)i / numberOfPoints * 2 * Mathf.PI;
+					path.Add(targetPosition + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius);
+				}
+				break;
+		}
+
 	}
 
 	public void Damage(int damage)
 	{
 		health -= damage;
 		if (health <= 0) { Destroy(gameObject); }
+		foreach (ShapeRenderer shape in GetComponentsInChildren<ShapeRenderer>()) { shape.FlashColor(Color.red); } 
 	}
 
-	public void State_Self_Idle() { _State = State.Self_Idle; }
-	public void State_Self_Patrol() { _State = State.Self_Patrol; }
-
-	public Vector2 Arrive(float slowingRadius)
+	private void OnDrawGizmos()
 	{
-		//Vector2 desired = transform.To(Target).normalized;
-		//if (DistToTarget < slowingRadius) { desired *= maxSpeed * (DistToTarget / slowingRadius); }
-		//else { desired *= maxSpeed; }
-		// Vector2 steering = desired - rb.velocity;
-		//return Vector2.ClampMagnitude(desired - rb.velocity, maxForce);
-		if (DistToTarget < slowingRadius) { 
-			return Vector2.ClampMagnitude(((Target - (Vector2)transform.position).normalized * maxSpeed * (DistToTarget / slowingRadius)) - body.velocity, maxForce);
+		//Shapes.Draw.UseDashes = true; Shapes.Draw.DashStyle = Shapes.DashStyle.defaultDashStyle;
+		//Shapes.Draw.DashSizeUniform *= 8f; Shapes.Draw.Thickness = 0.04f;
+		//Shapes.Draw.Line(transform.position, Target);
+		//Shapes.Draw.UseDashes = false;
+		if (!visualizePath) { return; }
+		for (int i = 1; i < path.Count; i++) {
+			Debug.DrawLine(path[i - 1], path[i], Color.HSVToRGB((float)i / path.Count, 1f, 1f));
 		}
-		else { 
-			return Vector2.ClampMagnitude(((Target - (Vector2)transform.position).normalized * maxSpeed) - body.velocity, maxForce);
-		}
-	}
-	public Vector2 Seek()
-	{
-		//Vector2 desired = Target - (Vector2)transform.position;
-		//desired.Normalize();
-		//desired *= maxSpeed; 
-		//// Vector2 steering = desired - rb.velocity;
-		//return Vector2.ClampMagnitude(desired - rb.velocity, maxForce);
-		return Vector2.ClampMagnitude(((Target - (Vector2)transform.position).normalized * maxSpeed) - body.velocity, maxForce);
-		//rb.AddForce(Vector2.ClampMagnitude(((Target - (Vector2)transform.position).normalized * maxSpeed) - rb.velocity, maxForce));
-	}
-	public Vector2 Seek(Vector2 target)
-	{
-		return Vector2.ClampMagnitude(((target - (Vector2)transform.position).normalized * maxSpeed) - body.velocity, maxForce);
-		//rb.AddForce(Vector2.ClampMagnitude(((Target - (Vector2)transform.position).normalized * maxSpeed) - rb.velocity, maxForce));
-	}
-	public Vector2 Flee()
-	{
-		//Vector2 desired = (Vector2)transform.position - Target;
-		//desired.Normalize();
-		//desired *= maxSpeed;
-		// Vector2 steering = desired - rb.velocity;
-		// return Vector2.ClampMagnitude(desired - rb.velocity, maxForce);
-		return Vector2.ClampMagnitude((((Vector2)transform.position - Target).normalized * maxSpeed) - body.velocity, maxForce);
-		//rb.AddForce(Vector2.ClampMagnitude((((Vector2)transform.position - Target).normalized * maxSpeed) - rb.velocity, maxForce));
-	}
-	public Vector2 Flee(Vector2 target)
-	{		
-		return Vector2.ClampMagnitude((((Vector2)transform.position - target).normalized * maxSpeed) - body.velocity, maxForce);
-		//rb.AddForce(Vector2.ClampMagnitude((((Vector2)transform.position - Target).normalized * maxSpeed) - rb.velocity, maxForce));
-	}
-	public Vector2 Pursuit(Rigidbody2D body, float predictionTime = 1f)
-	{
-		//Vector2 targetFuturePosition = body.position + body.velocity * predictionTime;
-		return Seek(body.position + body.velocity * predictionTime);
-	}
-	public Vector2 Pursuit(IEnumerable<Rigidbody2D> bodies, float predictionTime = 1f)
-	{
-		return Seek(
-			bodies.Select(b => b.position).Average() +
-			bodies.Select(b => b.velocity).Average()
-			* predictionTime
-		);
-	}
-	public Vector2 Evade(Rigidbody2D body, float predictionTime = 1f)
-	{
-		//Vector2 pursuerFuturePosition = body.position + body.velocity * predictionTime;
-		return Flee(body.position + body.velocity * predictionTime);
-	}
-	public Vector2 Evade(IEnumerable<Rigidbody2D> bodies, float predictionTime = 1f)
-	{
-		return Flee(
-			bodies.Select(b => b.position).Average() +
-			bodies.Select(b => b.velocity).Average()
-			* predictionTime
-		);
-	}
-	public Vector2 ObstacleAvoidance()
-	{
-		query = Physics2D.CircleCast(transform.position, 5f, transform.up, 20f);
-		if (query) {
-			Vector2 avoidanceForce = query.point - (Vector2)transform.position;
-			avoidanceForce = avoidanceForce.normalized * (1 - query.distance / 20f) * 5f;
-			return avoidanceForce;
-		}
-		else { return Vector2.zero; }
-	}
-
-	[Header("Flocking Parameters")]
-	public float separationWeight = 1.5f;
-	public float alignmentWeight = 1.0f;
-	public float cohesionWeight = 1.0f;
-	public float separationRadius = 3.0f;
-
-	public Vector2 Flock()
-	{
-
-		if (flock == null || flock.Count == 0) { return Vector2.zero; }
-
-		Vector2 separationForce = Vector2.zero, alignmentForce = Vector2.zero, cohesionForce = Vector2.zero;
-		int separationCount = 0, alignmentCount = 0, cohesionCount = 0;
-
-		foreach (Rigidbody2D other in flock) {
-			
-			if (other == body) { continue; }
-			float distance = Vector2.Distance(transform.position, other.transform.position);
-			// Separation
-			if (distance < separationRadius) { separationForce += (Vector2)(transform.position - other.transform.position); separationCount++; }
-			// Alignment
-			alignmentForce += other.velocity;						alignmentCount++;
-			// Cohesion
-			cohesionForce += (Vector2)other.transform.position;		cohesionCount++;
-		}
-
-		if (separationCount > 0) { separationForce /= separationCount; separationForce = separationForce.normalized * separationWeight; }
-		if (alignmentCount > 0) { alignmentForce /= alignmentCount; alignmentForce = alignmentForce.normalized * alignmentWeight; }
-		if (cohesionCount > 0) { cohesionForce /= cohesionCount; cohesionForce = (cohesionForce - (Vector2)transform.position).normalized * cohesionWeight; }
-
-		return separationForce + alignmentForce + cohesionForce;
-	
 	}
 
 }

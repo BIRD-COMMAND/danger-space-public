@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 6341143877443340279}
   - component: {fileID: 7719684998214894527}
   - component: {fileID: 1224486055290549898}
-  - component: {fileID: 5712812367395782065}
-  m_Layer: 0
+  - component: {fileID: 8547902412965016325}
+  m_Layer: 7
   m_Name: Ship_Enemy_Orb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &5712812367395782065
+--- !u!114 &8547902412965016325
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -334,30 +334,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 191185547667513190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0965d3fd90ee9c148beb328822f32cd9, type: 3}
+  m_Script: {fileID: 11500000, guid: 46280ed1974c29d4db32d6538109ceb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _State: 0
-  _ApproachType: 0
-  health: 50
+  patrol: []
+  health: 30
   pathing: 0
+  visualizePath: 0
   useTargetPosition: 0
   targetTransform: {fileID: 0}
   targetBody: {fileID: 0}
-  targetPosition: {x: 100, y: 10}
+  targetPosition: {x: 0, y: 0}
   pathTargetPosition: {x: 0, y: 0}
   path: []
   maxSpeed: 50
-  maxForce: 10000
+  maxForce: 2000
   turnFactor: 0.1
-  arrivalRadius: 10
-  separationWeight: 1.5
-  alignmentWeight: 1
-  cohesionWeight: 1
-  separationRadius: 3
+  arrivalRadius: 4.5
   pattern: 1
-  sineWaveAmplitude: 10
-  sineWaveFrequency: 6
+  radius: 8
+  sineWaveAmplitude: 8
+  sineWaveFrequency: 4
 --- !u!1 &1176196243548419499
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +369,7 @@ GameObject:
   - component: {fileID: 2223439154680429382}
   - component: {fileID: 7833050548441663750}
   - component: {fileID: 2127025454718414416}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Center Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -525,7 +523,7 @@ GameObject:
   - component: {fileID: 7320845729875199702}
   - component: {fileID: 5938515744999144040}
   - component: {fileID: 409514110585702774}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Outside Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -679,7 +677,7 @@ GameObject:
   - component: {fileID: 3036351161789899201}
   - component: {fileID: 8162906812970957907}
   - component: {fileID: 1171351013043587225}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Outside
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -833,7 +831,7 @@ GameObject:
   - component: {fileID: 7286690443578764344}
   - component: {fileID: 5865446110637082937}
   - component: {fileID: 4921232507942841955}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -987,7 +985,7 @@ GameObject:
   - component: {fileID: 7110742705392475309}
   - component: {fileID: 3144318367748742152}
   - component: {fileID: 5111912507475631341}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Middle Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1141,7 +1139,7 @@ GameObject:
   - component: {fileID: 3924739215364104702}
   - component: {fileID: 349880603162844048}
   - component: {fileID: 7394374340122480358}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}

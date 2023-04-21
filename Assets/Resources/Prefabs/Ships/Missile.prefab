@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2876338523277100718}
   - component: {fileID: 5980962620487949013}
   - component: {fileID: 2002616409647525017}
-  - component: {fileID: 4629227401257799920}
   m_Layer: 0
   m_Name: Center
   m_TagString: Untagged
@@ -140,20 +139,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4629227401257799920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259055511111826385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1064637f6c0e85b45bcd83aea0341e5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: 0.12
-  speed: 0.5
 --- !u!1 &1890965659764119781
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +151,6 @@ GameObject:
   - component: {fileID: 8471774341273975726}
   - component: {fileID: 5748164350441223952}
   - component: {fileID: 1881943063190105107}
-  - component: {fileID: 5600993682544446200}
   m_Layer: 0
   m_Name: Center Glow
   m_TagString: Untagged
@@ -294,20 +278,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5600993682544446200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890965659764119781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1064637f6c0e85b45bcd83aea0341e5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: 0.12
-  speed: 0.5
 --- !u!1 &5984474454580073841
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,8 +292,8 @@ GameObject:
   - component: {fileID: 8136719115391907741}
   - component: {fileID: 6282331270161382849}
   - component: {fileID: 3321782433982150033}
-  - component: {fileID: 4968725279497474340}
   - component: {fileID: 8516260684169775227}
+  - component: {fileID: 5717711160341638618}
   m_Layer: 0
   m_Name: Missile
   m_TagString: Untagged
@@ -584,31 +554,6 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &4968725279497474340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5984474454580073841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a40fb3da28781a458448b147e8f4bf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Class: 4
-  _State: 0
-  _ApproachType: 5
-  hasTarget: 0
-  targetTransform: {fileID: 0}
-  targetBody: {fileID: 0}
-  targetPosition: {x: 0, y: 0}
-  maxSpeed: 400
-  maxForce: 500
-  separationWeight: 1.5
-  alignmentWeight: 1
-  cohesionWeight: 1
-  separationRadius: 3
 --- !u!58 &8516260684169775227
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -645,3 +590,32 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.6
+--- !u!114 &5717711160341638618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5984474454580073841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46280ed1974c29d4db32d6538109ceb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _State: 0
+  health: 30
+  pathing: 0
+  visualizePath: 0
+  useTargetPosition: 0
+  targetTransform: {fileID: 0}
+  targetBody: {fileID: 0}
+  targetPosition: {x: 0, y: 0}
+  pathTargetPosition: {x: 0, y: 0}
+  path: []
+  maxSpeed: 5
+  maxForce: 5
+  turnFactor: 0.1
+  arrivalRadius: 10
+  pattern: 1
+  sineWaveAmplitude: 1
+  sineWaveFrequency: 1

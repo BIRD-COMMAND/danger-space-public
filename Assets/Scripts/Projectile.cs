@@ -1,3 +1,4 @@
+using Extensions;
 using Shapes;
 using System.Linq;
 using Unity.VisualScripting;
@@ -6,7 +7,6 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
 	[HideInInspector] public bool enableCollision = false;
-	[HideInInspector] public Module launcher;
 	[HideInInspector] public Weapon weapon;
 	[HideInInspector] public System.Collections.Generic.Queue<Projectile> pool;
 	[HideInInspector] public Collider2D launchCollider;
@@ -30,17 +30,6 @@ public class Projectile : MonoBehaviour
 		return this;
 	}
 
-	public void Launch(Module m)
-	{
-		enableCollision = true;
-		launcher = m;
-		IsTrigger = true;
-		transform.SetPositionAndRotation(m.projectileSpawn.position, m.projectileSpawn.rotation);
-		body.velocity = transform.up * m.projectileSpeed;
-		launchCollider = m.collider;
-		timer = m.projectileLifetime;
-	}
-
 	private void Update()
 	{
 		timer -= Time.deltaTime;
@@ -54,14 +43,8 @@ public class Projectile : MonoBehaviour
 	private void OnCollisionEnter2D(Collision2D collision)
 	{ 
 		if (!enableCollision) { return; }
-		if (collision.collider.TryGetComponent(out Module m)) { 
-			m.Hit(this); Debug.Log(m.name, m.gameObject); Return(); return;
-		}
-		AI ai = collision.transform.GetComponent<AI>();
-		if (!ai) { ai = collision.transform.GetComponentInParent<AI>(); }
-		if (ai) { 
+		if (collision.transform.TryGetComponentInParent(out AI ai)) { 
 			//TODO do some damage when a projectile hits an AI unit
-			ai.GetComponentsInChildren<ShapeRenderer>().ToList().ForEach(d => d.FlashColor(Color.red));
 			if (weapon) {
 				ai.Damage((int)weapon.projectileDamage);
 				if (weapon.impactEffect) { Destroy(Instantiate(weapon.impactEffect, transform.position, transform.rotation), 1f); }

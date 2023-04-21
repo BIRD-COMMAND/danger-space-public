@@ -1,7 +1,7 @@
 using Shapes;
 using UnityEngine;
 
-[ExecuteInEditMode, RequireComponent(typeof(Module))]
+[ExecuteInEditMode, RequireComponent(typeof(Weapon))]
 public class WeaponAmmoIndicator : MonoBehaviour
 {
 
@@ -9,13 +9,13 @@ public class WeaponAmmoIndicator : MonoBehaviour
 	public Color inactiveColor = Color.gray;
     public ShapeRenderer[] indicators;
 
-	private Module module;
+	private Weapon weapon;
 	private int max = 0;
 
 	private void Update()
 	{
 		for (int i = max; i > -1; i--) {
-			if (module.projectileAmmoCurrent > i) {
+			if (weapon.projectileAmmoCurrent > i) {
 				if (indicators[i].Color != activeColor) {
 					indicators[i].Color = activeColor;
 					indicators[i].transform.GetChild(0).gameObject.SetActive(true);
@@ -28,7 +28,7 @@ public class WeaponAmmoIndicator : MonoBehaviour
 		}
 	}
 
-	void Start() { module = GetComponent<Module>(); max = indicators.Length - 1; }
+	void Start() { weapon = GetComponent<Weapon>(); max = indicators.Length - 1; }
 	void OnValidate() { Start(); }
 
 }

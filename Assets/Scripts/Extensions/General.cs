@@ -85,5 +85,12 @@ namespace Extensions
 			return (upperBound + lowerBound) / 2f;
 		}
 
+		/// <summary>
+		/// Equivalent to TryGetComponent, but checks the parent GameObjects as well.
+		/// </summary>
+		public static bool TryGetComponentInParent<T>(this Component c, out T component) where T : Component {
+			component = c.GetComponentInParent<T>(); if (component) { return true; } else { return false; }
+		}
+
 	}
 }
