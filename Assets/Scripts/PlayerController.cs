@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 
 	public static PlayerController player;
 
+	public bool debugVisualizeAim = false;
+
 	public Weapon baseWeapon;
 	public Rigidbody2D body;
 	public float maxSpeed = 20f;
@@ -47,8 +49,19 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		// Look at mouse position
-		body.LookAt(Mouse.WorldPosition, turnFactor);
+
+		// when angular velocity is less than 1, immediately set it to 0, this cuts some of the slowness out of the mouse offset correction
+		if (body.angularVelocity > 0f && body.angularVelocity < 2f) { body.angularVelocity = 0f; }
+
+		// Lerp up vector toward mouse position in worldspace
+		
+		// when the body's angular velocity is low we lerp normally
+		if (body.angularVelocity < 0.5f) { body.LookAt(Mouse.WorldPosition, turnFactor); }
+		// the higher the body's angular velocity, the more we lerp to compensate
+		else { body.LookAt(Mouse.WorldPosition, Mathf.Clamp01(1f - (1f / body.angularVelocity) + turnFactor)); }
+		
+		// debug aim visualization
+		if (debugVisualizeAim) { Debug.DrawLine(transform.position, transform.position + (transform.up * transform.position.DistTo(Mouse.WorldPosition)), Color.green); }
 
 		// Movement
 		// get input from WASD and apply as a force to body
@@ -67,5 +80,9 @@ public class PlayerController : MonoBehaviour
 		if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 	}
 
+	private void OnCollisionExit2D(Collision2D collision)
+	{
+		
+	}
 
 }

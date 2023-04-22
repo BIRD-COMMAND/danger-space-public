@@ -348,7 +348,7 @@ MonoBehaviour:
   targetPosition: {x: 0, y: 0}
   pathTargetPosition: {x: 0, y: 0}
   path: []
-  maxSpeed: 50
+  maxSpeed: 150
   maxForce: 2000
   turnFactor: 0.1
   arrivalRadius: 4.5
