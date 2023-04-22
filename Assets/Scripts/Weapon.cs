@@ -100,6 +100,7 @@ public class Weapon : MonoBehaviour
 					if (overlap) { /*Debug.Log("overlapped");*/ shot.Return(); }						
 				}
 				else { shot.transform.SetPositionAndRotation(projectileSpawn.position, projectileSpawn.rotation); }
+				if (shot.trail) { shot.trail.emitting = true; shot.trail.Clear(); }
 				shot.body.velocity = shot.transform.up * projectileSpeed;
 				shot.timer = projectileLifetime;
 				if (projectilesPerShot > 1) { shots.Add(shot); }

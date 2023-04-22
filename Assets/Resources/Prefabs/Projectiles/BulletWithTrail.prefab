@@ -51,11 +51,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableCollision: 0
-  launcher: {fileID: 0}
   weapon: {fileID: 0}
   launchCollider: {fileID: 0}
   body: {fileID: 0}
   collider: {fileID: 0}
+  trail: {fileID: 0}
   timer: 0
 --- !u!33 &1481367549871798511
 MeshFilter:
@@ -234,8 +234,8 @@ TrailRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2946081766507428005}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 0
@@ -344,6 +344,6 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_MaskInteraction: 0
-  m_Autodestruct: 1
+  m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1

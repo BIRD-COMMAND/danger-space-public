@@ -80,9 +80,4 @@ public class PlayerController : MonoBehaviour
 		if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 	}
 
-	private void OnCollisionExit2D(Collision2D collision)
-	{
-		
-	}
-
 }

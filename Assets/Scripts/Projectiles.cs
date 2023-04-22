@@ -52,4 +52,13 @@ public class Projectiles : MonoBehaviour
 		}
 	}
 
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		if (collision.TryGetComponent(out Projectile projectile)) {
+			StartCoroutine(ReturnProjectile(projectile));
+		}
+	}
+	private WaitForSeconds returnDelay = new WaitForSeconds(0.5f);
+	private System.Collections.IEnumerator ReturnProjectile(Projectile projectile) { yield return returnDelay; projectile.Return(); }
+
 }

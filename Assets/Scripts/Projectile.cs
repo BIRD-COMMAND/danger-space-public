@@ -15,12 +15,7 @@ public class Projectile : MonoBehaviour
 	[HideInInspector] public TrailRenderer trail;
 	[HideInInspector] public float timer;
 
-	public bool IsTrigger { 
-		get { return GetComponentsInChildren<Collider2D>().Any(c => c.isTrigger);  }
-		set { foreach (Collider2D c in GetComponentsInChildren<Collider2D>()) { c.isTrigger = value; } }
-	}
-
-	public Projectile Activate() { if (trail) { trail.Clear(); } gameObject.SetActive(true); return this; }
+	public Projectile Activate() { gameObject.SetActive(true); return this; }
 	public Projectile Initialize(System.Collections.Generic.Queue<Projectile> pool) {
 		body = GetComponent<Rigidbody2D>();
 		collider = GetComponent<Collider2D>();
@@ -36,9 +31,11 @@ public class Projectile : MonoBehaviour
 		if (timer <= 0) { Return(); }
 	}
 
-	public void Return() { gameObject.SetActive(false); pool.Enqueue(this); }
-
-	private void OnTriggerExit2D(Collider2D other) { if (other == launchCollider) { IsTrigger = false; } }
+	public void Return() { 
+		if (trail) { trail.emitting = false; }
+		gameObject.SetActive(false); 
+		pool.Enqueue(this); 
+	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{ 
@@ -47,7 +44,7 @@ public class Projectile : MonoBehaviour
 			//TODO do some damage when a projectile hits an AI unit
 			if (weapon) {
 				ai.Damage((int)weapon.projectileDamage);
-				if (weapon.impactEffect) { Destroy(Instantiate(weapon.impactEffect, transform.position, transform.rotation), 1f); }
+				if (weapon.impactEffect) { Instantiate(weapon.impactEffect, transform.position, transform.rotation); }
 			}
 			Return();
 		}
