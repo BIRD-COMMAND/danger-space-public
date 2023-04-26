@@ -23,6 +23,7 @@ public class Weapon : MonoBehaviour
 	public Emanation emanation;
 	public GameObject projectile;
 	public GameObject impactEffect;
+	public ParticleSystem[] fireEffects;
 	public Transform projectileSpawn;
 	public float projectileSpawnRadius = 0f;
 	public int projectilesPerShot = 1;
@@ -57,34 +58,31 @@ public class Weapon : MonoBehaviour
 		if (projectileAmmoCurrent == 0f && projectileReloadTimeCurrent == 0f) { projectileAmmoCurrent = projectileAmmo; }
 	}
 
-	public void Fire()
+	public void Fire(Agent shooter)
 	{
 		if (projectileRateOfFireCurrent == 0f && projectileAmmoCurrent > 0f) {
 			projectileRateOfFireCurrent = projectileRateOfFire;
 			projectileAmmoCurrent -= projectileAmmoPerShot;
-			if (projectilesPerShot > 1) { shots.Clear(); }
+			shots.Clear();
+			Vector3 spawnPoint = projectileSpawn.position; 
+			Quaternion spawnRotation = projectileSpawn.rotation;
 			for (int i = 0; i < projectilesPerShot; i++) {
-				shot = Projectiles.Get(projectile);
+				shot = PoolManager.Get(projectile) as Projectile;
+				shot.shooter = shooter;
 				shot.weapon = this;
 				if (projectileSpawnRadius > 0f) {
 					bool overlap = true;
 					for (float j = 1f; j < 2.5f; j += 0.05f) {
 						switch (emanation) {
-							case Emanation.Point:  
-								shot.transform.SetPositionAndRotation(
-									(Vector2)projectileSpawn.position + (UnityEngine.Random.insideUnitCircle * projectileSpawnRadius * j), 
-									projectileSpawn.rotation
-								); 
-								if (projectileSpread > 0f) { shot.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-projectileSpread, projectileSpread)); }
+							case Emanation.Point:
+								spawnPoint = (Vector2)projectileSpawn.position + (UnityEngine.Random.insideUnitCircle * projectileSpawnRadius * j);
+								spawnRotation = projectileSpawn.rotation;
 								//Debug.DrawLine(transform.position, shot.transform.position, Color.red, 0.5f);
 								break;
-							case Emanation.Random: 
-								shot.transform.SetPositionAndRotation(
-									(Vector2)transform.position + (UnityEngine.Random.insideUnitCircle.normalized * Vector2.Distance(transform.position, projectileSpawn.position) * j),
-									projectileSpawn.rotation
-								); 
-								shot.transform.LookUp(shot.transform.position + (shot.transform.position - transform.position));
-								if (projectileSpread > 0f) { shot.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-projectileSpread, projectileSpread)); }
+							case Emanation.Random:
+								spawnPoint = (Vector2)transform.position + (UnityEngine.Random.insideUnitCircle.normalized * Vector2.Distance(transform.position, projectileSpawn.position) * j);
+								spawnRotation = projectileSpawn.rotation;
+								shot.transform.LookUp(spawnPoint + (spawnPoint - transform.position));
 								break;
 							case Emanation.Arc:
 								//TODO implement   arc emanation projectile spawning
@@ -94,19 +92,24 @@ public class Weapon : MonoBehaviour
 								break;
 							default: break;
 						}
-						if (shot.collider.Overlap(overlaps) == 0) { overlap = false; break; }
+						if (shot.collider.Overlap(spawnPoint, spawnRotation.Angle2D(), overlaps) == 0) { overlap = false; break; }
 						//else { foreach (Collider2D item in overlaps) { Debug.Log(item.name); } }
 					}
-					if (overlap) { /*Debug.Log("overlapped");*/ shot.Return(); }						
+					if (overlap) { /*Debug.Log("overlapped");*/ shot.Return(); Debug.Log("Projectile Return()ed by Weapon.overlap"); }
+					else {
+						if (projectileSpread > 0f) { shot.Activate(spawnPoint, spawnRotation * Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(-projectileSpread, projectileSpread))); }
+						else { shot.Activate(spawnPoint, spawnRotation); }						 
+					}
 				}
-				else { shot.transform.SetPositionAndRotation(projectileSpawn.position, projectileSpawn.rotation); }
-				if (shot.trail) { shot.trail.emitting = true; shot.trail.Clear(); }
+				else {
+					if (projectileSpread > 0f) { shot.Activate(spawnPoint, spawnRotation * Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(-projectileSpread, projectileSpread))); }
+					else { shot.Activate(spawnPoint, spawnRotation); }
+				}
 				shot.body.velocity = shot.transform.up * projectileSpeed;
 				shot.timer = projectileLifetime;
-				if (projectilesPerShot > 1) { shots.Add(shot); }
+				shots.Add(shot);
 			}
-			if (projectilesPerShot > 1) { shots.ForEach(p => p.enableCollision = true); }
-			else { shot.enableCollision = true; }
+			//foreach (ParticleSystem item in fireEffects) { if (item != null && !item.isPlaying) { item.Play(); break; } }
 		}
 	}
 

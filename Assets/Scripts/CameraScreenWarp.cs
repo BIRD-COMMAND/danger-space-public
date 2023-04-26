@@ -20,7 +20,6 @@ public class CameraScreenWarp : MonoBehaviour
 			float height = 2.0f * GetComponent<Camera>().orthographicSize;
 			float width = height * GetComponent<Camera>().aspect;
 			screenSize = new Vector2(width, height);
-			screenTrigger.size = new Vector2(width, height);
 		}
 		dummies[0] = dummy;
 		for (int i = 1; i < 8; i++) { dummies[i] = Instantiate(dummy, transform); }
@@ -40,6 +39,9 @@ public class CameraScreenWarp : MonoBehaviour
 
 	private void Update()
 	{
+
+		if (!PlayerController.player) { return; }
+		player = PlayerController.player.gameObject;
 
 		for (int i = 0; i < dummies.Length; i++) {
 			

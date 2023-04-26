@@ -28,7 +28,7 @@ public class LevelData : ScriptableObject
 		try {
 			level.spawns = new List<SpawnData>();
 			foreach (GameObject item in UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().GetRootGameObjects()) {
-				if (item.GetComponent<AI>() && UnityEditor.PrefabUtility.IsOutermostPrefabInstanceRoot(item)) {
+				if (UnityEditor.PrefabUtility.IsOutermostPrefabInstanceRoot(item)) {
 					level.spawns.Add(
 						new SpawnData()
 						{

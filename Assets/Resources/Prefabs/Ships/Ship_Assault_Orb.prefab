@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 6341143877443340279}
   - component: {fileID: 7719684998214894527}
   - component: {fileID: 1224486055290549898}
-  - component: {fileID: 8547902412965016325}
+  - component: {fileID: 5056582451939254573}
+  - component: {fileID: 5145217350644530750}
   m_Layer: 7
-  m_Name: Ship_Enemy_Orb
+  m_Name: Ship_Assault_Orb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,7 +216,43 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &8547902412965016325
+--- !u!58 &5056582451939254573
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191185547667513190}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 6
+--- !u!114 &5145217350644530750
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -224,28 +261,60 @@ MonoBehaviour:
   m_GameObject: {fileID: 191185547667513190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46280ed1974c29d4db32d6538109ceb8, type: 3}
+  m_Script: {fileID: 11500000, guid: 51600c02f7891a44eac76e3b189508b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _State: 0
-  patrol: []
-  health: 30
-  pathing: 0
-  visualizePath: 0
-  useTargetPosition: 0
-  targetTransform: {fileID: 0}
-  targetBody: {fileID: 0}
-  targetPosition: {x: 0, y: 0}
-  pathTargetPosition: {x: 0, y: 0}
-  path: []
-  maxSpeed: 200
-  maxForce: 2000
-  turnFactor: 0.1
-  arrivalRadius: 4.5
-  pattern: 1
-  radius: 8
-  sineWaveAmplitude: 8
-  sineWaveFrequency: 4
+  role: 1
+  state: 0
+  target: {fileID: 0}
+  maxHealth: 10
+  health: 10
+  invulnerable: 0
+  deathEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  shapes: []
+  path:
+    nodes: []
+  bounds: {fileID: 5056582451939254573}
+  radius: 1
+  maxVelocity: 3.5
+  maxAcceleration: 10
+  turnSpeed: 20
+  targetRadius: 0.005
+  slowRadius: 1
+  timeToTarget: 0.1
+  smoothing: 1
+  numSamplesForSmoothing: 5
+  maxPredictionTime: 1
+  pursuitSlowRadius: 10
+  stopRadius: 0.005
+  pathOffset: 0.71
+  pathDirection: 1
+  obstacleAvoidDistance: 0.5
+  obstacleAvoidanceMultiplier: 4
+  mainWhiskerLen: 1.25
+  sideWhiskerLen: 0.701
+  sideWhiskerAngle: 45
+  obstacleDetection: 1
+  castMask:
+    serializedVersion: 2
+    m_Bits: 243
+  distanceBetween: 0
+  collisionDetectionRadiusMultiplier: 4
+  collisionAvoidanceMultiplier: 1.5
+  fleePanicDist: 3.5
+  fleeDecelerateOnStop: 1
+  fleeTimeToTarget: 0.1
+  evadeMaxPredictionTime: 1
+  hideDistanceFromBoundary: 0.6
+  wanderOffset: 1.5
+  wanderRadius: 4
+  wanderRate: 0.4
+  wander2Radius: 1.2
+  wander2Distance: 2
+  wander2Jitter: 40
+  sepMaxAcceleration: 25
+  maxSepDist: 1
+  fleeThreshold: 0.5
 --- !u!1 &7319166930321926902
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,23 @@ using UnityEngine;
 public class ZoneManager : MonoBehaviour
 {
 
+	public static Zone Fallback => instance.fallback;
+	public static Zone General1 => instance.general1;
+	public static Zone General2 => instance.general2;
+	public static Zone General3 => instance.general3;
+	public static Zone General4 => instance.general4;
+	public static Zone Support1 => instance.support1;
+	public static Zone Support2 => instance.support2;
+	public static Zone Support3 => instance.support3;
+	public static Zone Support4 => instance.support4;
+	public static Zone PlayerFront => instance.playerFront;
+	public static Zone PlayerBack => instance.playerBack;
+	public static Zone PlayerLeft => instance.playerLeft;
+	public static Zone PlayerRight => instance.playerRight;
+
 	public static ZoneManager instance;
+
+	public static Zone GetZone(Zone.Type t) => instance[t];
 
 	public Zone this[Zone.Type t] { get {
 			switch (t) {
@@ -19,14 +36,10 @@ public class ZoneManager : MonoBehaviour
 				case Zone.Type.Support2: return support2;
 				case Zone.Type.Support3: return support3;
 				case Zone.Type.Support4: return support4;
-				case Zone.Type.Player1:  return player1;
-				case Zone.Type.Player2:  return player2;
-				case Zone.Type.Player3:  return player3;
-				case Zone.Type.Player4:  return player4;
-				case Zone.Type.Player5:  return player5;
-				case Zone.Type.Player6:  return player6;
-				case Zone.Type.Player7:  return player7;
-				case Zone.Type.Player8:  return player8;
+				case Zone.Type.PlayerFront:  return playerFront;
+				case Zone.Type.PlayerBack:   return playerBack;
+				case Zone.Type.PlayerLeft:   return playerLeft;
+				case Zone.Type.PlayerRight:  return playerRight;
 			}
 		}
 	}
@@ -43,38 +56,23 @@ public class ZoneManager : MonoBehaviour
 	public Zone support2 = new Zone();
 	public Zone support3 = new Zone();
 	public Zone support4 = new Zone();
-	public Zone player1 = new Zone();
-	public Zone player2 = new Zone();
-	public Zone player3 = new Zone();
-	public Zone player4 = new Zone();
-	public Zone player5 = new Zone();
-	public Zone player6 = new Zone();
-	public Zone player7 = new Zone();
-	public Zone player8 = new Zone();
-
-	private readonly Vector3 p1 = new Vector3(0f, 30f, 0f);
-	private readonly Vector3 p2 = new Vector3(18.5f, 18.5f, 0f);
-	private readonly Vector3 p3 = new Vector3(30f, 0f, 0f);
-	private readonly Vector3 p4 = new Vector3(18.5f, -18.5f, 0f);
-	private readonly Vector3 p5 = new Vector3(0f, -30f, 0f);
-	private readonly Vector3 p6 = new Vector3(-18.5f, -18.5f, 0f);
-	private readonly Vector3 p7 = new Vector3(-30f, 0f, 0f);
-	private readonly Vector3 p8 = new Vector3(-18.5f, 18.5f, 0f);
+	public Zone playerFront = new Zone();
+	public Zone playerBack = new Zone();
+	public Zone playerLeft = new Zone();
+	public Zone playerRight = new Zone();
 
 	private void Awake() { instance = this; }
 
+	private float rotation;
 	private void Update()
 	{
 		// keep player zones relative to the player
 		if (PlayerController.player) {
-			player1.position = PlayerController.player.transform.position + p1;
-			player2.position = PlayerController.player.transform.position + p2;
-			player3.position = PlayerController.player.transform.position + p3;
-			player4.position = PlayerController.player.transform.position + p4;
-			player5.position = PlayerController.player.transform.position + p5;
-			player6.position = PlayerController.player.transform.position + p6;
-			player7.position = PlayerController.player.transform.position + p7;
-			player8.position = PlayerController.player.transform.position + p8;
+			rotation = Mathf.Deg2Rad * PlayerController.player.Rotation;
+			playerFront.position = PlayerController.player.transform.UnitsForward(40f);		playerFront.rotation = rotation;
+			playerBack.position =  PlayerController.player.transform.UnitsBackward(40f);	playerBack.rotation =  rotation;
+			playerLeft.position =  PlayerController.player.transform.UnitsLeft(40f);		playerLeft.rotation =  rotation;
+			playerRight.position = PlayerController.player.transform.UnitsRight(40f);		playerRight.rotation = rotation;
 		}
 
 	}
@@ -97,14 +95,10 @@ public class ZoneManager : MonoBehaviour
 		if (support2.active) { support2.Draw(Color.magenta); }
 		if (support3.active) { support3.Draw(Color.magenta); }
 		if (support4.active) { support4.Draw(Color.magenta); }
-		if (player1.active)  { player1. Draw(Color.red);	 }
-		if (player2.active)  { player2. Draw(Color.red);	 }
-		if (player3.active)  { player3. Draw(Color.red);	 }
-		if (player4.active)  { player4. Draw(Color.red);	 }
-		if (player5.active)  { player5. Draw(Color.red);	 }
-		if (player6.active)  { player6. Draw(Color.red);	 }
-		if (player7.active)  { player7. Draw(Color.red);	 }
-		if (player8.active)  { player8. Draw(Color.red);	 }
+		if (playerFront.active) { playerFront. Draw(Color.red); }
+		if (playerBack.active)  { playerBack.  Draw(Color.red); }
+		if (playerLeft.active)  { playerLeft.  Draw(Color.red); }
+		if (playerRight.active) { playerRight. Draw(Color.red); }
 
 	}
 

@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
+using Shapes;
+using Unity.VisualScripting;
 
-
-public class PlayerController : MonoBehaviour
+public class PlayerController : Agent
 {
 
 	public static PlayerController player;
 
 	public bool debugVisualizeAim = false;
 
+	public GameObject glow;
+
 	public Weapon baseWeapon;
-	public Rigidbody2D body;
 	public float maxSpeed = 20f;
 	public float maxSpeedBrakeFactor = 0.025f;
 	public float maxThrust = 10000f;
@@ -29,9 +31,10 @@ public class PlayerController : MonoBehaviour
 	private bool KeyS => Input.GetKey(KeyCode.S);
 	private bool KeyD => Input.GetKey(KeyCode.D);
 
-	private void Awake() { 
+	protected override void Awake() {
+		base.Awake();
 		player = this; 
-		body = GetComponent<Rigidbody2D>(); 
+		role = AgentType.Player;
 		baseWeapon = GetComponent<Weapon>();
 	}
 
@@ -43,7 +46,9 @@ public class PlayerController : MonoBehaviour
 			item.ApplyThrust(Vector2.Dot(body.velocity.normalized, transform.DirToMouse()));
 		}
 
-		if (Mouse.LeftDown) { baseWeapon.Fire(); }
+		if (Mouse.LeftDown) { baseWeapon.Fire(this); }
+
+		if (Mouse.RightClick) { Time.timeScale = Time.timeScale < 0.9f ? 1f : 0.1f; }
 
 	}
 
@@ -79,5 +84,6 @@ public class PlayerController : MonoBehaviour
 		if (!KeyD && body.velocity.x > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 		if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 	}
+
 
 }

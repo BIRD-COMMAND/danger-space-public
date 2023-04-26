@@ -12,9 +12,9 @@ public class ZoneManagerEditor : Editor
 	SerializedProperty rally, fallback;
 	SerializedProperty general1, general2, general3, general4;
 	SerializedProperty support1, support2, support3, support4;
-	SerializedProperty player1, player2, player3, player4, player5, player6, player7, player8;
+	SerializedProperty playerFront, playerBack, playerLeft, playerRight;
 	SerializedProperty shape, active, size, position;
-	bool rallyFoldoutState, fallbackFoldoutState, general1FoldoutState, general2FoldoutState, general3FoldoutState, general4FoldoutState, support1FoldoutState, support2FoldoutState, support3FoldoutState, support4FoldoutState, player1FoldoutState, player2FoldoutState, player3FoldoutState, player4FoldoutState, player5FoldoutState, player6FoldoutState, player7FoldoutState, player8FoldoutState;
+	bool rallyFoldoutState, fallbackFoldoutState, general1FoldoutState, general2FoldoutState, general3FoldoutState, general4FoldoutState, support1FoldoutState, support2FoldoutState, support3FoldoutState, support4FoldoutState, playerFrontFoldoutState, playerBackFoldoutState, playerLeftFoldoutState, playerRightFoldoutState, player5FoldoutState, player6FoldoutState, player7FoldoutState, player8FoldoutState;
 
 	private void OnEnable()
 	{
@@ -30,14 +30,10 @@ public class ZoneManagerEditor : Editor
 		support2 = serializedObject.FindProperty("support2");
 		support3 = serializedObject.FindProperty("support3");
 		support4 = serializedObject.FindProperty("support4");
-		player1 = serializedObject.FindProperty("player1");
-		player2 = serializedObject.FindProperty("player2");
-		player3 = serializedObject.FindProperty("player3");
-		player4 = serializedObject.FindProperty("player4");
-		player5 = serializedObject.FindProperty("player5");
-		player6 = serializedObject.FindProperty("player6");
-		player7 = serializedObject.FindProperty("player7");
-		player8 = serializedObject.FindProperty("player8");
+		playerFront = serializedObject.FindProperty("playerFront");
+		playerBack = serializedObject.FindProperty("playerBack");
+		playerLeft = serializedObject.FindProperty("playerLeft");
+		playerRight = serializedObject.FindProperty("playerRight");
 	}
 	private void OnDisable() { SaveFoldoutStates(); }
 
@@ -53,14 +49,10 @@ public class ZoneManagerEditor : Editor
 		support2FoldoutState = EditorPrefs.GetBool("zoneManagerSupport2FoldoutState", false);
 		support3FoldoutState = EditorPrefs.GetBool("zoneManagerSupport3FoldoutState", false);
 		support4FoldoutState = EditorPrefs.GetBool("zoneManagerSupport4FoldoutState", false);
-		player1FoldoutState = EditorPrefs.GetBool("zoneManagerPlayer1FoldoutState", false);
-		player2FoldoutState = EditorPrefs.GetBool("zoneManagerPlayer2FoldoutState", false);
-		player3FoldoutState = EditorPrefs.GetBool("zoneManagerPlayer3FoldoutState", false);
-		player4FoldoutState = EditorPrefs.GetBool("zoneManagerPlayer4FoldoutState", false);
-		player5FoldoutState = EditorPrefs.GetBool("zoneManagerPlayer5FoldoutState", false);
-		player6FoldoutState = EditorPrefs.GetBool("zoneManagerPlayer6FoldoutState", false);
-		player7FoldoutState = EditorPrefs.GetBool("zoneManagerPlayer7FoldoutState", false);
-		player8FoldoutState = EditorPrefs.GetBool("zoneManagerPlayer8FoldoutState", false);
+		playerFrontFoldoutState = EditorPrefs.GetBool("zoneManagerPlayer1FoldoutState", false);
+		playerBackFoldoutState = EditorPrefs.GetBool("zoneManagerPlayer2FoldoutState", false);
+		playerLeftFoldoutState = EditorPrefs.GetBool("zoneManagerPlayer3FoldoutState", false);
+		playerRightFoldoutState = EditorPrefs.GetBool("zoneManagerPlayer4FoldoutState", false);
 	}
 	private void SaveFoldoutStates()
 	{
@@ -74,14 +66,10 @@ public class ZoneManagerEditor : Editor
 		EditorPrefs.SetBool("zoneManagerSupport2FoldoutState", support2FoldoutState);
 		EditorPrefs.SetBool("zoneManagerSupport3FoldoutState", support3FoldoutState);
 		EditorPrefs.SetBool("zoneManagerSupport4FoldoutState", support4FoldoutState);
-		EditorPrefs.SetBool("zoneManagerPlayer1FoldoutState", player1FoldoutState);
-		EditorPrefs.SetBool("zoneManagerPlayer2FoldoutState", player2FoldoutState);
-		EditorPrefs.SetBool("zoneManagerPlayer3FoldoutState", player3FoldoutState);
-		EditorPrefs.SetBool("zoneManagerPlayer4FoldoutState", player4FoldoutState);
-		EditorPrefs.SetBool("zoneManagerPlayer5FoldoutState", player5FoldoutState);
-		EditorPrefs.SetBool("zoneManagerPlayer6FoldoutState", player6FoldoutState);
-		EditorPrefs.SetBool("zoneManagerPlayer7FoldoutState", player7FoldoutState);
-		EditorPrefs.SetBool("zoneManagerPlayer8FoldoutState", player8FoldoutState);
+		EditorPrefs.SetBool("zoneManagerPlayer1FoldoutState", playerFrontFoldoutState);
+		EditorPrefs.SetBool("zoneManagerPlayer2FoldoutState", playerBackFoldoutState);
+		EditorPrefs.SetBool("zoneManagerPlayer3FoldoutState", playerLeftFoldoutState);
+		EditorPrefs.SetBool("zoneManagerPlayer4FoldoutState", playerRightFoldoutState);
 	}
 
 	public override void OnInspectorGUI()
@@ -221,10 +209,10 @@ public class ZoneManagerEditor : Editor
 		}
 		EditorGUILayout.EndFoldoutHeaderGroup();
 
-		shape = player1.FindPropertyRelative("shape");	active = player1.FindPropertyRelative("active");
-		size = player1.FindPropertyRelative("size");	position = player1.FindPropertyRelative("position");
-		player1FoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(player1FoldoutState, "Player1");
-		if (player1FoldoutState) {
+		shape = playerFront.FindPropertyRelative("shape");	active = playerFront.FindPropertyRelative("active");
+		size = playerFront.FindPropertyRelative("size");	position = playerFront.FindPropertyRelative("position");
+		playerFrontFoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(playerFrontFoldoutState, "PlayerFront");
+		if (playerFrontFoldoutState) {
 			GUILayout.BeginHorizontal(); 
 			EditorGUILayout.LabelField("Active", GUILayout.Width(60f)); EditorGUILayout.PropertyField(active, GUIContent.none, GUILayout.Width(32f)); 
 			EditorGUILayout.LabelField("Shape", GUILayout.Width(60f)); EditorGUILayout.PropertyField(shape, GUIContent.none, GUILayout.Width(80f)); 
@@ -234,10 +222,10 @@ public class ZoneManagerEditor : Editor
 		}
 		EditorGUILayout.EndFoldoutHeaderGroup();
 
-		shape = player2.FindPropertyRelative("shape");	active = player2.FindPropertyRelative("active");
-		size = player2.FindPropertyRelative("size");	position = player2.FindPropertyRelative("position");
-		player2FoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(player2FoldoutState, "Player2");
-		if (player2FoldoutState) {
+		shape = playerBack.FindPropertyRelative("shape");	active = playerBack.FindPropertyRelative("active");
+		size = playerBack.FindPropertyRelative("size");	position = playerBack.FindPropertyRelative("position");
+		playerBackFoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(playerBackFoldoutState, "PlayerBack");
+		if (playerBackFoldoutState) {
 			GUILayout.BeginHorizontal(); 
 			EditorGUILayout.LabelField("Active", GUILayout.Width(60f)); EditorGUILayout.PropertyField(active, GUIContent.none, GUILayout.Width(32f)); 
 			EditorGUILayout.LabelField("Shape", GUILayout.Width(60f)); EditorGUILayout.PropertyField(shape, GUIContent.none, GUILayout.Width(80f)); 
@@ -247,10 +235,10 @@ public class ZoneManagerEditor : Editor
 		}
 		EditorGUILayout.EndFoldoutHeaderGroup();
 
-		shape = player3.FindPropertyRelative("shape");	active = player3.FindPropertyRelative("active");
-		size = player3.FindPropertyRelative("size");	position = player3.FindPropertyRelative("position");
-		player3FoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(player3FoldoutState, "Player3");
-		if (player3FoldoutState) {
+		shape = playerLeft.FindPropertyRelative("shape");	active = playerLeft.FindPropertyRelative("active");
+		size = playerLeft.FindPropertyRelative("size");	position = playerLeft.FindPropertyRelative("position");
+		playerLeftFoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(playerLeftFoldoutState, "PlayerLeft");
+		if (playerLeftFoldoutState) {
 			GUILayout.BeginHorizontal(); 
 			EditorGUILayout.LabelField("Active", GUILayout.Width(60f)); EditorGUILayout.PropertyField(active, GUIContent.none, GUILayout.Width(32f)); 
 			EditorGUILayout.LabelField("Shape", GUILayout.Width(60f)); EditorGUILayout.PropertyField(shape, GUIContent.none, GUILayout.Width(80f)); 
@@ -260,62 +248,10 @@ public class ZoneManagerEditor : Editor
 		}
 		EditorGUILayout.EndFoldoutHeaderGroup();
 
-		shape = player4.FindPropertyRelative("shape");	active = player4.FindPropertyRelative("active");
-		size = player4.FindPropertyRelative("size");	position = player4.FindPropertyRelative("position");
-		player4FoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(player4FoldoutState, "Player4");
-		if (player4FoldoutState) {
-			GUILayout.BeginHorizontal(); 
-			EditorGUILayout.LabelField("Active", GUILayout.Width(60f)); EditorGUILayout.PropertyField(active, GUIContent.none, GUILayout.Width(32f)); 
-			EditorGUILayout.LabelField("Shape", GUILayout.Width(60f)); EditorGUILayout.PropertyField(shape, GUIContent.none, GUILayout.Width(80f)); 
-			GUILayout.EndHorizontal();
-			EditorGUILayout.PropertyField(size);
-			EditorGUILayout.PropertyField(position);
-		}
-		EditorGUILayout.EndFoldoutHeaderGroup();
-
-		shape = player5.FindPropertyRelative("shape");	active = player5.FindPropertyRelative("active");
-		size = player5.FindPropertyRelative("size");	position = player5.FindPropertyRelative("position");
-		player5FoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(player5FoldoutState, "Player5");
-		if (player5FoldoutState) {
-			GUILayout.BeginHorizontal(); 
-			EditorGUILayout.LabelField("Active", GUILayout.Width(60f)); EditorGUILayout.PropertyField(active, GUIContent.none, GUILayout.Width(32f)); 
-			EditorGUILayout.LabelField("Shape", GUILayout.Width(60f)); EditorGUILayout.PropertyField(shape, GUIContent.none, GUILayout.Width(80f)); 
-			GUILayout.EndHorizontal();
-			EditorGUILayout.PropertyField(size);
-			EditorGUILayout.PropertyField(position);
-		}
-		EditorGUILayout.EndFoldoutHeaderGroup();
-
-		shape = player6.FindPropertyRelative("shape");	active = player6.FindPropertyRelative("active");
-		size = player6.FindPropertyRelative("size");	position = player6.FindPropertyRelative("position");
-		player6FoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(player6FoldoutState, "Player6");
-		if (player6FoldoutState) {
-			GUILayout.BeginHorizontal(); 
-			EditorGUILayout.LabelField("Active", GUILayout.Width(60f)); EditorGUILayout.PropertyField(active, GUIContent.none, GUILayout.Width(32f)); 
-			EditorGUILayout.LabelField("Shape", GUILayout.Width(60f)); EditorGUILayout.PropertyField(shape, GUIContent.none, GUILayout.Width(80f)); 
-			GUILayout.EndHorizontal();
-			EditorGUILayout.PropertyField(size);
-			EditorGUILayout.PropertyField(position);
-		}
-		EditorGUILayout.EndFoldoutHeaderGroup();
-
-		shape = player7.FindPropertyRelative("shape");	active = player7.FindPropertyRelative("active");
-		size = player7.FindPropertyRelative("size");	position = player7.FindPropertyRelative("position");
-		player7FoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(player7FoldoutState, "Player7");
-		if (player7FoldoutState) {
-			GUILayout.BeginHorizontal(); 
-			EditorGUILayout.LabelField("Active", GUILayout.Width(60f)); EditorGUILayout.PropertyField(active, GUIContent.none, GUILayout.Width(32f)); 
-			EditorGUILayout.LabelField("Shape", GUILayout.Width(60f)); EditorGUILayout.PropertyField(shape, GUIContent.none, GUILayout.Width(80f)); 
-			GUILayout.EndHorizontal();
-			EditorGUILayout.PropertyField(size);
-			EditorGUILayout.PropertyField(position);
-		}
-		EditorGUILayout.EndFoldoutHeaderGroup();
-
-		shape = player8.FindPropertyRelative("shape");	active = player8.FindPropertyRelative("active");
-		size = player8.FindPropertyRelative("size");	position = player8.FindPropertyRelative("position");
-		player8FoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(player8FoldoutState, "Player8");
-		if (player8FoldoutState) {
+		shape = playerRight.FindPropertyRelative("shape");	active = playerRight.FindPropertyRelative("active");
+		size = playerRight.FindPropertyRelative("size");	position = playerRight.FindPropertyRelative("position");
+		playerRightFoldoutState = EditorGUILayout.BeginFoldoutHeaderGroup(playerRightFoldoutState, "PlayerRight");
+		if (playerRightFoldoutState) {
 			GUILayout.BeginHorizontal(); 
 			EditorGUILayout.LabelField("Active", GUILayout.Width(60f)); EditorGUILayout.PropertyField(active, GUIContent.none, GUILayout.Width(32f)); 
 			EditorGUILayout.LabelField("Shape", GUILayout.Width(60f)); EditorGUILayout.PropertyField(shape, GUIContent.none, GUILayout.Width(80f)); 
@@ -383,45 +319,25 @@ public class ZoneManagerEditor : Editor
 			position.vector2Value = Handles.FreeMoveHandle(position.vector2Value, 0.5f, Vector3.zero, Handles.DotHandleCap);
 			Handles.Label(position.vector2Value + labelOffset, "S4");
 		}
-		if (player1FoldoutState && player1.FindPropertyRelative("active").boolValue) {
-			position = player1.FindPropertyRelative("position");
+		if (playerFrontFoldoutState && playerFront.FindPropertyRelative("active").boolValue) {
+			position = playerFront.FindPropertyRelative("position");
 			position.vector2Value = Handles.FreeMoveHandle(position.vector2Value, 0.5f, Vector3.zero, Handles.DotHandleCap);
 			Handles.Label(position.vector2Value + labelOffset, "P1");
 		}
-		if (player2FoldoutState && player2.FindPropertyRelative("active").boolValue) {
-			position = player2.FindPropertyRelative("position");
+		if (playerBackFoldoutState && playerBack.FindPropertyRelative("active").boolValue) {
+			position = playerBack.FindPropertyRelative("position");
 			position.vector2Value = Handles.FreeMoveHandle(position.vector2Value, 0.5f, Vector3.zero, Handles.DotHandleCap);
 			Handles.Label(position.vector2Value + labelOffset, "P2");
 		}
-		if (player3FoldoutState && player3.FindPropertyRelative("active").boolValue) {
-			position = player3.FindPropertyRelative("position");
+		if (playerLeftFoldoutState && playerLeft.FindPropertyRelative("active").boolValue) {
+			position = playerLeft.FindPropertyRelative("position");
 			position.vector2Value = Handles.FreeMoveHandle(position.vector2Value, 0.5f, Vector3.zero, Handles.DotHandleCap);
 			Handles.Label(position.vector2Value + labelOffset, "P3");
 		}
-		if (player4FoldoutState && player4.FindPropertyRelative("active").boolValue) {
-			position = player4.FindPropertyRelative("position");
+		if (playerRightFoldoutState && playerRight.FindPropertyRelative("active").boolValue) {
+			position = playerRight.FindPropertyRelative("position");
 			position.vector2Value = Handles.FreeMoveHandle(position.vector2Value, 0.5f, Vector3.zero, Handles.DotHandleCap);
 			Handles.Label(position.vector2Value + labelOffset, "P4");
-		}
-		if (player5FoldoutState && player5.FindPropertyRelative("active").boolValue) {
-			position = player5.FindPropertyRelative("position");
-			position.vector2Value = Handles.FreeMoveHandle(position.vector2Value, 0.5f, Vector3.zero, Handles.DotHandleCap);
-			Handles.Label(position.vector2Value + labelOffset, "P5");
-		}
-		if (player6FoldoutState && player6.FindPropertyRelative("active").boolValue) {
-			position = player6.FindPropertyRelative("position");
-			position.vector2Value = Handles.FreeMoveHandle(position.vector2Value, 0.5f, Vector3.zero, Handles.DotHandleCap);
-			Handles.Label(position.vector2Value + labelOffset, "P6");
-		}
-		if (player7FoldoutState && player7.FindPropertyRelative("active").boolValue) {
-			position = player7.FindPropertyRelative("position");
-			position.vector2Value = Handles.FreeMoveHandle(position.vector2Value, 0.5f, Vector3.zero, Handles.DotHandleCap);
-			Handles.Label(position.vector2Value + labelOffset, "P7");
-		}
-		if (player8FoldoutState && player8.FindPropertyRelative("active").boolValue) {
-			position = player8.FindPropertyRelative("position");
-			position.vector2Value = Handles.FreeMoveHandle(position.vector2Value, 0.5f, Vector3.zero, Handles.DotHandleCap);
-			Handles.Label(position.vector2Value + labelOffset, "P8");
 		}
 		serializedObject.ApplyModifiedProperties();
 	}
