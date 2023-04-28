@@ -13,20 +13,20 @@ public class OffsetPursuit : MonoBehaviour
 
     void Awake() { agent = GetComponent<Agent>(); }
 
-    public Vector3 GetSteering(Agent target, Vector3 offset)
+    public Vector2 GetSteering(Agent target, Vector2 offset)
     {
-        Vector3 targetPos;
+        Vector2 targetPos;
         return GetSteering(target, offset, out targetPos);
     }
 
-    public Vector3 GetSteering(Agent target, Vector3 offset, out Vector3 targetPos)
+    public Vector2 GetSteering(Agent target, Vector2 offset, out Vector2 targetPos)
     {
-        Vector3 worldOffsetPos = target.Position + target.transform.TransformDirection(offset);
+        Vector2 worldOffsetPos = target.Position + (Vector2)target.transform.TransformDirection(offset);
 
         //Debug.DrawLine(transform.position, worldOffsetPos);
 
         /* Calculate the distance to the offset point */
-        Vector3 displacement = worldOffsetPos - transform.position;
+        Vector3 displacement = worldOffsetPos - (Vector2)transform.position;
         float distance = displacement.magnitude;
 
         /* Get the character's speed */

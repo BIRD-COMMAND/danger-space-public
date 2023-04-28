@@ -151,8 +151,6 @@ public class LinePath
     {
         Vector3 vw = w - v;
 
-        vw = agent.ConvertVector(vw);
-
         float l2 = Vector3.Dot(vw, vw);
 
         if (l2 == 0) { return 0; }

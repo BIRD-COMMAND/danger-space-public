@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 8112232646799529267}
   - component: {fileID: 3307679064248748474}
   - component: {fileID: 8335773483258427265}
+  - component: {fileID: 6722098431486721267}
+  - component: {fileID: 7463035414688234612}
   m_Layer: 9
   m_Name: Asteroid_2
   m_TagString: Untagged
@@ -249,6 +251,72 @@ SpringJoint2D:
   m_Distance: 0.1
   m_DampingRatio: 0
   m_Frequency: 0.1
+--- !u!58 &6722098431486721267
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58019498626906273}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 8
+--- !u!114 &7463035414688234612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58019498626906273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
+  body: {fileID: 0}
+  bounds: {fileID: 6722098431486721267}
+  shapes: []
+  target: {fileID: 0}
+  destroyEffectPrefab: {fileID: 0}
+  wreckagePrefab: {fileID: 0}
+  maxHealth: 10
+  health: 10
+  pointValue: 100
+  collisionDamageToPlayer: 2
+  invulnerable: 0
+  maxVelocity: 3.5
+  maxAcceleration: 10
+  turnSpeed: 20
+  smoothing: 1
+  numSamplesForSmoothing: 5
+  isCore: 0
 --- !u!1 &216502996287733046
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +332,8 @@ GameObject:
   - component: {fileID: 4992523637222181213}
   - component: {fileID: 9096381668110995102}
   - component: {fileID: 4470036391831644922}
+  - component: {fileID: 646035447729616263}
+  - component: {fileID: 5139206681582535442}
   m_Layer: 9
   m_Name: Core
   m_TagString: Untagged
@@ -498,6 +568,72 @@ SpringJoint2D:
   m_Distance: 0.1
   m_DampingRatio: 0
   m_Frequency: 0.1
+--- !u!58 &646035447729616263
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216502996287733046}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 18
+--- !u!114 &5139206681582535442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216502996287733046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
+  body: {fileID: 0}
+  bounds: {fileID: 646035447729616263}
+  shapes: []
+  target: {fileID: 0}
+  destroyEffectPrefab: {fileID: 0}
+  wreckagePrefab: {fileID: 0}
+  maxHealth: 10
+  health: 10
+  pointValue: 100
+  collisionDamageToPlayer: 2
+  invulnerable: 0
+  maxVelocity: 3.5
+  maxAcceleration: 10
+  turnSpeed: 20
+  smoothing: 1
+  numSamplesForSmoothing: 5
+  isCore: 1
 --- !u!1 &526992918459115922
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +644,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1231852892462029260}
   - component: {fileID: 9056933665743839306}
-  m_Layer: 0
+  - component: {fileID: 4415285533684612313}
+  - component: {fileID: 764780330647872086}
+  m_Layer: 9
   m_Name: AsteroidCluster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,7 +661,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 526992918459115922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 51.8, y: -9.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -535,7 +673,7 @@ Transform:
   - {fileID: 3108510829664143133}
   - {fileID: 2738389493919774929}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &9056933665743839306
 Rigidbody2D:
@@ -564,6 +702,72 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &4415285533684612313
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526992918459115922}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 50
+--- !u!114 &764780330647872086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526992918459115922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313ae81f8ee703c4fa0c8872356de16e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
+  body: {fileID: 0}
+  bounds: {fileID: 4415285533684612313}
+  shapes: []
+  target: {fileID: 0}
+  destroyEffectPrefab: {fileID: 0}
+  wreckagePrefab: {fileID: 0}
+  maxHealth: 10
+  health: 10
+  pointValue: 100
+  collisionDamageToPlayer: 2
+  invulnerable: 1
+  maxVelocity: 3.5
+  maxAcceleration: 10
+  turnSpeed: 20
+  smoothing: 1
+  numSamplesForSmoothing: 5
+  core: {fileID: 5139206681582535442}
 --- !u!1 &1414496293185534948
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,6 +783,8 @@ GameObject:
   - component: {fileID: 7179094988416146829}
   - component: {fileID: 7610865116193599533}
   - component: {fileID: 6064548715454752816}
+  - component: {fileID: 6983560730106000569}
+  - component: {fileID: 8386476340717063382}
   m_Layer: 9
   m_Name: Asteroid_5
   m_TagString: Untagged
@@ -813,6 +1019,72 @@ SpringJoint2D:
   m_Distance: 0.1
   m_DampingRatio: 0
   m_Frequency: 0.1
+--- !u!58 &6983560730106000569
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414496293185534948}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 6
+--- !u!114 &8386476340717063382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414496293185534948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
+  body: {fileID: 0}
+  bounds: {fileID: 6983560730106000569}
+  shapes: []
+  target: {fileID: 0}
+  destroyEffectPrefab: {fileID: 0}
+  wreckagePrefab: {fileID: 0}
+  maxHealth: 10
+  health: 10
+  pointValue: 100
+  collisionDamageToPlayer: 2
+  invulnerable: 0
+  maxVelocity: 3.5
+  maxAcceleration: 10
+  turnSpeed: 20
+  smoothing: 1
+  numSamplesForSmoothing: 5
+  isCore: 0
 --- !u!1 &1815712366767222401
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +1100,8 @@ GameObject:
   - component: {fileID: 5054438435733929528}
   - component: {fileID: 1291233593399693367}
   - component: {fileID: 6545044753358106695}
+  - component: {fileID: 4189101952714732297}
+  - component: {fileID: 3312800505301068351}
   m_Layer: 9
   m_Name: Asteroid_1
   m_TagString: Untagged
@@ -1062,6 +1336,72 @@ SpringJoint2D:
   m_Distance: 0.1
   m_DampingRatio: 0
   m_Frequency: 0.1
+--- !u!58 &4189101952714732297
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815712366767222401}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 12
+--- !u!114 &3312800505301068351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815712366767222401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
+  body: {fileID: 0}
+  bounds: {fileID: 4189101952714732297}
+  shapes: []
+  target: {fileID: 0}
+  destroyEffectPrefab: {fileID: 0}
+  wreckagePrefab: {fileID: 0}
+  maxHealth: 10
+  health: 10
+  pointValue: 100
+  collisionDamageToPlayer: 2
+  invulnerable: 0
+  maxVelocity: 3.5
+  maxAcceleration: 10
+  turnSpeed: 20
+  smoothing: 1
+  numSamplesForSmoothing: 5
+  isCore: 0
 --- !u!1 &4614308432703689765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1077,6 +1417,8 @@ GameObject:
   - component: {fileID: 6806755053526909476}
   - component: {fileID: 3372515763109263327}
   - component: {fileID: 815236897615817132}
+  - component: {fileID: 2808210666121898736}
+  - component: {fileID: 2302539600057358663}
   m_Layer: 9
   m_Name: Asteroid_3
   m_TagString: Untagged
@@ -1311,6 +1653,72 @@ SpringJoint2D:
   m_Distance: 0.1
   m_DampingRatio: 0
   m_Frequency: 0.1
+--- !u!58 &2808210666121898736
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614308432703689765}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 8
+--- !u!114 &2302539600057358663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614308432703689765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
+  body: {fileID: 0}
+  bounds: {fileID: 2808210666121898736}
+  shapes: []
+  target: {fileID: 0}
+  destroyEffectPrefab: {fileID: 0}
+  wreckagePrefab: {fileID: 0}
+  maxHealth: 10
+  health: 10
+  pointValue: 100
+  collisionDamageToPlayer: 2
+  invulnerable: 0
+  maxVelocity: 3.5
+  maxAcceleration: 10
+  turnSpeed: 20
+  smoothing: 1
+  numSamplesForSmoothing: 5
+  isCore: 0
 --- !u!1 &5018475746944557907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1326,6 +1734,8 @@ GameObject:
   - component: {fileID: 8143770033656739055}
   - component: {fileID: 2082254016464782684}
   - component: {fileID: 8933062985888079664}
+  - component: {fileID: 5858512789862828283}
+  - component: {fileID: 6243709902838687021}
   m_Layer: 9
   m_Name: Asteroid_6
   m_TagString: Untagged
@@ -1560,6 +1970,72 @@ SpringJoint2D:
   m_Distance: 0.1
   m_DampingRatio: 0
   m_Frequency: 0.1
+--- !u!58 &5858512789862828283
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5018475746944557907}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 4
+--- !u!114 &6243709902838687021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5018475746944557907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
+  body: {fileID: 0}
+  bounds: {fileID: 5858512789862828283}
+  shapes: []
+  target: {fileID: 0}
+  destroyEffectPrefab: {fileID: 0}
+  wreckagePrefab: {fileID: 0}
+  maxHealth: 10
+  health: 10
+  pointValue: 100
+  collisionDamageToPlayer: 2
+  invulnerable: 0
+  maxVelocity: 3.5
+  maxAcceleration: 10
+  turnSpeed: 20
+  smoothing: 1
+  numSamplesForSmoothing: 5
+  isCore: 0
 --- !u!1 &5996518758204200166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,6 +2051,8 @@ GameObject:
   - component: {fileID: 3639564864506026572}
   - component: {fileID: 1022835354265331002}
   - component: {fileID: 5697629379059231800}
+  - component: {fileID: 9083060256319166774}
+  - component: {fileID: 7929255681195800288}
   m_Layer: 9
   m_Name: Asteroid_4
   m_TagString: Untagged
@@ -1809,3 +2287,69 @@ SpringJoint2D:
   m_Distance: 0.1
   m_DampingRatio: 0
   m_Frequency: 0.1
+--- !u!58 &9083060256319166774
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5996518758204200166}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 6
+--- !u!114 &7929255681195800288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5996518758204200166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
+  body: {fileID: 0}
+  bounds: {fileID: 9083060256319166774}
+  shapes: []
+  target: {fileID: 0}
+  destroyEffectPrefab: {fileID: 0}
+  wreckagePrefab: {fileID: 0}
+  maxHealth: 10
+  health: 10
+  pointValue: 100
+  collisionDamageToPlayer: 2
+  invulnerable: 0
+  maxVelocity: 3.5
+  maxAcceleration: 10
+  turnSpeed: 20
+  smoothing: 1
+  numSamplesForSmoothing: 5
+  isCore: 0

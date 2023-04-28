@@ -67,12 +67,12 @@ public class ZoneManager : MonoBehaviour
 	private void Update()
 	{
 		// keep player zones relative to the player
-		if (PlayerController.player) {
-			rotation = Mathf.Deg2Rad * PlayerController.player.Rotation;
-			playerFront.position = PlayerController.player.transform.UnitsForward(40f);		playerFront.rotation = rotation;
-			playerBack.position =  PlayerController.player.transform.UnitsBackward(40f);	playerBack.rotation =  rotation;
-			playerLeft.position =  PlayerController.player.transform.UnitsLeft(40f);		playerLeft.rotation =  rotation;
-			playerRight.position = PlayerController.player.transform.UnitsRight(40f);		playerRight.rotation = rotation;
+		if (GameManager.Player) {
+			rotation = Mathf.Deg2Rad *	GameManager.Player.Rotation;
+			playerFront.position =		GameManager.Player.transform.UnitsForward(40f);		playerFront.rotation = rotation;
+			playerBack.position =		GameManager.Player.transform.UnitsBackward(40f);	playerBack.rotation =  rotation;
+			playerLeft.position =		GameManager.Player.transform.UnitsLeft(40f);		playerLeft.rotation =  rotation;
+			playerRight.position =		GameManager.Player.transform.UnitsRight(40f);		playerRight.rotation = rotation;
 		}
 
 	}

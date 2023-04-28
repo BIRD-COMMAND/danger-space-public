@@ -7,7 +7,6 @@ public class PoolableTrail : Poolable
 {
 
     [HideInInspector] public TrailRenderer trail;
-	private float detachTime = 0f;
 
 	private void Awake() { trail = GetComponent<TrailRenderer>(); }
 
@@ -29,16 +28,10 @@ public class PoolableTrail : Poolable
 		return this;
 	}
 
-	public void Detach() {
-		transform.SetParent(pool.transform);
-		detachTime = Time.time;
-	}
+	public void Detach() { transform.SetParent(pool.transform); }
 
-	private void FixedUpdate()
-	{
-		if (detachTime > 0f && transform.parent == pool.transform) {
-			if (Time.time - detachTime > trail.time) { detachTime = 0f; Return(); }
-		}
+	private void FixedUpdate() {
+		if (transform.parent == pool.transform && trail.positionCount < 2) { Return(); }
 	}
 
 }

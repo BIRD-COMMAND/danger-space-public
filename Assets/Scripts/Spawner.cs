@@ -26,13 +26,10 @@ public class Spawner : MonoBehaviour
 		}
 	}
 
-	//private void OnDrawGizmos()
-	//{
-	//	if (useTargetPositionOverride) {
-	//		Shapes.Draw.UseDashes = true; Shapes.Draw.DashStyle = Shapes.DashStyle.defaultDashStyle;
-	//		Shapes.Draw.DashSizeUniform *= 8f; Shapes.Draw.Thickness = 0.04f;
-	//		Shapes.Draw.Line(transform.position, targetPositionOverride);
-	//	}
-	//}
+	private void OnDrawGizmos()
+	{
+		// draw spawn point indicator ring
+		Shapes.Draw.Thickness = 0.3f; Shapes.Draw.Ring(transform.position, 3f, Color.red);
+	}
 
 }

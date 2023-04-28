@@ -78,20 +78,20 @@ public class EnemyAssault : Agent
 		
 		if (HealthPercent < fleeThreshold) { path.Clear(); state = State.Self_Flee; Self_Flee(); return; }
 
-		target = PlayerController.player;
+		target = GameManager.Player;
 		if (!target) { state = State.Self_Idle; return; }
 
-		Vector3 accel = Vector3.zero;
+		Vector2 accel = Vector2.zero;
 		if (path.Empty) { path = new LinePath(transform.position, target.Position); }
 		else { path[1] = target.Position; }
 		accel += GetInRange(target, 40f); // maintain range of 40
 		accel += AvoidObstacles();
 		accel += AvoidCollisionsWithAllies();
 		Steer(accel);		
-		if (Vector3.Distance(Position, target.Position) > 50f) { FaceHeading(); }
+		if (Vector2.Distance(Position, target.Position) > 50f) { FaceHeading(); }
 		else {  FaceTarget(); } // face target if within 50
 
-		if (IsOnScreen && IsArrivingInRange(target, 40f) && TargetInSight(target)) { GetComponent<Weapon>().Fire(this); }
+		if (IsOnScreen && TargetInSight(target)) { GetComponent<Weapon>().Fire(this); }
 
 	}
 
@@ -105,16 +105,5 @@ public class EnemyAssault : Agent
 	private void Self_Idle() {
 		Steer(Wander2()); FaceHeading();
 	}
-
-
-	private void OnCollisionEnter2D(Collision2D collision)
-	{
-		if (collision.transform.FindComponent(out PlayerController player)) {
-			player.Damage(collisionDamageToPlayer);
-			OnWillBeDestroyed();
-			Destroy(gameObject);
-		}
-	}
-
 
 }

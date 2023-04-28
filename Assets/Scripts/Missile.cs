@@ -64,10 +64,10 @@ public class Missile : Agent
 	private void Enemy_Pursue()
 	{
 
-		target = PlayerController.player;
+		target = GameManager.Player;
 		if (!target) { return; }
 
-		Vector3 accel = Vector3.zero;
+		Vector2 accel = Vector2.zero;
 		accel += Pursue(target);
 		accel += SeparationAll();
 		accel += AvoidObstacles();
@@ -76,12 +76,11 @@ public class Missile : Agent
 
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision)
+	protected override void OnCollisionEnter2D(Collision2D collision)
 	{
+		base.OnCollisionEnter2D(collision);
 		if (collision.ApproximateForce().magnitude < 1f) { return; }
-		if (collision.transform.FindComponent(out PlayerController player)) { player.Damage(collisionDamageToPlayer); }
-		OnWillBeDestroyed();
-		Destroy(gameObject);
+		OnWillBeDestroyed(); Destroy(gameObject);
 	}
 
 }

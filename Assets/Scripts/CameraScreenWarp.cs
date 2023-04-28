@@ -40,8 +40,8 @@ public class CameraScreenWarp : MonoBehaviour
 	private void Update()
 	{
 
-		if (!PlayerController.player) { return; }
-		player = PlayerController.player.gameObject;
+		if (!GameManager.Player) { return; }
+		player = GameManager.Player.gameObject;
 
 		for (int i = 0; i < dummies.Length; i++) {
 			

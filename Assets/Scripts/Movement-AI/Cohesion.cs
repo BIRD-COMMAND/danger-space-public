@@ -13,9 +13,9 @@ public class Cohesion : MonoBehaviour
 
     void Awake() { agent = GetComponent<Agent>(); facingCosineVal = Mathf.Cos(facingCosine * Mathf.Deg2Rad); }
 
-    public Vector3 GetSteering(ICollection<Agent> targets)
+    public Vector2 GetSteering(ICollection<Agent> targets)
     {
-        Vector3 centerOfMass = Vector3.zero;
+        Vector2 centerOfMass = Vector2.zero;
         int count = 0;
 
         /* Sums up everyone's position who is close enough and in front of the character */
@@ -30,7 +30,7 @@ public class Cohesion : MonoBehaviour
 
         if (count == 0)
         {
-            return Vector3.zero;
+            return Vector2.zero;
         }
         else
         {

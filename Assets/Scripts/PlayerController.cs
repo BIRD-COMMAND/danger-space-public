@@ -7,19 +7,15 @@ using Unity.VisualScripting;
 
 public class PlayerController : Agent
 {
+	[Header("Player")]
+	[SerializeField] private Weapon baseWeapon;
+	[SerializeField] private float maxSpeed = 40f;
+	[SerializeField] private float maxSpeedBrakeFactor = 0.025f;
+	[SerializeField] private float maxThrust = 10000f;
+	[SerializeField] private float brakeFactor = 0.1f;
+	[SerializeField] private float turnFactor = 0.3f;
 
-	public static PlayerController player;
-
-	public bool debugVisualizeAim = false;
-
-	public GameObject glow;
-
-	public Weapon baseWeapon;
-	public float maxSpeed = 20f;
-	public float maxSpeedBrakeFactor = 0.025f;
-	public float maxThrust = 10000f;
-	public float brakeFactor = 0.1f;
-	public float turnFactor = 0.2f;
+	[SerializeField] private bool debugVisualizeAim = false;
 
 	private Vector2 MoveVector =>
 		new Vector2(
@@ -30,13 +26,6 @@ public class PlayerController : Agent
 	private bool KeyA => Input.GetKey(KeyCode.A);
 	private bool KeyS => Input.GetKey(KeyCode.S);
 	private bool KeyD => Input.GetKey(KeyCode.D);
-
-	protected override void Awake() {
-		base.Awake();
-		player = this; 
-		role = AgentType.Player;
-		baseWeapon = GetComponent<Weapon>();
-	}
 
 	// Start is called before the first frame update
 	private void Update()
@@ -73,17 +62,16 @@ public class PlayerController : Agent
 		Vector2 force = MoveVector * maxThrust;
 		body.AddForce(force);
 
-		// limit max speed
+		// limit max speed - this approach allows the player to exceed the max speed, but the braking intensifies the faster the player goes
 		if (body.velocity.magnitude > maxSpeed) { body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, maxSpeedBrakeFactor); }
 
-		// reduce velocity if key is not held down
+		// reduce vertical velocity if relevant key is not held down
 		if (!KeyW && body.velocity.y > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), brakeFactor); }
 		if (!KeyS && body.velocity.y < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), brakeFactor); }
 
-		// reduce velocity if key is not held down
+		// reduce horizontal velocity if relevant key is not held down
 		if (!KeyD && body.velocity.x > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 		if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 	}
-
 
 }

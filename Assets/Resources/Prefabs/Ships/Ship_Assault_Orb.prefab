@@ -264,26 +264,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51600c02f7891a44eac76e3b189508b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  role: 1
-  state: 0
+  faction: 64
+  body: {fileID: 0}
+  bounds: {fileID: 5056582451939254573}
+  shapes: []
   target: {fileID: 0}
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   maxHealth: 10
   health: 10
+  pointValue: 100
+  damageOnCollision: 2
   invulnerable: 0
-  deathEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
-  shapes: []
-  path:
-    nodes: []
-  bounds: {fileID: 5056582451939254573}
-  radius: 1
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
-  targetRadius: 0.005
-  slowRadius: 1
-  timeToTarget: 0.1
   smoothing: 1
   numSamplesForSmoothing: 5
+  state: 0
+  path:
+    nodes: []
+  arriveTargetRadius: 0.005
+  arriveSlowRadius: 1
+  arriveTimeToTarget: 0.1
   maxPredictionTime: 1
   pursuitSlowRadius: 10
   stopRadius: 0.005
@@ -291,13 +294,11 @@ MonoBehaviour:
   pathDirection: 1
   obstacleAvoidDistance: 0.5
   obstacleAvoidanceMultiplier: 4
+  obstacleCheckDistanceMultiplier: 1
+  debugObstacleAvoidance: 0
   mainWhiskerLen: 1.25
   sideWhiskerLen: 0.701
   sideWhiskerAngle: 45
-  obstacleDetection: 1
-  castMask:
-    serializedVersion: 2
-    m_Bits: 243
   distanceBetween: 0
   collisionDetectionRadiusMultiplier: 4
   collisionAvoidanceMultiplier: 1.5
@@ -327,7 +328,6 @@ GameObject:
   - component: {fileID: 1474359588159489070}
   - component: {fileID: 7320845729875199702}
   - component: {fileID: 5938515744999144040}
-  - component: {fileID: 409514110585702774}
   m_Layer: 7
   m_Name: Glow
   m_TagString: Untagged
@@ -455,20 +455,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &409514110585702774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7319166930321926902}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1064637f6c0e85b45bcd83aea0341e5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: 0
-  speed: 0.5
 --- !u!1 &8148243595387436743
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +467,6 @@ GameObject:
   - component: {fileID: 7629687588778375406}
   - component: {fileID: 3036351161789899201}
   - component: {fileID: 8162906812970957907}
-  - component: {fileID: 1171351013043587225}
   m_Layer: 7
   m_Name: Outside
   m_TagString: Untagged
@@ -609,20 +594,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1171351013043587225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8148243595387436743}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1064637f6c0e85b45bcd83aea0341e5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: 0
-  speed: 0.5
 --- !u!1 &8188386164210189543
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +606,6 @@ GameObject:
   - component: {fileID: 4471585974216911636}
   - component: {fileID: 7286690443578764344}
   - component: {fileID: 5865446110637082937}
-  - component: {fileID: 4921232507942841955}
   m_Layer: 7
   m_Name: Middle
   m_TagString: Untagged
@@ -763,20 +733,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4921232507942841955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8188386164210189543}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1064637f6c0e85b45bcd83aea0341e5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: 0.06
-  speed: 0.5
 --- !u!1 &9147945292910541243
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,7 +745,6 @@ GameObject:
   - component: {fileID: 3123382182739939581}
   - component: {fileID: 3924739215364104702}
   - component: {fileID: 349880603162844048}
-  - component: {fileID: 7394374340122480358}
   m_Layer: 7
   m_Name: Center
   m_TagString: Untagged
@@ -917,17 +872,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7394374340122480358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9147945292910541243}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1064637f6c0e85b45bcd83aea0341e5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: 0.12
-  speed: 0.5

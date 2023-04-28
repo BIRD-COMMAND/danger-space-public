@@ -508,40 +508,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da6a380d82ae10479750a899866e3a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  role: 1
-  state: 34
+  faction: 64
+  body: {fileID: 0}
+  bounds: {fileID: 4026743688544109525}
+  shapes: []
   target: {fileID: 0}
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   maxHealth: 10
   health: 10
+  pointValue: 75
+  collisionDamageToPlayer: 2
   invulnerable: 0
-  deathEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
-  shapes: []
-  path:
-    nodes: []
-  bounds: {fileID: 4026743688544109525}
-  radius: 1.6
   maxVelocity: 80
   maxAcceleration: 300
   turnSpeed: 360
-  targetRadius: 0.05
-  slowRadius: 1
-  timeToTarget: 0.1
   smoothing: 1
   numSamplesForSmoothing: 5
+  state: 34
+  path:
+    nodes: []
+  arriveTargetRadius: 0.005
+  arriveSlowRadius: 1
+  arriveTimeToTarget: 0.1
   maxPredictionTime: 1
   pursuitSlowRadius: 10
   stopRadius: 0.05
   pathOffset: 0.71
   pathDirection: 1
-  obstacleAvoidDistance: 5
+  obstacleAvoidDistance: 20
   obstacleAvoidanceMultiplier: 4
+  obstacleCheckDistanceMultiplier: 2
+  debugObstacleAvoidance: 1
   mainWhiskerLen: 12.5
   sideWhiskerLen: 7.01
   sideWhiskerAngle: 45
-  obstacleDetection: 1
-  castMask:
-    serializedVersion: 2
-    m_Bits: 243
   distanceBetween: 3
   collisionDetectionRadiusMultiplier: 4
   collisionAvoidanceMultiplier: 1.5

@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A generic Object Pool for Poolables
+/// </summary>
 public class ObjectPool : MonoBehaviour
 {
 
 	public GameObject prefab;
-	public Queue<Poolable> queue = new Queue<Poolable>();
+	[HideInInspector] public Queue<Poolable> queue = new Queue<Poolable>();
 
 	public void Initialize(int initialQuantity = 1)
 	{

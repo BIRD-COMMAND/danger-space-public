@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class for all objects that can be pooled
+/// </summary>
 public abstract class Poolable : MonoBehaviour
 {
 
