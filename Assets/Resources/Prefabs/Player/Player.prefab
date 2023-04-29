@@ -623,7 +623,7 @@ MonoBehaviour:
   wreckagePrefab: {fileID: 0}
   maxHealth: 10
   health: 10
-  pointValue: -1000
+  pointValue: -100
   damageOnCollision: 2
   invulnerable: 0
   maxVelocity: 3.5
@@ -660,9 +660,6 @@ MonoBehaviour:
   wanderOffset: 1.5
   wanderRadius: 4
   wanderRate: 0.4
-  wander2Radius: 1.2
-  wander2Distance: 2
-  wander2Jitter: 40
   sepMaxAcceleration: 25
   maxSepDist: 1
   baseWeapon: {fileID: 8521137323921410363}

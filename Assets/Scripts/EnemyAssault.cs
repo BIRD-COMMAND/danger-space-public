@@ -4,106 +4,71 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 
+/// <summary>
+/// This Unit has 2 states: Enemy_Pursue and Self_Flee.<br/>
+/// While pursuing it attempts to maintain a certain distance and fires at the player as much as possible.<br/>
+/// If its HealthPercent drops below the FleeThreshold or it has no target it wanders, avoiding all engagements.
+/// </summary>
 public class EnemyAssault : Agent
 {
 
 	/// <summary>
 	/// Agent will flee when health percentage is below this value
 	/// </summary>
-	[Header("Enemy Assault"), Range(0f, 1f)]
+	[Header("Enemy Assault"), Range(0f, 1f)]	
 	public float fleeThreshold = 0.5f;
+
+	/// <summary>
+	/// The agent can only fire its weapon if this is set to true
+	/// </summary>
+	public bool fireWeapon = true;
+
+	private void Start() { 
+		path = new LinePath(Position, Vector3.zero); 
+	}
 
 	private void FixedUpdate()
 	{
-
-		if ((state == State.Self_Idle || state == State.Self_Flee) && HealthPercent > fleeThreshold) {
-			path.Clear(); state = State.Enemy_Pursue;
-		}
 		
-		//EvaluateState:
+		target = GameManager.Player;
+		if (!target) { Self_Flee(); return; }
+
+		state = HealthPercent > fleeThreshold ? State.Enemy_Pursue : State.Self_Flee;
+
 		switch (state) {
-			case State.Self_Idle:									Self_Idle();	break;
-			case State.Self_Drift:													break;
-			case State.Self_Patrol:													break;
-			case State.Self_Flee:									Self_Flee();	break;
-			case State.Self_FleeBattle:												break;
-			case State.Self_FleeSeekAllies:											break;
-			case State.Leader_Seek:													break;
-			case State.Leader_SeekArrive:											break;
-			case State.Leader_Pursue:												break;
-			case State.Leader_PursueArrive:											break;
-			case State.Leader_Flee:													break;
-			case State.Leader_Attack:												break;
-			case State.Leader_Defend:												break;
-			case State.Leader_Repair:												break;
-			case State.Leader_Buff:													break;
-			case State.Formation_Seek:												break;
-			case State.Formation_SeekArrive:										break;
-			case State.Formation_Pursue:											break;
-			case State.Formation_PursueArrive:										break;
-			case State.Formation_Flee:												break;
-			case State.Formation_Attack:											break;
-			case State.Formation_Defend:											break;
-			case State.Formation_Repair:											break;
-			case State.Formation_Buff:												break;
-			case State.Formation_Create:											break;
-			case State.Formation_Destroy:											break;
-			case State.Formation_Enter:												break;
-			case State.Formation_Fly:												break;
-			case State.Formation_AttackFrom:										break;
-			case State.Formation_DefendFrom:										break;
-			case State.Formation_RepairFrom:										break;
-			case State.Formation_BuffFrom:											break;
-			case State.Enemy_Seek:													break;
-			case State.Enemy_SeekArrive:											break;
-			case State.Enemy_Pursue:								Enemy_Pursue(); break;
-			case State.Enemy_PursueArrive:											break;
-			case State.Enemy_Flee:													break;
-			case State.Enemy_Attack:												break;
-			case State.Enemy_Defend:												break;
-			case State.Enemy_Repair:												break;
-			case State.Enemy_Buff:													break;
-			case State.Zone_ApproachRally:											break;
-			case State.Zone_ApproachFallback:										break;
-			case State.Zone_Approach1:												break;
-			case State.Zone_Approach2:												break;
-			case State.Zone_Approach3:												break;
-			case State.Zone_Approach4:												break;
+			case State.Self_Flee:		Self_Flee();		break;
+			case State.Enemy_Pursue:	Enemy_Pursue();		break;
 			default:break;
 		}
+
 	}
 
 	private void Enemy_Pursue()
 	{
 		
-		if (HealthPercent < fleeThreshold) { path.Clear(); state = State.Self_Flee; Self_Flee(); return; }
+		// update path with target position
+		path[0] = Position; path[1] = target.Position;
 
-		target = GameManager.Player;
-		if (!target) { state = State.Self_Idle; return; }
-
+		// maintain range of 40, avoid obstacles, avoid collisions with allies
 		Vector2 accel = Vector2.zero;
-		if (path.Empty) { path = new LinePath(transform.position, target.Position); }
-		else { path[1] = target.Position; }
-		accel += GetInRange(target, 40f); // maintain range of 40
+		accel += GetInRange(target, 40f);
 		accel += AvoidObstacles();
 		accel += AvoidCollisionsWithAllies();
-		Steer(accel);		
-		if (Vector2.Distance(Position, target.Position) > 50f) { FaceHeading(); }
-		else {  FaceTarget(); } // face target if within 50
+		accel += FlowField.GetForce(this) * 3f;
+		Steer(accel);
 
-		if (IsOnScreen && TargetInSight(target)) { GetComponent<Weapon>().Fire(this); }
+		// face target if within 50, else face heading
+		if (Vector2.Distance(Position, target.Position) < 50f) { FaceTarget(); }
+		else { FaceHeading(); }
+
+		// if can fireWeapon, IsOnScreen, and TargetInSight, fire weapon
+		if (fireWeapon && IsOnScreen && TargetInSight(target)) { GetComponent<Weapon>().Fire(this); }
 
 	}
 
-	private void Self_Flee()
-	{
-		if (path.Empty) { path = new LinePath(transform.position, ZoneManager.Fallback.RandomPointInZone()); }
-		if (PathingComplete) { path.Clear(); state = State.Self_Idle; Self_Idle(); return; }
-		Steer(Arrive(path[1])); FaceHeading();
-	}
-
-	private void Self_Idle() {
-		Steer(Wander2()); FaceHeading();
+	private void Self_Flee() {
+		Steer(Wander() + AvoidObstacles() + AvoidCollisionsAll());
+		FaceHeading(); 
 	}
 
 }

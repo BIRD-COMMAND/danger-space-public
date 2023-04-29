@@ -1,14 +1,28 @@
-using Shapes;
+﻿using Shapes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 using UnityEngine.UI;
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 
+    /// <summary>
+    /// Active instance of the player. If this is null the player is currently dead.
+    /// </summary>
     public static PlayerController Player;
+    /// <summary>
+    /// All entities on screen that are structures.
+    /// </summary>
+    public static List<Entity> Structures;        
+    /// <summary>
+    /// All colliders on screen.
+    /// </summary>
+    public static List<Collider2D> CollidersOnScreen = new List<Collider2D>();
+    
     private static GameManager instance;
 
 	public static readonly LayerMask RaycastLayersExcludingProjectiles;
@@ -20,23 +34,48 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private GameObject playerPrefab;
     [SerializeField] private Vector2 spawnPoint;
     public bool debugKeepPlayerInvulnerable = false;
-    [SerializeField] private int playerLives = 3;
+    [SerializeField] private float playerScore = 0f;
+    [SerializeField] private int playerLives = 4;
     [SerializeField] private float playerRespawnTime = 2f;
     private float playerRespawnTimer = 2f;
 
-    [Header("Score")]
+    [Header("UI")]
+    [SerializeField] private Text livesText;
+    [SerializeField] private Text healthText; //■□
 	[SerializeField] private Text scoreText;
-    [SerializeField] private float score = 0f;
-    public static float Score => instance.score;
-    public static void AddScore(float value) { instance.score += value; }
+    [SerializeField] private Text gameOverText;
+    [SerializeField] private Button retryButton;
+
+    public static float Score => instance.playerScore;
+    public static void AddScore(float value) { instance.playerScore += value; }
 
 	private void Awake() { instance = this; SpawnPlayer(); }
+
+	private void Start() {
+        if (SceneManager.loadedSceneCount == 1) {
+            SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        }
+	}
 
 	// Update is called once per frame
 	void Update()
     {
         // update UI score text
-        scoreText.text = ((int)score).ToString();
+        scoreText.text = ((int)playerScore).ToString();
+
+        // update UI lives text
+        livesText.text = playerLives.ToString();
+        if (playerLives == 0 && !gameOverText.isActiveAndEnabled)    { gameOverText.enabled = true;  retryButton.gameObject.SetActive(true);  }
+        else if (playerLives > 0 && gameOverText.isActiveAndEnabled) { gameOverText.enabled = false; retryButton.gameObject.SetActive(false); }
+
+        // update UI player health text
+        if (Player) {
+            healthText.text = "";
+            for (float i = 0.1f; i < 1.1f; i += 0.1f) {
+                healthText.text += (i <= Player.HealthPercent || Mathf.Approximately(i, Player.HealthPercent)) ? "■" : "□";
+            }
+        }
+        else { healthText.text = "□□□□□□□□□□"; }
 
         // handle respawn
         if (!Player) {
@@ -44,20 +83,39 @@ public class GameManager : MonoBehaviour
             playerRespawnTimer -= Time.deltaTime;
             if (playerRespawnTimer <= 0f) {
                 playerRespawnTimer = playerRespawnTime;
-				playerLives--; 
                 SpawnPlayer();
 			}
 		}
     }
 
-    private void SpawnPlayer()
+    public void ResetGame()
     {
-        // instantiate player prefab and flash green for 1 second
-        Player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity).GetComponent<PlayerController>();
+        playerLives = 4;
+        playerScore = 0;
+    }
+
+	private void FixedUpdate()
+	{
+        TrackStructuresOnScreen();
+	}
+
+	private void SpawnPlayer()
+    {
+		playerLives--; if (playerLives == 0) { return; }
+		// instantiate player prefab and flash green for 1 second
+		Player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity).GetComponent<PlayerController>();
         Player.FlashColor(Color.green, 1f);
 		// give player invulnerability for 1 second
 		Player.invulnerable = true; 
         Runtime.DoInSeconds(() => { Player.invulnerable = debugKeepPlayerInvulnerable; }, 1f);
+	}
+
+	private void TrackStructuresOnScreen()
+	{
+		ScreenTrigger.Collider.Overlap(CollidersOnScreen);
+		Structures = CollidersOnScreen
+		.Where(c => c.GetComponent<Entity>() && c.GetComponent<Entity>().IsStructure)
+		.Select(c => c.GetComponent<Entity>()).Distinct().ToList();
 	}
 
 	private void OnDrawGizmosSelected() { 

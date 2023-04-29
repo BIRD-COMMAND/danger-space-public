@@ -13,21 +13,40 @@ public class PoolManager : MonoBehaviour
 
 	private void Awake() {
 		instance = this;
-		foreach (GameObject prefab in Resources.LoadAll<GameObject>("Prefabs/Projectiles")) {
-			if (!prefab.FindComponent<Poolable>()) { continue; }
-			queues[prefab] = CreateObjectPool(prefab, "_ProjectilesPool", 60);
-		}
+		Transform particlesPoolRoot = new GameObject("ParticlesPool").transform;
+		particlesPoolRoot.parent = transform;
 		foreach (GameObject prefab in Resources.LoadAll<GameObject>("Prefabs/Particles")) {
 			if (!prefab.FindComponent<Poolable>()) { continue; }
 			queues[prefab] = CreateObjectPool(prefab, "_ParticlesPool", 20);
+			queues[prefab].transform.parent = particlesPoolRoot;
 		}
+		Transform pickupsPoolRoot = new GameObject("PickupsPool").transform;
+		pickupsPoolRoot.parent = transform;
+		foreach (GameObject prefab in Resources.LoadAll<GameObject>("Prefabs/Pickups")) {
+			if (!prefab.FindComponent<Poolable>()) { continue; }
+			queues[prefab] = CreateObjectPool(prefab, "_PickupsPool", 20);
+			queues[prefab].transform.parent = pickupsPoolRoot;
+		}
+		Transform projectilesPoolRoot = new GameObject("ProjectilesPool").transform;
+		projectilesPoolRoot.parent = transform;
+		foreach (GameObject prefab in Resources.LoadAll<GameObject>("Prefabs/Projectiles")) {
+			if (!prefab.FindComponent<Poolable>()) { continue; }
+			queues[prefab] = CreateObjectPool(prefab, "_ProjectilesPool", 60);
+			queues[prefab].transform.parent = projectilesPoolRoot;
+		}
+		Transform shipsPoolRoot = new GameObject("ShipsPool").transform;
+		shipsPoolRoot.parent = transform;
 		foreach (GameObject prefab in Resources.LoadAll<GameObject>("Prefabs/Ships")) {
 			if (!prefab.FindComponent<Poolable>()) { continue; }
 			queues[prefab] = CreateObjectPool(prefab, "_ShipsPool", 20);
+			queues[prefab].transform.parent = shipsPoolRoot;
 		}
+		Transform trailsPoolRoot = new GameObject("TrailsPool").transform;
+		trailsPoolRoot.parent = transform;
 		foreach (GameObject prefab in Resources.LoadAll<GameObject>("Prefabs/Trails")) {
 			if (!prefab.FindComponent<Poolable>()) { continue; }
 			queues[prefab] = CreateObjectPool(prefab, "_TrailsPool", 60);
+			queues[prefab].transform.parent = trailsPoolRoot;
 		}
 	}
 

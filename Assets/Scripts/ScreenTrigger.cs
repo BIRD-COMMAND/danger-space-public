@@ -21,8 +21,11 @@ public class ScreenTrigger : MonoBehaviour
 		}
 	}
 
-	public static bool IsOnScreen(Vector2 position) {
+	public static bool Contains(Vector2 position) { 
 		return instance.screenTrigger.OverlapPoint(position);
+	}
+	public static bool IsOnScreen(Vector2 position) {
+		return Contains(position);
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)

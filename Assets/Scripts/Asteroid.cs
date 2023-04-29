@@ -21,7 +21,7 @@ public class Asteroid : Entity
 		);
 	}
 
-	public override void Damage(float damage) {
+	public override void Damage(float damage, Entity source) {
 		FlashColor(Color.white);
 	}
 

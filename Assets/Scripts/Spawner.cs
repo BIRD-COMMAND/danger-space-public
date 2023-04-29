@@ -24,6 +24,11 @@ public class Spawner : MonoBehaviour
 			spawned.Add(Instantiate(prefab, transform.position, prefab.transform.rotation));
 			lastSpawn = Time.time;
 		}
+		foreach (GameObject item in spawned) {
+			if (!ScreenTrigger.Contains(item.transform.position) && !ScreenBoundary.Contains(item.transform.position)) {
+				item.transform.position = transform.position;
+			}
+		}
 	}
 
 	private void OnDrawGizmos()

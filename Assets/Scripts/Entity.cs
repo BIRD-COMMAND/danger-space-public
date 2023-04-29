@@ -26,6 +26,7 @@ public class Entity : MonoBehaviour
 	[SerializeField, HideInInspector] protected Rigidbody2D body;
 	public CircleCollider2D Bounds => bounds;
 	[SerializeField] protected CircleCollider2D bounds;
+	[SerializeField] protected Drop[] drops;
 	[HideInInspector] public List<ShapeRenderer> shapes;
 	public Entity target;
 	public GameObject destroyEffectPrefab;
@@ -259,21 +260,40 @@ public class Entity : MonoBehaviour
 
 	#region Damage and Destruction
 
-	public virtual void Damage(float damage)
+	public virtual void Heal(float healing, Entity source)
 	{
+		OnIncomingHealing(healing, source);
+		if (health > 0) {
+			OnWillTakeHealing(healing, source);
+			health += healing;
+			OnTookHealing(healing, source);
+		}
+		if (health > maxHealth) { health = maxHealth; }
+	}
+	public virtual void RemoteHealing(float damage, Entity source) { }
+	public virtual void OnIncomingHealing(float healing, Entity source) { }
+	public virtual void OnWillTakeHealing(float healing, Entity source) { }
+	public virtual void OnTookHealing(float healing, Entity source) { 
+		if (health > 0) { FlashColor(Color.green); } 
+	}
+
+	public virtual void Damage(float damage, Entity source)
+	{
+		OnIncomingDamage(damage, source);
 		if (invulnerable == false) {
-			OnWillTakeDamage(damage);
+			OnWillTakeDamage(damage, source);
 			health -= damage;
-			OnTookDamage(damage);
+			OnTookDamage(damage, source);
 		}
 		if (health <= 0) {
 			OnWillBeDestroyed();
 			Destroy(gameObject);
 		}
 	}
-
-	public virtual void OnWillTakeDamage(float damage) { }
-	public virtual void OnTookDamage(float damage)
+	public virtual void RemoteDamage(float damage, Entity source) { }
+	public virtual void OnIncomingDamage(float damage, Entity source) { }
+	public virtual void OnWillTakeDamage(float damage, Entity source) { }
+	public virtual void OnTookDamage(float damage, Entity source)
 	{
 		// flash red when damaged if the agent is still alive
 		if (health > 0) { FlashColor(Color.red); }
@@ -298,6 +318,9 @@ public class Entity : MonoBehaviour
 			// the player can have a negative point value to penalize death
 			GameManager.AddScore(pointValue);
 
+			// spawn drops
+			if (drops != null) { foreach (Drop item in drops) { item.TrySpawn(transform); } }
+
 		}
 		catch { }
 
@@ -306,7 +329,7 @@ public class Entity : MonoBehaviour
 	protected virtual void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.transform.FindComponent(out Entity entity)) {
-			 entity.Damage(DamageOnCollision);
+			 entity.Damage(DamageOnCollision, this);
 		}
 	}
 

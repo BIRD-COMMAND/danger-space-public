@@ -14,6 +14,8 @@ public class CameraScreenWarp : MonoBehaviour
 	private Vector2 screenSize;
 	private Vector3[] dummyOffsets;
 
+	private bool dummiesHidden = false;
+
 	// Start is called before the first frame update
 	void Start() {
 		if (GetComponent<Camera>() && GetComponent<Camera>().orthographic) {
@@ -21,8 +23,11 @@ public class CameraScreenWarp : MonoBehaviour
 			float width = height * GetComponent<Camera>().aspect;
 			screenSize = new Vector2(width, height);
 		}
-		dummies[0] = dummy;
-		for (int i = 1; i < 8; i++) { dummies[i] = Instantiate(dummy, transform); }
+		GameObject dummiesParent = new GameObject("PlayerDummies");
+		dummiesParent.transform.SetParent(transform);
+		dummiesParent.transform.SetPositionAndRotation(transform.position, transform.rotation);
+		dummies[0] = dummy; dummy.transform.parent = dummiesParent.transform;
+		for (int i = 1; i < 8; i++) { dummies[i] = Instantiate(dummy, dummiesParent.transform); }
 		dummyOffsets = new Vector3[]
 		{
 			new Vector3(-screenSize.x, -screenSize.y, 0),
@@ -40,7 +45,8 @@ public class CameraScreenWarp : MonoBehaviour
 	private void Update()
 	{
 
-		if (!GameManager.Player) { return; }
+		if (!GameManager.Player) { FakeDestroyDummies(); return; }
+		else { ReactivateDummies(); }
 		player = GameManager.Player.gameObject;
 
 		for (int i = 0; i < dummies.Length; i++) {
@@ -94,6 +100,24 @@ public class CameraScreenWarp : MonoBehaviour
 	private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 	private System.Collections.IEnumerator ReactivateTrail(TrailRenderer trail) { 
 		yield return endOfFrame; yield return endOfFrame; trail.emitting = true; 
+	}
+
+	private void FakeDestroyDummies()
+	{
+		if (dummiesHidden) { return; }
+		for (int i = 0; i < 8; i++) {
+			PoolManager
+				.Get(dummies[i].GetComponent<Entity>().destroyEffectPrefab)
+				.Activate(dummies[i].transform.position, dummies[i].transform.rotation);
+			dummies[i].SetActive(false);
+		}
+		dummiesHidden = true;
+	}
+	private void ReactivateDummies()
+	{
+		if (!dummiesHidden) { return; }
+		for (int i = 0; i < 8; i++) { dummies[i].SetActive(true); }
+		dummiesHidden = false;
 	}
 
 }

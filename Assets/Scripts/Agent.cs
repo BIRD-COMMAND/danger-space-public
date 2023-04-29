@@ -81,11 +81,9 @@ public abstract class Agent : Entity
 
 	protected override void Awake() {
 		base.Awake();
-		//Create a vector to a target position on the wander circle
-		float theta = Random.value * 2 * Mathf.PI;
-		wander2Target = new Vector2(wander2Radius * Mathf.Cos(theta), wander2Radius * Mathf.Sin(theta));
 		mainWhiskerLen = obstacleAvoidDistance * obstacleCheckDistanceMultiplier;
 		sideWhiskerLen = obstacleAvoidDistance * obstacleCheckDistanceMultiplier * 0.75f;
+		hideDistanceFromBoundary = Radius * 1.5f;
 	}	
 
 	/// <summary>
@@ -508,7 +506,7 @@ public abstract class Agent : Entity
 		bool defaultQueriesStartInColliders = Physics2D.queriesStartInColliders;
 		Physics2D.queriesStartInColliders = false;
 
-		hit = Physics2D.CircleCast(ColliderPosition, (Radius * 0.5f), direction, distance, 1 << 9 /*Environment Layer*/ );
+		hit = Physics2D.CircleCast(ColliderPosition, (Radius * 0.5f), direction, distance, (1 << 9) | (1 << 3) /*Environment + LevelBounds*/ );
 
 		Physics2D.queriesStartInColliders = defaultQueriesStartInColliders;
 
@@ -694,7 +692,7 @@ public abstract class Agent : Entity
 	/// </summary>
 	public float evadeMaxPredictionTime = 1f;
 
-	public Vector2 Evade(Agent target)
+	public Vector2 Evade(Entity target)
 	{
 		/* Calculate the distance to the target */
 		Vector2 displacement = target.Position - Position;
@@ -724,23 +722,25 @@ public abstract class Agent : Entity
 
 	#region Hide
 
-	[Header("Hide")]
+	//[Header("Hide")]
 
-	public float hideDistanceFromBoundary = 0.6f;
+	[HideInInspector] public float hideDistanceFromBoundary = 6f;
 
-	public Vector2 Hide(Agent target, ICollection<Agent> obstacles)
+	public Vector2 Hide(Entity target) { return Hide(target, GameManager.Structures); }
+
+	public Vector2 Hide(Entity target, ICollection<Entity> obstacles)
 	{
 		Vector2 bestHidingSpot;
 		return Hide(target, obstacles, out bestHidingSpot);
 	}
 
-	public Vector2 Hide(Agent target, ICollection<Agent> obstacles, out Vector2 bestHidingSpot)
+	public Vector2 Hide(Entity target, ICollection<Entity> obstacles, out Vector2 bestHidingSpot)
 	{
 		/* Find the closest hiding spot. */
 		float distToClostest = Mathf.Infinity;
 		bestHidingSpot = Vector2.zero;
 
-		foreach (Agent r in obstacles) {
+		foreach (Entity r in obstacles) {
 			Vector2 hidingSpot = GetHidingPosition(r, target);
 
 			float dist = Vector2.Distance(hidingSpot, transform.position);
@@ -761,7 +761,7 @@ public abstract class Agent : Entity
 		return Arrive(bestHidingSpot);
 	}
 
-	Vector2 GetHidingPosition(Agent obstacle, Agent target)
+	Vector2 GetHidingPosition(Entity obstacle, Entity target)
 	{
 		float distAway = obstacle.Radius + hideDistanceFromBoundary;
 
@@ -773,28 +773,28 @@ public abstract class Agent : Entity
 
 	#endregion
 
-	#region Wander1
+	#region Wander
 
-	[Header("Wander1")]
+	[Header("Wander")]
 
 	/// <summary>
 	/// The forward offset of the wander square
 	/// </summary>
-	public float wanderOffset = 1.5f;
+	public float wanderOffset = 16f;
 
 	/// <summary>
 	/// The radius of the wander square
 	/// </summary>
-	public float wanderRadius = 4;
+	public float wanderRadius = 6;
 
 	/// <summary>
 	/// The rate at which the wander orientation can change in radians
 	/// </summary>
-	public float wanderRate = 0.4f;
+	public float wanderRate = 1f;
 
 	float wanderOrientation = 0;
 
-	public Vector2 Wander1()
+	public Vector2 Wander()
 	{
 		float characterOrientation = RotationInRadians;
 
@@ -805,55 +805,20 @@ public abstract class Agent : Entity
 		float targetOrientation = wanderOrientation + characterOrientation;
 
 		/* Calculate the center of the wander circle */
-		Vector2 targetPosition = Position + (OrientationToVector(characterOrientation) * wanderOffset);
+		Vector2 targetPosition = Position + ((Vector2)transform.up * wanderOffset);
 
 		//debugRing.transform.position = targetPosition;
 
 		/* Calculate the target position */
 		targetPosition = targetPosition + (OrientationToVector(targetOrientation) * wanderRadius);
 
-		//Debug.DrawLine (transform.position, targetPosition);
+		Debug.DrawLine (transform.position, targetPosition);
 
 		return Seek(targetPosition);
 	}
 
 	/* Returns a random number between -1 and 1. Values around zero are more likely. */
 	float RandomBinomial() { return Random.value - Random.value; }
-
-	#endregion
-
-	#region Wander2
-
-	public float wander2Radius = 1.2f;
-
-	public float wander2Distance = 2f;
-
-	/// <summary>
-	/// Maximum amount of random displacement a second
-	/// </summary>
-	public float wander2Jitter = 40f;
-
-	Vector2 wander2Target;
-
-	public Vector2 Wander2()
-	{
-		/* Get the jitter for this time frame */
-		float jitter = wander2Jitter * Time.deltaTime;
-
-		/* Add a small random vector to the target's position */
-		wander2Target += new Vector2(Random.Range(-1f, 1f) * jitter, Random.Range(-1f, 1f) * jitter);
-
-		/* Make the wanderTarget fit on the wander circle again */
-		wander2Target.Normalize();
-		wander2Target *= wander2Radius;
-
-		/* Move the target in front of the character */
-		Vector2 targetPosition = Position + (Vector2)transform.right * wander2Distance + wander2Target;
-
-		//Debug.DrawLine(transform.position, targetPosition);
-
-		return Seek(targetPosition);
-	}
 
 	#endregion
 

@@ -51,7 +51,7 @@ public class Projectile : Poolable
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{ 
-		if (collision.transform.FindComponent(out Entity entity)) { entity.Damage(weapon.projectileDamage); }
+		if (collision.transform.FindComponent(out Entity entity)) { entity.Damage(weapon.projectileDamage, shooter); }
 		if (weapon.impactEffect) { PoolManager.Get(weapon.impactEffect).Activate(transform.position, transform.rotation); }
 		//Debug.Log("Projectile Return()ed by Projectile.OnCollisionEnter2D");
 		Return();

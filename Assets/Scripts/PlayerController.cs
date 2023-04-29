@@ -37,7 +37,7 @@ public class PlayerController : Agent
 
 		if (Mouse.LeftDown) { baseWeapon.Fire(this); }
 
-		if (Mouse.RightClick) { Time.timeScale = Time.timeScale < 0.9f ? 1f : 0.1f; }
+		//if (Mouse.RightClick) { Time.timeScale = Time.timeScale < 0.9f ? 1f : 0.1f; }
 
 	}
 
@@ -73,5 +73,9 @@ public class PlayerController : Agent
 		if (!KeyD && body.velocity.x > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 		if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 	}
+
+	// handle passthrough damage and healing from PlayerDummy class instances
+	public override void RemoteDamage(float damage, Entity source) { base.Damage(damage, source); }
+	public override void RemoteHealing(float damage, Entity source) { base.Heal(damage, source); }
 
 }
