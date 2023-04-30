@@ -17,6 +17,10 @@ public class PlayerController : Agent
 
 	[SerializeField] private bool debugVisualizeAim = false;
 
+	[Header("Bullet Time")]
+	[SerializeField] private float slowTimeFactor = 0.2f;
+	[SerializeField] private bool slowTime = false;
+
 	private Vector2 MoveVector =>
 		new Vector2(
 			(KeyA ? -1 : 0f) + (KeyD ? 1f : 0f),
@@ -37,41 +41,54 @@ public class PlayerController : Agent
 
 		if (Mouse.LeftDown) { baseWeapon.Fire(this); }
 
-		//if (Mouse.RightClick) { Time.timeScale = Time.timeScale < 0.9f ? 1f : 0.1f; }
+		if (Mouse.RightClick) {
+			if (!slowTime) { 
+				Time.timeScale = slowTimeFactor;
+				body.velocity /= slowTimeFactor;
+				slowTime = true;
+			}
+			else { 
+				Time.timeScale = 1f;
+				body.velocity *= slowTimeFactor;
+				slowTime = false;
+			}
+		}
 
 	}
 
 	void FixedUpdate()
 	{
 
-		// when angular velocity is less than 1, immediately set it to 0, this cuts some of the slowness out of the mouse offset correction
-		if (body.angularVelocity > 0f && body.angularVelocity < 2f) { body.angularVelocity = 0f; }
-
 		// Lerp up vector toward mouse position in worldspace
-		
-		// when the body's angular velocity is low we lerp normally
-		if (body.angularVelocity < 0.5f) { body.LookAt(Mouse.WorldPosition, turnFactor); }
-		// the higher the body's angular velocity, the more we lerp to compensate
-		else { body.LookAt(Mouse.WorldPosition, Mathf.Clamp01(1f - (1f / body.angularVelocity) + turnFactor)); }
+		body.LookAt(Mouse.WorldPosition, slowTime ? Mathf.Max(turnFactor, 0.6f) : turnFactor);
 		
 		// debug aim visualization
 		if (debugVisualizeAim) { Debug.DrawLine(transform.position, transform.position + (transform.up * transform.position.DistTo(Mouse.WorldPosition)), Color.green); }
 
 		// Movement
-		// get input from WASD and apply as a force to body
-		Vector2 force = MoveVector * maxThrust;
-		body.AddForce(force);
+		if (slowTime) { body.velocity *= slowTimeFactor; }
 
 		// limit max speed - this approach allows the player to exceed the max speed, but the braking intensifies the faster the player goes
 		if (body.velocity.magnitude > maxSpeed) { body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, maxSpeedBrakeFactor); }
 
-		// reduce vertical velocity if relevant key is not held down
-		if (!KeyW && body.velocity.y > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), brakeFactor); }
-		if (!KeyS && body.velocity.y < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), brakeFactor); }
+		for (float increment = Time.timeScale; !slowTime || increment < 1f; increment += Time.timeScale) {
 
-		// reduce horizontal velocity if relevant key is not held down
-		if (!KeyD && body.velocity.x > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
-		if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
+			// get input from WASD and apply as a force to body
+			body.AddForce(MoveVector * maxThrust / Time.timeScale);
+
+			// reduce vertical velocity if relevant key is not held down
+			if (!KeyW && body.velocity.y > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), brakeFactor); }
+			if (!KeyS && body.velocity.y < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), brakeFactor); }
+
+			// reduce horizontal velocity if relevant key is not held down
+			if (!KeyD && body.velocity.x > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
+			if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
+
+			if (!slowTime) { break; }
+		}
+
+		if (slowTime) { body.velocity /= slowTimeFactor; }
+
 	}
 
 	// handle passthrough damage and healing from PlayerDummy class instances

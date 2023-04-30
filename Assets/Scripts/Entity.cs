@@ -299,11 +299,9 @@ public class Entity : MonoBehaviour
 		if (health > 0) { FlashColor(Color.red); }
 	}
 
-	public virtual void OnWillBeDestroyed() { }
-	protected virtual void OnDestroy()
-	{
+	public virtual void OnWillBeDestroyed() {
 		try {
-			
+
 			// if there's a destroyEffectPrefab, get one from the Pool and Activate it
 			if (destroyEffectPrefab) {
 				PoolManager.Get(destroyEffectPrefab).Activate(transform.position, transform.rotation);
@@ -323,8 +321,8 @@ public class Entity : MonoBehaviour
 
 		}
 		catch { }
-
 	}
+	protected virtual void OnDestroy() { }
 
 	protected virtual void OnCollisionEnter2D(Collision2D collision)
 	{

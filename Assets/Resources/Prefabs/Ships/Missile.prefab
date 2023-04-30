@@ -307,7 +307,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -511,6 +511,7 @@ MonoBehaviour:
   faction: 64
   body: {fileID: 0}
   bounds: {fileID: 4026743688544109525}
+  drops: []
   shapes: []
   target: {fileID: 0}
   destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
