@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3365378542767727608}
   - component: {fileID: 3141872500320987846}
   - component: {fileID: 2846019690520672154}
-  - component: {fileID: 4877523081749589744}
+  - component: {fileID: 5321593503997885350}
   m_Layer: 6
   m_Name: TriangleL
   m_TagString: Untagged
@@ -197,7 +197,7 @@ PolygonCollider2D:
       - {x: -3.8971143, y: -2.2500002}
       - {x: 3.8971145, y: -2.2499995}
   m_UseDelaunayMesh: 0
---- !u!114 &4877523081749589744
+--- !u!114 &5321593503997885350
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,12 +206,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 84940254561910533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b26a27d9cf499524a9f4d58b318e4cb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 769002a4fcf0fa34489c226435f6ab1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shipTransform: {fileID: 0}
-  flipDirection: 1
-  maxAngleOffset: -10
+  flipDirection: 0
+  maxAngleOffset: 10
   slerpFactor: 0.05
 --- !u!1 &2057089151064729650
 GameObject:
@@ -617,6 +617,7 @@ MonoBehaviour:
   faction: 4
   body: {fileID: 0}
   bounds: {fileID: 6024105540313166787}
+  drops: []
   shapes: []
   target: {fileID: 0}
   destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
@@ -953,7 +954,7 @@ GameObject:
   - component: {fileID: 2087417578818208902}
   - component: {fileID: 1970578243274332232}
   - component: {fileID: 6565871255979575980}
-  - component: {fileID: 4102364509109000017}
+  - component: {fileID: 3636131425741289144}
   m_Layer: 6
   m_Name: TriangleR
   m_TagString: Untagged
@@ -1137,7 +1138,7 @@ PolygonCollider2D:
       - {x: -3.8971143, y: -2.2500002}
       - {x: 3.8971145, y: -2.2499995}
   m_UseDelaunayMesh: 0
---- !u!114 &4102364509109000017
+--- !u!114 &3636131425741289144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1146,12 +1147,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4913409261073061431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b26a27d9cf499524a9f4d58b318e4cb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 769002a4fcf0fa34489c226435f6ab1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shipTransform: {fileID: 0}
-  flipDirection: 0
-  maxAngleOffset: -10
+  flipDirection: 1
+  maxAngleOffset: 10
   slerpFactor: 0.05
 --- !u!1 &4934314293478887337
 GameObject:

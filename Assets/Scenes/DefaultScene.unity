@@ -386,44 +386,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!21 &256867478
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Disc Transparent [INNER_RADIUS] (instance)
-  m_Shader: {fileID: 4800000, guid: 0736a017ee88a8741b09e7382339ab99, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - INNER_RADIUS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _ColorMask: 1
-    - _StencilComp: 8
-    - _StencilID: 1
-    - _StencilOp: 0
-    - _StencilOpPass: 2
-    - _StencilReadMask: 1
-    - _StencilWriteMask: 1
-    - _ZOffsetFactor: 0
-    - _ZOffsetUnits: 0
-    - _ZTest: 4
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1 &306569537
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,7 +484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &316332653
 RectTransform:
   m_ObjectHideFlags: 0
@@ -718,6 +680,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335156106}
   m_CullTransparentMesh: 1
+--- !u!21 &351768639
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Regular Polygon Transparent (instance)
+  m_Shader: {fileID: 4800000, guid: a008a2b36086d4e4393a9b3c8a6d998f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _StencilComp: 6
+    - _StencilID: 1
+    - _StencilOp: 0
+    - _StencilOpPass: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _ZOffsetFactor: 0
+    - _ZOffsetUnits: 0
+    - _ZTest: 4
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1 &398811259
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   innerBounds: {fileID: 398811261}
   outerBounds: {fileID: 398811262}
---- !u!21 &1073677914
+--- !u!21 &511355856
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -997,18 +996,19 @@ Material:
     - _ZTest: 4
     m_Colors: []
   m_BuildTextureStacks: []
---- !u!21 &1332685704
+--- !u!21 &605597735
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Regular Polygon Transparent (instance)
-  m_Shader: {fileID: 4800000, guid: a008a2b36086d4e4393a9b3c8a6d998f, type: 3}
+  m_Name: Disc Transparent [INNER_RADIUS] (instance)
+  m_Shader: {fileID: 4800000, guid: 0736a017ee88a8741b09e7382339ab99, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - INNER_RADIUS
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -1022,13 +1022,13 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _ColorMask: 15
-    - _StencilComp: 6
+    - _ColorMask: 1
+    - _StencilComp: 8
     - _StencilID: 1
     - _StencilOp: 0
-    - _StencilOpPass: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
+    - _StencilOpPass: 2
+    - _StencilReadMask: 1
+    - _StencilWriteMask: 1
     - _ZOffsetFactor: 0
     - _ZOffsetUnits: 0
     - _ZTest: 4
@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468926374}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
@@ -1517,7 +1517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcad3210d09059f47bf55373d7e8f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!21 &1923311336
+--- !u!21 &1844036750
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -1752,7 +1752,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1073677914}
+  - {fileID: 351768639}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2003,22 +2003,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5519318123695653806}
   m_Mesh: {fileID: 43100795730674332, guid: a3d1f56cebf202c448b6fb479f61a9dc, type: 2}
---- !u!114 &3188200840613233985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3575301566254325734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b26a27d9cf499524a9f4d58b318e4cb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipTransform: {fileID: 0}
-  flipDirection: 1
-  maxAngleOffset: -10
-  slerpFactor: 0.05
 --- !u!96 &3321222029195989899
 TrailRenderer:
   serializedVersion: 3
@@ -2161,7 +2145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1332685704}
+  - {fileID: 511355856}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2196,7 +2180,7 @@ GameObject:
   - component: {fileID: 1084838470644236111}
   - component: {fileID: 5552912529929897727}
   - component: {fileID: 6814648547173178419}
-  - component: {fileID: 3188200840613233985}
+  - component: {fileID: 6814648547173178420}
   m_Layer: 6
   m_Name: TriangleL
   m_TagString: Untagged
@@ -2429,7 +2413,7 @@ GameObject:
   - component: {fileID: 2946944794393188417}
   - component: {fileID: 3437458428873175758}
   - component: {fileID: 8501575833600345436}
-  - component: {fileID: 9185276267820031252}
+  - component: {fileID: 8501575833600345437}
   m_Layer: 6
   m_Name: TriangleR
   m_TagString: Untagged
@@ -2457,7 +2441,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1923311336}
+  - {fileID: 1844036750}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2683,6 +2667,22 @@ PolygonCollider2D:
       - {x: -3.8971143, y: -2.2500002}
       - {x: 3.8971145, y: -2.2499995}
   m_UseDelaunayMesh: 0
+--- !u!114 &6814648547173178420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3575301566254325734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 769002a4fcf0fa34489c226435f6ab1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipTransform: {fileID: 0}
+  flipDirection: 0
+  maxAngleOffset: 10
+  slerpFactor: 0.05
 --- !u!61 &6932801068314733144
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2827,7 +2827,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 256867478}
+  - {fileID: 605597735}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3109,7 +3109,7 @@ PolygonCollider2D:
       - {x: -3.8971143, y: -2.2500002}
       - {x: 3.8971145, y: -2.2499995}
   m_UseDelaunayMesh: 0
---- !u!114 &9185276267820031252
+--- !u!114 &8501575833600345437
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3118,10 +3118,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5519318123695653806}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b26a27d9cf499524a9f4d58b318e4cb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 769002a4fcf0fa34489c226435f6ab1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shipTransform: {fileID: 0}
-  flipDirection: 0
-  maxAngleOffset: -10
+  flipDirection: 1
+  maxAngleOffset: 10
   slerpFactor: 0.05
