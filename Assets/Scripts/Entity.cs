@@ -46,6 +46,7 @@ public class Entity : MonoBehaviour
 	public float maxVelocity = 3.5f;
 	public float maxAcceleration = 10f;
 	public float turnSpeed = 20f;
+	public bool inBulletTime = false;
 
 	[Header("Look Direction Smoothing")]
 	/// <summary>

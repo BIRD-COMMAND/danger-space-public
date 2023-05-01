@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 public class PlayerController : Agent
 {
 	[Header("Player")]
+	[SerializeField] private GameObject glow;
 	[SerializeField] private Weapon baseWeapon;
 	[SerializeField] private float maxSpeed = 40f;
 	[SerializeField] private float maxSpeedBrakeFactor = 0.025f;
@@ -17,9 +18,7 @@ public class PlayerController : Agent
 
 	[SerializeField] private bool debugVisualizeAim = false;
 
-	[Header("Bullet Time")]
-	[SerializeField] private float slowTimeFactor = 0.2f;
-	[SerializeField] private bool slowTime = false;
+	
 
 	private Vector2 MoveVector =>
 		new Vector2(
@@ -39,39 +38,30 @@ public class PlayerController : Agent
 			item.ApplyThrust(Vector2.Dot(body.velocity.normalized, transform.DirToMouse()));
 		}
 
+		// temporary "activate bullet time" ability on right click, for debugging
+		if (Mouse.RightClick) { GameManager.BulletTime_Start(); gameObject.AddComponent<BulletTimeScaler>(); }
+		
+		// fire weapon on left click
 		if (Mouse.LeftDown) { baseWeapon.Fire(this); }
-
-		if (Mouse.RightClick) {
-			if (!slowTime) { 
-				Time.timeScale = slowTimeFactor;
-				body.velocity /= slowTimeFactor;
-				slowTime = true;
-			}
-			else { 
-				Time.timeScale = 1f;
-				body.velocity *= slowTimeFactor;
-				slowTime = false;
-			}
-		}
-
+		
 	}
 
 	void FixedUpdate()
 	{
 
 		// Lerp up vector toward mouse position in worldspace
-		body.LookAt(Mouse.WorldPosition, slowTime ? Mathf.Max(turnFactor, 0.6f) : turnFactor);
+		body.LookAt(Mouse.WorldPosition, GameManager.SlowTime ? Mathf.Max(turnFactor, 0.6f) : turnFactor);
 		
 		// debug aim visualization
 		if (debugVisualizeAim) { Debug.DrawLine(transform.position, transform.position + (transform.up * transform.position.DistTo(Mouse.WorldPosition)), Color.green); }
 
 		// Movement
-		if (slowTime) { body.velocity *= slowTimeFactor; }
+		if (GameManager.SlowTime) { body.velocity *= GameManager.SlowTimeFactor; }
 
 		// limit max speed - this approach allows the player to exceed the max speed, but the braking intensifies the faster the player goes
 		if (body.velocity.magnitude > maxSpeed) { body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, maxSpeedBrakeFactor); }
 
-		for (float increment = Time.timeScale; !slowTime || increment < 1f; increment += Time.timeScale) {
+		for (float increment = Time.timeScale; !GameManager.SlowTime || increment < 1f; increment += Time.timeScale) {
 
 			// get input from WASD and apply as a force to body
 			body.AddForce(MoveVector * maxThrust / Time.timeScale);
@@ -84,15 +74,24 @@ public class PlayerController : Agent
 			if (!KeyD && body.velocity.x > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 			if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 
-			if (!slowTime) { break; }
+			if (!GameManager.SlowTime) { break; }
 		}
 
-		if (slowTime) { body.velocity /= slowTimeFactor; }
+		if (GameManager.SlowTime) { body.velocity /= GameManager.SlowTimeFactor; }
 
+	}
+
+	/// <summary>
+	/// Sets the color of the glow around the Player's ship
+	/// </summary>
+	public void SetGlowColor(Color color)
+	{
+		glow.GetComponent<Disc>().ColorInner = color.WithAlpha(0.6f);
+		glow.GetComponent<Disc>().ColorOuter = color.WithAlpha(0f);
 	}
 
 	// handle passthrough damage and healing from PlayerDummy class instances
 	public override void RemoteDamage(float damage, Entity source) { base.Damage(damage, source); }
 	public override void RemoteHealing(float damage, Entity source) { base.Heal(damage, source); }
-
+	
 }

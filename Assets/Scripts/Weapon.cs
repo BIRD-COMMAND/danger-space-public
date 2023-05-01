@@ -53,17 +53,23 @@ public class Weapon : MonoBehaviour
 
 	private void Update()
 	{
-		projectileRateOfFireCurrent = Mathf.Max(projectileRateOfFireCurrent - Time.deltaTime, 0f);
-		projectileReloadTimeCurrent = Mathf.Max(projectileReloadTimeCurrent - Time.deltaTime, 0f);
+		if (GetComponent<BulletTimeScaler>()) {
+			projectileRateOfFireCurrent = Mathf.Max(projectileRateOfFireCurrent - Time.unscaledDeltaTime, 0f);
+			projectileReloadTimeCurrent = Mathf.Max(projectileReloadTimeCurrent - Time.unscaledDeltaTime, 0f);
+		}
+		else {
+			projectileRateOfFireCurrent = Mathf.Max(projectileRateOfFireCurrent - Time.deltaTime, 0f);
+			projectileReloadTimeCurrent = Mathf.Max(projectileReloadTimeCurrent - Time.deltaTime, 0f);
+		}
 		if (projectileAmmoCurrent == 0f && projectileReloadTimeCurrent == 0f) { projectileAmmoCurrent = projectileAmmo; }
 	}
 
-	public void Fire(Agent shooter)
+	public List<Projectile> Fire(Agent shooter)
 	{
+		shots.Clear();
 		if (projectileRateOfFireCurrent == 0f && projectileAmmoCurrent > 0f) {
 			projectileRateOfFireCurrent = projectileRateOfFire;
 			projectileAmmoCurrent -= projectileAmmoPerShot;
-			shots.Clear();
 			Vector3 spawnPoint = projectileSpawn.position; 
 			Quaternion spawnRotation = projectileSpawn.rotation;
 			for (int i = 0; i < projectilesPerShot; i++) {
@@ -106,11 +112,13 @@ public class Weapon : MonoBehaviour
 					else { shot.Activate(spawnPoint, spawnRotation); }
 				}
 				shot.body.velocity = shot.transform.up * projectileSpeed;
+				if (shooter.inBulletTime) { shot.body.velocity /= Time.timeScale; }
 				shot.timer = projectileLifetime;
 				shots.Add(shot);
 			}
 			//foreach (ParticleSystem item in fireEffects) { if (item != null && !item.isPlaying) { item.Play(); break; } }
 		}
+		return shots;
 	}
 
 	private void OnDrawGizmosSelected()

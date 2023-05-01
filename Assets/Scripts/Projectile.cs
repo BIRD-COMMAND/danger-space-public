@@ -49,7 +49,7 @@ public class Projectile : Poolable
 		foreach (Collider2D item in launcher.FindComponents<Collider2D>()) { Physics2D.IgnoreCollision(collider, item, ignore); }
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision)
+	protected virtual void OnCollisionEnter2D(Collision2D collision)
 	{ 
 		if (collision.transform.FindComponent(out Entity entity)) { entity.Damage(weapon.projectileDamage, shooter); }
 		if (weapon.impactEffect) { PoolManager.Get(weapon.impactEffect).Activate(transform.position, transform.rotation); }
@@ -57,7 +57,7 @@ public class Projectile : Poolable
 		Return();
 	}
 
-	private void OnTriggerExit2D(Collider2D collision)
+	protected virtual void OnTriggerExit2D(Collider2D collision)
 	{
 		// Exited shooter's trigger collider
 		if (shooter && collision.FindComponent(out Entity entity) && entity == shooter && collision == entity.Bounds) {

@@ -39,7 +39,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float playerRespawnTime = 2f;
     private float playerRespawnTimer = 2f;
 
-    [Header("UI")]
+	public static float SlowTimeFactor => instance.slowTimeFactor;
+	[Header("Bullet Time"), SerializeField] private float slowTimeFactor = 0.2f;
+    public static bool SlowTime => instance.slowTime;
+	[SerializeField] private bool slowTime = false;
+
+	[Header("UI")]
     [SerializeField] private Text livesText;
     [SerializeField] private Text healthText; //■□
 	[SerializeField] private Text scoreText;
@@ -47,7 +52,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button retryButton;
 
     public static float Score => instance.playerScore;
-    public static void AddScore(float value) { instance.playerScore += value; }
+    public static void AddScore(float value) { 
+        if (!Player) { return; }
+        instance.playerScore += value; 
+    }
 
 	private void Awake() { instance = this; SpawnPlayer(); }
 
@@ -79,6 +87,7 @@ public class GameManager : MonoBehaviour
 
         // handle respawn
         if (!Player) {
+            if (slowTime) { Time.timeScale = 1f; slowTime = false; }
             if (playerLives == 0) { return; }
             playerRespawnTimer -= Time.deltaTime;
             if (playerRespawnTimer <= 0f) {
@@ -92,6 +101,25 @@ public class GameManager : MonoBehaviour
     {
         playerLives = 4;
         playerScore = 0;
+    }
+
+    public static void BulletTime_Start(float duration = 5f) { instance.M_BulletTime_Start(duration); }
+    private void M_BulletTime_Start(float duration = 5f) { 
+        if (bulletTime_End_Coroutine != null) { StopCoroutine(bulletTime_End_Coroutine); }
+        Time.timeScale = slowTimeFactor; slowTime = true;
+        bulletTime_End_Coroutine = StartCoroutine(BulletTime_End_Coroutine(duration));
+        if (Player) { Player.SetGlowColor(Color.cyan); }
+    }
+    public static void BulletTime_End() { instance.M_BulletTime_End(); }
+	private void M_BulletTime_End() { 
+        Time.timeScale = 1f; slowTime = false; 
+        if (Player) { Player.SetGlowColor(Color.white); }
+    }
+    private Coroutine bulletTime_End_Coroutine;
+    private IEnumerator BulletTime_End_Coroutine(float duration)
+    {
+        yield return new WaitForSecondsRealtime(duration);
+        M_BulletTime_End();
     }
 
 	private void FixedUpdate()

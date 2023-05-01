@@ -53,7 +53,7 @@ MonoBehaviour:
   collider: {fileID: 0}
   blendMode: 1
   scaleMode: 0
-  color: {r: 0, g: 1, b: 0, a: 1}
+  color: {r: 0, g: 1, b: 1, a: 1}
   detailLevel: 2
   renderQueue: -1
   zTest: 4
@@ -67,7 +67,7 @@ MonoBehaviour:
   stencilWriteMask: 255
   type: 0
   colorMode: 1
-  colorOuterStart: {r: 0, g: 1, b: 0, a: 0}
+  colorOuterStart: {r: 0, g: 1, b: 1, a: 0}
   colorInnerEnd: {r: 1, g: 1, b: 1, a: 1}
   colorOuterEnd: {r: 1, g: 1, b: 1, a: 1}
   geometry: 0
@@ -154,9 +154,9 @@ GameObject:
   - component: {fileID: 6255747623813995279}
   - component: {fileID: 7537688059070521425}
   - component: {fileID: 4973177849377255547}
-  - component: {fileID: 1939410851731495973}
+  - component: {fileID: 3392960206062951083}
   m_Layer: 0
-  m_Name: Pickup_Health
+  m_Name: Pickup_BulletTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
   collider: {fileID: 0}
   blendMode: 1
   scaleMode: 0
-  color: {r: 0, g: 1, b: 0, a: 1}
+  color: {r: 0, g: 1, b: 1, a: 1}
   detailLevel: 2
   renderQueue: -1
   zTest: 4
@@ -382,7 +382,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 32
---- !u!114 &1939410851731495973
+--- !u!114 &3392960206062951083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -391,8 +391,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 9157298823971073651}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ea6f9d3866f31847b2bd3545cd9ee82, type: 3}
+  m_Script: {fileID: 11500000, guid: 285793a0e9c14f54fa70bcec88ea738a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pool: {fileID: 0}
-  healValue: 3
+  bulletTimeDuration: 5

@@ -768,7 +768,7 @@ MonoBehaviour:
   bounds: {fileID: 2867127581348205316}
   drops:
   - prefab: {fileID: 9157298823971073651, guid: c891a4649215e26489d26485c2ce25df, type: 3}
-    spawnChance: 0.2
+    spawnChance: 0.25
   shapes: []
   target: {fileID: 0}
   destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
@@ -781,6 +781,7 @@ MonoBehaviour:
   maxVelocity: 50
   maxAcceleration: 200
   turnSpeed: 300
+  inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 8
   state: 3

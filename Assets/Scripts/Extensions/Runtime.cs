@@ -195,6 +195,21 @@ namespace Extensions
 			else { yield return new WaitForSeconds(seconds); action(); }
 		}
 
+		/// <summary>
+		/// If both parameters are valid, uses a coroutine to execute the specified action after the specified number of seconds of realtime.<br/>
+		/// If either parameter is invalid the action is not executed
+		/// </summary>
+		public static void DoInSecondsRealtime(Action action, float seconds) { s_Instance.StartCoroutine(s_Instance.M_DoInSecondsRealtime(action, seconds)); }
+		private System.Collections.IEnumerator M_DoInSecondsRealtime(Action action, float seconds)
+		{
+			// if action is null throw exception
+			if (action == null) { throw new ArgumentNullException("action"); }
+			// if seconds is not valid perform action immediately
+			if (!float.IsNormal(seconds) || seconds < 0f) { action(); }
+			// else WaitForSeconds and perform action
+			else { yield return new WaitForSecondsRealtime(seconds); action(); }
+		}
+
 		#endregion
 
 	}
