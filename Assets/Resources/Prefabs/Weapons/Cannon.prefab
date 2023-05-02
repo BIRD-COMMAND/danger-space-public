@@ -742,8 +742,6 @@ GameObject:
   - component: {fileID: 3089590795373447977}
   - component: {fileID: 4721639693564192010}
   - component: {fileID: 3013718866728267774}
-  - component: {fileID: 5686460303525809088}
-  - component: {fileID: 6306963813457769482}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -770,7 +768,7 @@ Transform:
   - {fileID: 2814402806079326483}
   - {fileID: 1300184490116430055}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5155504955043031766
 MonoBehaviour:
@@ -968,99 +966,6 @@ PolygonCollider2D:
       - {x: -0.55, y: 0.55}
       - {x: -0.25, y: 0.25}
   m_UseDelaunayMesh: 0
---- !u!114 &5686460303525809088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4618882584238823356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aeea3b81fa028b46981b5e8556ab62e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeColor: {r: 0, g: 1, b: 0, a: 1}
-  inactiveColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  indicators:
-  - {fileID: 4234308836398664095}
-  - {fileID: 2501077410370021945}
-  - {fileID: 8468885506841454033}
---- !u!114 &6306963813457769482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4618882584238823356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad6d80672435bcc429e40db3ead27cab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  core: {fileID: 0}
-  parent: {fileID: 0}
-  modules: []
-  centroid: {x: 0, y: 0}
-  centroidSpriteTextureRext:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  type: 8
-  slot: -1
-  slots: 0
-  slotsCurrent: 0
-  collider: {fileID: 0}
-  effectCenterOfMass: 0
-  centerCentroidHorizontally: 0
-  centerCentroidVertically: 0
-  mass: 1000
-  massCurrent: 1000
-  health: 10
-  healthCurrent: 10
-  thrust: 1000
-  speed: 10
-  speedCurrent: 0
-  projectile: {fileID: 0}
-  projectileSpawn: {fileID: 0}
-  projectileSpeed: 0
-  projectileLifetime: 0
-  projectileSize: 0
-  projectileDamage: 0
-  projectileRange: 0
-  projectileRateOfFire: 0
-  projectileRateOfFireCurrent: 0
-  projectileAmmo: 0
-  projectileAmmoCurrent: 0
-  projectileAmmoPerShot: 0
-  projectileReloadTime: 0
-  projectileReloadTimeCurrent: 0
-  shield: 0
-  shieldCurrent: 0
-  shieldRechargeRate: 0
-  shieldRechargeRateCurrent: 0
-  shieldRechargeDelay: 0
-  shieldRechargeDelayCurrent: 0
-  armor: 0
-  armorCurrent: 0
-  armorRegenRate: 0
-  armorRegenRateCurrent: 0
-  armorRegenDelay: 0
-  armorRegenDelayCurrent: 0
-  armorRegenAmount: 0
-  armorRegenAmountCurrent: 0
-  armorRegenInterval: 0
-  armorRegenIntervalCurrent: 0
-  power: 0
-  powerCurrent: 0
-  powerConsumption: 0
-  powerConsumptionCurrent: 0
-  powerRechargeRate: 0
-  powerRechargeRateCurrent: 0
-  powerRechargeDelay: 0
-  powerRechargeDelayCurrent: 0
 --- !u!1 &7779129305867098140
 GameObject:
   m_ObjectHideFlags: 0

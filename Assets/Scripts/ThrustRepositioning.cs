@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
+/// <summary>
+/// ThrustRepositioning is responsible for repositioning the thruster elements of the player ship along an arc during movement and acceleration.
+/// </summary>
 public class ThrustRepositioning : MonoBehaviour
 {
 
@@ -14,6 +17,9 @@ public class ThrustRepositioning : MonoBehaviour
 	private Vector3 startingPosition;
 	private Quaternion startingRotation;
 
+	/// <summary>
+	/// Initialize transform reference and record the starting position and rotation of the thruster element.
+	/// </summary>
 	private void Start()
 	{
 		shipTransform = transform.parent;
@@ -21,6 +27,10 @@ public class ThrustRepositioning : MonoBehaviour
 		startingRotation = transform.localRotation;
 	}
 
+	/// <summary>
+	/// Offset the thruster element based on the normalized thrust value
+	/// </summary>
+	/// <param name="thrust">A normalized value representing total thrust force.</param>
 	public void ApplyThrust(float thrust)
 	{
 		

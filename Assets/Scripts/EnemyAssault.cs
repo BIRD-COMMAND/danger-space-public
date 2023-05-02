@@ -15,23 +15,29 @@ public class EnemyAssault : Agent
 	/// <summary>
 	/// Agent will flee when health percentage is below this value
 	/// </summary>
-	[Header("Enemy Assault"), Range(0f, 1f)]	
+	[Header("Enemy Assault"), Range(0f, 1f), Tooltip("Agent will flee when health percentage is below this value")]
 	public float fleeThreshold = 0.5f;
 
 	/// <summary>
 	/// The agent can only fire its weapon if this is set to true
 	/// </summary>
+	[Tooltip("The agent can only fire its weapon if this is set to true")]
 	public bool fireWeapon = true;
 
 	private void Start() { 
+		// set a default path to the world origin
 		path = new LinePath(Position, Vector3.zero); 
 	}
 
 	private void FixedUpdate()
 	{
 		
+		// try to target the player, otherwise wander
+
 		target = GameManager.Player;
 		if (!target) { Self_Flee(); return; }
+
+		// set current agent state based on health percentage and fleeThreshold
 
 		state = HealthPercent > fleeThreshold ? State.Enemy_Pursue : State.Self_Flee;
 
@@ -67,6 +73,7 @@ public class EnemyAssault : Agent
 	}
 
 	private void Self_Flee() {
+		// this combination is a wandering behavior avoiding collisions and obstacles
 		Steer(Wander() + AvoidObstacles() + AvoidCollisionsAll());
 		FaceHeading(); 
 	}

@@ -543,7 +543,7 @@ MonoBehaviour:
   obstacleAvoidDistance: 20
   obstacleAvoidanceMultiplier: 4
   obstacleCheckDistanceMultiplier: 2
-  debugObstacleAvoidance: 0
+  debugObstacleAvoidance: 1
   mainWhiskerLen: 12.5
   sideWhiskerLen: 7.01
   sideWhiskerAngle: 45

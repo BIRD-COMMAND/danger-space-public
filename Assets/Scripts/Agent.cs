@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Extensions;
-using Shapes;
 
+/// <summary>
+/// An Agent is an Entity with movement and steering capabilities implemented. It is the base class for all moving AI units in the game.
+/// </summary>
 public abstract class Agent : Entity
 {
 
@@ -16,67 +17,34 @@ public abstract class Agent : Entity
 	public enum State
 	{
 
-		Self_Idle,
-		Self_Drift,
-		Self_Patrol,
-		Self_Flee,
-		Self_FleeBattle,
-		Self_FleeSeekAllies,
+		Self_Idle, Self_Drift, Self_Patrol, Self_Flee, Self_FleeBattle, Self_FleeSeekAllies, 
 
-		Leader_Seek,
-		Leader_SeekArrive,
-		Leader_Pursue,
-		Leader_PursueArrive,
-		Leader_Flee,
-		Leader_Attack,
-		Leader_Defend,
-		Leader_Repair,
-		Leader_Buff,
+		Leader_Seek, Leader_SeekArrive, Leader_Pursue, Leader_PursueArrive, 
+		Leader_Flee, Leader_Attack, Leader_Defend, Leader_Repair, Leader_Buff, 
 
-		Formation_Seek,
-		Formation_SeekArrive,
-		Formation_Pursue,
-		Formation_PursueArrive,
-		Formation_Flee,
-		Formation_Attack,
-		Formation_Defend,
-		Formation_Repair,
-		Formation_Buff,
-		Formation_Create,
-		Formation_Destroy,
-		Formation_Enter,
-		Formation_Fly,
-		Formation_AttackFrom,
-		Formation_DefendFrom,
-		Formation_RepairFrom,
-		Formation_BuffFrom,
+		Formation_Seek, Formation_SeekArrive, Formation_Pursue, Formation_PursueArrive, 
+		Formation_Flee, Formation_Attack, Formation_Defend, Formation_Repair, Formation_Buff, 
+		Formation_Create, Formation_Destroy, Formation_Enter, Formation_Fly, 
+		Formation_AttackFrom, Formation_DefendFrom, Formation_RepairFrom, Formation_BuffFrom, 
 
-		Enemy_Seek,
-		Enemy_SeekArrive,
-		Enemy_Pursue,
-		Enemy_PursueArrive,
-		Enemy_Flee,
-		Enemy_Attack,
-		Enemy_Defend,
-		Enemy_Repair,
-		Enemy_Buff,
+		Enemy_Seek, Enemy_SeekArrive, Enemy_Pursue, Enemy_PursueArrive, 
+		Enemy_Flee, Enemy_Attack, Enemy_Defend, Enemy_Repair, Enemy_Buff, 
 
-
-		Zone_ApproachRally,
-		Zone_ApproachFallback,
-		Zone_Approach1,
-		Zone_Approach2,
-		Zone_Approach3,
-		Zone_Approach4,
+		Zone_ApproachRally, Zone_ApproachFallback, Zone_Approach1, Zone_Approach2, Zone_Approach3, Zone_Approach4, 
 
 	}
 
 	#endregion
 
+	/// <summary>
+	/// The current AI state of the agent
+	/// </summary>
 	[Header("Agent")]
-
 	public State state;
 	
+	/// <summary>
+	/// The current path the agent is following
+	/// </summary>
 	public LinePath path;
 
 	protected override void Awake() {
@@ -131,6 +99,9 @@ public abstract class Agent : Entity
 		return acceleration;
 	}
 
+	/// <summary>
+	/// A seek steering behavior. Will return the steering for the current game object to seek a given position
+	/// </summary>
 	public Vector2 Seek(Vector2 targetPosition)
 	{
 		return Seek(targetPosition, maxAcceleration);
@@ -186,6 +157,9 @@ public abstract class Agent : Entity
 		return acceleration;
 	}
 
+	/// <summary>
+	/// Returns true if the Agent is within the arriveSlowRadius of its targetPosition
+	/// </summary>
 	public bool IsArriving(Vector2 targetPosition) { return (targetPosition - Position).magnitude < arriveSlowRadius; }
 
 	#endregion
@@ -262,6 +236,9 @@ public abstract class Agent : Entity
 		return Arrive(explicitTarget + ((Position - explicitTarget).normalized * range));
 	}
 
+	/// <summary>
+	/// Returns true if the Agent is within the arriveSlowRadius of the given range relative to its targetPosition.
+	/// </summary>
 	public bool IsArrivingInRange(Entity target, float range) {
 		Vector2 displacement = target.Position - Position;
 		float distance = displacement.magnitude;
@@ -270,10 +247,6 @@ public abstract class Agent : Entity
 		Vector2 explicitTarget = target.Position + target.Velocity * prediction;
 		return (explicitTarget + ((Position - explicitTarget).normalized * range) - Position).magnitude < arriveSlowRadius;
 	}
-
-	#endregion
-
-	#region Interpose
 
 	/// <summary>
 	/// Calculates the steering for an agent so it stays positioned between two targets
@@ -638,11 +611,11 @@ public abstract class Agent : Entity
 
 	[Header("Flee")]
 
-	public float fleePanicDist = 3.5f;
-
-	public bool fleeDecelerateOnStop = true;
+	public float fleePanicDistance = 3.5f;
 
 	public float fleeTimeToTarget = 0.1f;
+
+	public bool fleeDecelerateOnStop = true;
 
 	public Vector2 Flee(Vector2 targetPosition)
 	{
@@ -650,7 +623,7 @@ public abstract class Agent : Entity
 		Vector2 acceleration = Position - targetPosition;
 
 		/* If the target is far way then don't flee */
-		if (acceleration.magnitude > fleePanicDist) {
+		if (acceleration.magnitude > fleePanicDistance) {
 			/* Slow down if we should decelerate on stop */
 			if (fleeDecelerateOnStop && Velocity.magnitude > 0.001f) {
 				/* Decelerate to zero velocity in time to target amount of time */

@@ -732,20 +732,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emanation: 0
-  projectile: {fileID: 2946081766507428005, guid: d44e66c788fda0b40a3787fa00c52d46, type: 3}
-  impactEffect: {fileID: 6847970898024345062, guid: e2035873a38851f408a9acc81c68aa43, type: 3}
-  fireEffects: []
+  projectilePrefab: {fileID: 2946081766507428005, guid: d44e66c788fda0b40a3787fa00c52d46, type: 3}
+  impactEffectPrefab: {fileID: 6847970898024345062, guid: e2035873a38851f408a9acc81c68aa43, type: 3}
   projectileSpawn: {fileID: 7264131024865671819}
-  projectileSpawnRadius: 1
   projectilesPerShot: 1
+  projectileSpawnRadius: 1
   projectileSpeed: 100
   projectileLifetime: 10
-  projectileSize: 0
   projectileDamage: 1
-  projectileRange: 0
   projectileSpread: 3
   projectileRateOfFire: 0.333
-  projectileRateOfFireCurrent: 0
+  projectileShotCooldown: 0
   projectileAmmo: 100
   projectileAmmoCurrent: 100
   projectileAmmoPerShot: 1
@@ -766,17 +763,16 @@ MonoBehaviour:
   faction: 64
   body: {fileID: 0}
   bounds: {fileID: 2867127581348205316}
+  target: {fileID: 0}
   drops:
   - prefab: {fileID: 9157298823971073651, guid: c891a4649215e26489d26485c2ce25df, type: 3}
     spawnChance: 0.25
-  shapes: []
-  target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
-  wreckagePrefab: {fileID: 0}
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 0
   maxVelocity: 50
   maxAcceleration: 200
@@ -805,9 +801,9 @@ MonoBehaviour:
   distanceBetween: 10
   collisionDetectionRadiusMultiplier: 4
   collisionAvoidanceMultiplier: 1.5
-  fleePanicDist: 3.5
-  fleeDecelerateOnStop: 1
+  fleePanicDistance: 3.5
   fleeTimeToTarget: 0.1
+  fleeDecelerateOnStop: 1
   evadeMaxPredictionTime: 1
   hideDistanceFromBoundary: 6
   wanderOffset: 16

@@ -1,18 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Base class for all objects that can be pooled
+/// Poolable is an abstract class representing a poolable object, which can be instantiated, reused and returned to an object pool.
 /// </summary>
 public abstract class Poolable : MonoBehaviour
 {
 
+	/// <summary>
+	/// Reference to the object pool that this poolable object belongs to
+	/// </summary>
 	[HideInInspector] public ObjectPool pool;
 
+	/// <summary>
+	/// Initializes the poolable object by setting its object pool, enqueuing it into the pool, and deactivating it.
+	/// </summary>
+	/// <param name="pool">The object pool to assign this poolable object to.</param>
+	/// <returns>The initialized poolable object.</returns>
 	public Poolable Initialize(ObjectPool pool) { 
 		this.pool = pool; pool.queue.Enqueue(this); gameObject.SetActive(false); return this; 
 	}
-    public abstract Poolable Activate(Vector3 position, Quaternion rotation);
+	
+	/// <summary>
+	/// Activates the poolable object, setting its position and rotation.
+	/// </summary>
+	/// <param name="position">The new position of the poolable object.</param>
+	/// <param name="rotation">The new rotation of the poolable object.</param>
+	/// <returns>The activated poolable object.</returns>
+	public abstract Poolable Activate(Vector3 position, Quaternion rotation);
+	
+	/// <summary>
+	/// Returns the poolable object to its object pool and resets its state.
+	/// </summary>
+	/// <returns>The returned poolable object.</returns>
 	public abstract Poolable Return();
+
 }

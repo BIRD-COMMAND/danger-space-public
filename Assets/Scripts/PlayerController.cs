@@ -1,25 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 using Shapes;
 using Unity.VisualScripting;
 
+/// <summary>
+/// PlayerController class is responsible for handling the player's movement, interactions, and weapon firing in the game.
+/// </summary>
 public class PlayerController : Agent
 {
+
+	/// <summary>
+	/// The glow effect GameObject attached to the Player's ship
+	/// </summary>
 	[Header("Player")]
 	[SerializeField] private GameObject glow;
+	/// <summary>
+	/// The base weapon GameObject that the player uses to fire
+	/// </summary>
 	[SerializeField] private Weapon baseWeapon;
+	/// <summary>
+	/// The maximum speed the player can reach
+	/// </summary>
 	[SerializeField] private float maxSpeed = 40f;
+	/// <summary>
+	/// The factor applied to braking when the player exceeds the maximum speed
+	/// </summary>
 	[SerializeField] private float maxSpeedBrakeFactor = 0.025f;
+	/// <summary>
+	/// The maximum thrust force applied to the player's movement
+	/// </summary>
 	[SerializeField] private float maxThrust = 10000f;
+	/// <summary>
+	/// The factor applied to braking when the player releases a movement key
+	/// </summary>
 	[SerializeField] private float brakeFactor = 0.1f;
+	/// <summary>
+	/// The factor applied to turning the player's ship towards the mouse cursor
+	/// </summary>
 	[SerializeField] private float turnFactor = 0.3f;
-
+	/// <summary>
+	/// A boolean value to enable or disable the aim visualization during debugging
+	/// </summary>
 	[SerializeField] private bool debugVisualizeAim = false;
 
-	
 
+	#region Properties for getting the state of the movement keys
+	
 	private Vector2 MoveVector =>
 		new Vector2(
 			(KeyA ? -1 : 0f) + (KeyD ? 1f : 0f),
@@ -30,7 +56,9 @@ public class PlayerController : Agent
 	private bool KeyS => Input.GetKey(KeyCode.S);
 	private bool KeyD => Input.GetKey(KeyCode.D);
 
-	// Start is called before the first frame update
+	#endregion
+
+
 	private void Update()
 	{
 		// reposition thrusters based on whether current velocity is moving toward or away from mouse
@@ -50,18 +78,18 @@ public class PlayerController : Agent
 	{
 
 		// Lerp up vector toward mouse position in worldspace
-		body.LookAt(Mouse.WorldPosition, GameManager.SlowTime ? Mathf.Max(turnFactor, 0.6f) : turnFactor);
+		body.LookAt(Mouse.WorldPosition, GameManager.BulletTime ? Mathf.Max(turnFactor, 0.6f) : turnFactor);
 		
 		// debug aim visualization
 		if (debugVisualizeAim) { Debug.DrawLine(transform.position, transform.position + (transform.up * transform.position.DistTo(Mouse.WorldPosition)), Color.green); }
 
 		// Movement
-		if (GameManager.SlowTime) { body.velocity *= GameManager.SlowTimeFactor; }
+		if (GameManager.BulletTime) { body.velocity *= GameManager.SlowTimeFactor; }
 
 		// limit max speed - this approach allows the player to exceed the max speed, but the braking intensifies the faster the player goes
 		if (body.velocity.magnitude > maxSpeed) { body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, maxSpeedBrakeFactor); }
 
-		for (float increment = Time.timeScale; !GameManager.SlowTime || increment < 1f; increment += Time.timeScale) {
+		for (float increment = Time.timeScale; !GameManager.BulletTime || increment < 1f; increment += Time.timeScale) {
 
 			// get input from WASD and apply as a force to body
 			body.AddForce(MoveVector * maxThrust / Time.timeScale);
@@ -74,10 +102,10 @@ public class PlayerController : Agent
 			if (!KeyD && body.velocity.x > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 			if (!KeyA && body.velocity.x < 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithX(0f), brakeFactor); }
 
-			if (!GameManager.SlowTime) { break; }
+			if (!GameManager.BulletTime) { break; }
 		}
 
-		if (GameManager.SlowTime) { body.velocity /= GameManager.SlowTimeFactor; }
+		if (GameManager.BulletTime) { body.velocity /= GameManager.SlowTimeFactor; }
 
 	}
 
@@ -89,9 +117,5 @@ public class PlayerController : Agent
 		glow.GetComponent<Disc>().ColorInner = color.WithAlpha(0.6f);
 		glow.GetComponent<Disc>().ColorOuter = color.WithAlpha(0f);
 	}
-
-	// handle passthrough damage and healing from PlayerDummy class instances
-	public override void RemoteDamage(float damage, Entity source) { base.Damage(damage, source); }
-	public override void RemoteHealing(float damage, Entity source) { base.Heal(damage, source); }
-	
+		
 }

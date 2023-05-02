@@ -120,6 +120,43 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!21 &83019970
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Regular Polygon Transparent (instance)
+  m_Shader: {fileID: 4800000, guid: a008a2b36086d4e4393a9b3c8a6d998f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _StencilComp: 6
+    - _StencilID: 1
+    - _StencilOp: 0
+    - _StencilOpPass: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _ZOffsetFactor: 0
+    - _ZOffsetUnits: 0
+    - _ZTest: 4
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1 &113393019
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,45 +1098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   innerBounds: {fileID: 398811261}
   outerBounds: {fileID: 398811262}
---- !u!21 &878120633
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Disc Transparent [INNER_RADIUS] (instance)
-  m_Shader: {fileID: 4800000, guid: 0736a017ee88a8741b09e7382339ab99, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - INNER_RADIUS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _ColorMask: 1
-    - _StencilComp: 8
-    - _StencilID: 1
-    - _StencilOp: 0
-    - _StencilOpPass: 2
-    - _StencilReadMask: 1
-    - _StencilWriteMask: 1
-    - _ZOffsetFactor: 0
-    - _ZOffsetUnits: 0
-    - _ZTest: 4
-    m_Colors: []
-  m_BuildTextureStacks: []
---- !u!21 &992292740
+--- !u!21 &677254905
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -1136,7 +1135,7 @@ Material:
     - _ZTest: 4
     m_Colors: []
   m_BuildTextureStacks: []
---- !u!21 &1167705990
+--- !u!21 &1083696686
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -1370,6 +1369,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &1459089394
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Disc Transparent [INNER_RADIUS] (instance)
+  m_Shader: {fileID: 4800000, guid: 0736a017ee88a8741b09e7382339ab99, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - INNER_RADIUS
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 1
+    - _StencilComp: 8
+    - _StencilID: 1
+    - _StencilOp: 0
+    - _StencilOpPass: 2
+    - _StencilReadMask: 1
+    - _StencilWriteMask: 1
+    - _ZOffsetFactor: 0
+    - _ZOffsetUnits: 0
+    - _ZTest: 4
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1 &1468926374
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,43 +1693,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcad3210d09059f47bf55373d7e8f439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!21 &2086937092
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Regular Polygon Transparent (instance)
-  m_Shader: {fileID: 4800000, guid: a008a2b36086d4e4393a9b3c8a6d998f, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _ColorMask: 15
-    - _StencilComp: 6
-    - _StencilID: 1
-    - _StencilOp: 0
-    - _StencilOpPass: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _ZOffsetFactor: 0
-    - _ZOffsetUnits: 0
-    - _ZTest: 4
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!114 &37605258441020996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1767,18 +1767,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 113e53c103c35ad48a88c6b20fd53565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   dummy: {fileID: 4788688234721455631}
   screenTrigger: {fileID: 6932801068314733144}
-  dummies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &662426262215079297
 Transform:
   m_ObjectHideFlags: 0
@@ -1891,7 +1881,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2086937092}
+  - {fileID: 1083696686}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1936,103 +1926,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5754385862265145294}
   m_Mesh: {fileID: 43100795730674332, guid: a3d1f56cebf202c448b6fb479f61a9dc, type: 2}
---- !u!114 &2070345857594351690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5477427797817276499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca46cbc89ffc69340bc3c3ff655328f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visualize: 0
-  rally:
-    shape: 1
-    active: 1
-    size: {x: 240, y: 130}
-    position: {x: 0, y: 0}
-    rotation: 0
-  fallback:
-    shape: 1
-    active: 1
-    size: {x: 40, y: 40}
-    position: {x: -100, y: 45}
-    rotation: 0
-  general1:
-    shape: 1
-    active: 1
-    size: {x: 20, y: 130}
-    position: {x: 170, y: 0}
-    rotation: 0
-  general2:
-    shape: 1
-    active: 1
-    size: {x: 20, y: 130}
-    position: {x: -170, y: 0}
-    rotation: 0
-  general3:
-    shape: 0
-    active: 0
-    size: {x: 0, y: 0}
-    position: {x: 0, y: 0}
-    rotation: 0
-  general4:
-    shape: 0
-    active: 0
-    size: {x: 0, y: 0}
-    position: {x: 0, y: 0}
-    rotation: 0
-  support1:
-    shape: 0
-    active: 0
-    size: {x: 0, y: 0}
-    position: {x: 0, y: 0}
-    rotation: 0
-  support2:
-    shape: 0
-    active: 0
-    size: {x: 0, y: 0}
-    position: {x: 0, y: 0}
-    rotation: 0
-  support3:
-    shape: 0
-    active: 0
-    size: {x: 0, y: 0}
-    position: {x: 0, y: 0}
-    rotation: 0
-  support4:
-    shape: 0
-    active: 0
-    size: {x: 0, y: 0}
-    position: {x: 0, y: 0}
-    rotation: 0
-  playerFront:
-    shape: 1
-    active: 1
-    size: {x: 90, y: 50}
-    position: {x: 0, y: 40}
-    rotation: 0
-  playerBack:
-    shape: 1
-    active: 1
-    size: {x: 90, y: 50}
-    position: {x: 0, y: -40}
-    rotation: 0
-  playerLeft:
-    shape: 1
-    active: 1
-    size: {x: 50, y: 90}
-    position: {x: -40, y: 0}
-    rotation: 0
-  playerRight:
-    shape: 1
-    active: 1
-    size: {x: 50, y: 90}
-    position: {x: 40, y: 0}
-    rotation: 0
 --- !u!50 &2292505292113501465
 Rigidbody2D:
   serializedVersion: 4
@@ -2284,7 +2177,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 992292740}
+  - {fileID: 83019970}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2531,7 +2424,6 @@ GameObject:
   - component: {fileID: 6084586260240930104}
   - component: {fileID: 2292505292113501465}
   - component: {fileID: 535546034312879820}
-  - component: {fileID: 2070345857594351690}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2580,7 +2472,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1167705990}
+  - {fileID: 677254905}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2938,7 +2830,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 3515856047047001512, guid: 956713a005ff62545852238b9fb93119, type: 3}
   spawnPoint: {x: 0, y: 0}
-  debugKeepPlayerInvulnerable: 0
   playerScore: 0
   playerLives: 4
   playerRespawnTime: 2
@@ -2969,7 +2860,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 878120633}
+  - {fileID: 1459089394}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3150,15 +3041,14 @@ MonoBehaviour:
   faction: 2
   body: {fileID: 0}
   bounds: {fileID: 8463159644601532935}
-  drops: []
-  shapes: []
   target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
-  wreckagePrefab: {fileID: 0}
+  drops: []
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 0
   maxVelocity: 3.5
   maxAcceleration: 10

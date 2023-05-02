@@ -1,16 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 
+/// <summary>
+/// The ScreenTrigger is a BoxCollider2D that is the size of the screen.
+/// </summary>
 [RequireComponent(typeof(BoxCollider2D))]
 public class ScreenTrigger : MonoBehaviour
 {
-
-	public static BoxCollider2D Collider => instance.screenTrigger;
-	private BoxCollider2D screenTrigger;
+	
 	private static ScreenTrigger instance;
 
+	/// <summary>
+	/// The BoxCollider2D for the ScreenTrigger.
+	/// </summary>
+	public static BoxCollider2D Collider => instance.screenTrigger;
+	private BoxCollider2D screenTrigger;
+
+	/// <summary>
+	/// Initializes the static instance of the class and sets the ScreenTrigger to the size of the screen.
+	/// </summary>
 	private void Awake() { 
 		instance = this;
 		if (this.FindComponent(out Camera cam) && cam.orthographic) {
@@ -21,13 +29,22 @@ public class ScreenTrigger : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Returns true if the given position is within the ScreenTrigger.
+	/// </summary>
 	public static bool Contains(Vector2 position) { 
 		return instance.screenTrigger.OverlapPoint(position);
 	}
+	/// <summary>
+	/// Returns true if the given position is within the ScreenTrigger.
+	/// </summary>
 	public static bool IsOnScreen(Vector2 position) {
 		return Contains(position);
 	}
 
+	/// <summary>
+	/// Handles returning Projectiles to their pool when they go off screen.
+	/// </summary>
 	private void OnTriggerExit2D(Collider2D collision)
 	{
 		

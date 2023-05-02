@@ -1,19 +1,32 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 
+/// <summary>
+/// The LinePath class represents a sequence of connected line segments defined by a set of nodes.<br/>
+/// It provides various utility functions for working with paths, such as calculating distances,<br/>
+/// finding the closest point on the path, and drawing the path in the scene view.
+/// </summary>
 [Serializable]
 public class LinePath
 {
-    public Vector3[] nodes;
 
-    [NonSerialized]
+	/// <summary>
+	/// An array of Vector3 nodes representing the points that make up the path.
+	/// </summary>
+	public Vector3[] nodes;
+
+	/// <summary>
+	/// The maximum distance between the first and last nodes of the path.
+	/// </summary>
+	[NonSerialized]
     public float maxDist;
 
-    [NonSerialized]
+	/// <summary>
+	/// An array of cumulative distances between each consecutive pair of nodes in the path.
+	/// </summary>
+	[NonSerialized]
     public float[] distances;
 
     /// <summary>
@@ -25,9 +38,21 @@ public class LinePath
         set { nodes[i] = value; CalcDistances(); }
     }
 
+    /// <summary>
+    /// Returns true if the path is empty
+    /// </summary>
     public bool Empty => nodes.Length == 0;
+    /// <summary>
+    /// Returns the number of nodes in the path
+    /// </summary>
     public int Length => nodes.Length;
+    /// <summary>
+    /// Returns the first node in the path
+    /// </summary>
     public Vector3 First => nodes[0];
+    /// <summary>
+    /// Returns the last node in the path
+    /// </summary>
     public Vector3 Last => nodes[nodes.Length - 1];
 
     /// <summary>
@@ -79,7 +104,10 @@ public class LinePath
         return distances[closestSegment] + GetParamForSegment(position, nodes[closestSegment], nodes[closestSegment + 1], agent);
     }
 
-    public int GetClosestSegment(Vector3 position)
+	/// <summary>
+	/// Find the first point in the closest line segment to the specified position
+	/// </summary>
+	public int GetClosestSegment(Vector3 position)
     {
         /* Find the first point in the closest line segment to the path */
         float closestDist = DistToSegment(position, nodes[0], nodes[1]);
@@ -164,6 +192,10 @@ public class LinePath
         return t * (v - w).magnitude;
     }
 
+    /// <summary>
+    /// Removes the specified node from the path
+    /// </summary>
+    /// <param name="i">Index of the node to remove</param>
     public void RemoveNode(int i)
     {
         Vector3[] newNodes = new Vector3[nodes.Length - 1];
@@ -181,6 +213,9 @@ public class LinePath
         CalcDistances();
     }
 
+    /// <summary>
+    /// Reverses the path
+    /// </summary>
     public void ReversePath()
     {
         Array.Reverse(nodes);

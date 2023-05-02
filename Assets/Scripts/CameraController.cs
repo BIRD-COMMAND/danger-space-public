@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 
+/// <summary>
+/// Basic debug camera controller with middle-click mouse panning and scroll wheel zoom.<br/>
+/// Not currently used in the project, but useful when prototyping.
+/// </summary>
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
 {
@@ -14,12 +18,11 @@ public class CameraController : MonoBehaviour
 	public int scrollZoomFactor = 512;
 
 	private Camera cam;
+
 	private bool currentlyMousePanning = false;
 
-	// Start is called before the first frame update
-	void OnEnable() { cam = GetComponent<Camera>(); }
+	void Awake() { cam = GetComponent<Camera>(); }
 
-	// Update is called once per frame
 	void Update()
 	{
 
