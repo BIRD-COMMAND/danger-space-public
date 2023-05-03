@@ -1,7 +1,6 @@
 using UnityEngine;
 using Extensions;
 using Shapes;
-using Unity.VisualScripting;
 
 /// <summary>
 /// PlayerController class is responsible for handling the player's movement, interactions, and weapon firing in the game.

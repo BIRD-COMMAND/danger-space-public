@@ -118,7 +118,11 @@ public class GameManager : MonoBehaviour
 
 	private void Start() { if (SceneManager.loadedSceneCount == 1) { SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive); } }
 	
-	void Update() { UpdateUI(); HandleRespawn(); }
+	void Update() { 
+		UpdateUI(); 
+		HandleRespawn(); 
+		if (Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); } 
+	}
 	
 	void FixedUpdate() { TrackStructuresOnScreen(); }
 
