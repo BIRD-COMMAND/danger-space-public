@@ -21,7 +21,7 @@ public class PoolManager : MonoBehaviour
 		CreatePoolsForResources("Prefabs/Particles",	"ParticlesPool",	20);
 		CreatePoolsForResources("Prefabs/Pickups",		"PickupsPool",		20);
 		CreatePoolsForResources("Prefabs/Projectiles",	"ProjectilesPool",	60);
-		CreatePoolsForResources("Prefabs/Ships",		"ShipsPool",		20);
+		CreatePoolsForResources("Prefabs/Ships",		"ShipsPool",		04);
 		CreatePoolsForResources("Prefabs/Trails",		"TrailsPool",		60);				
 	}
 

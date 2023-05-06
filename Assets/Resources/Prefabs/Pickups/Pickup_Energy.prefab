@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 4973177849377255547}
   - component: {fileID: 3392960206062951083}
   m_Layer: 0
-  m_Name: Pickup_BulletTime
+  m_Name: Pickup_Energy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -395,4 +395,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool: {fileID: 0}
-  bulletTimeDuration: 5
+  energyRestored: 50

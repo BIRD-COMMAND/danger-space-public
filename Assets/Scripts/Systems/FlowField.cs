@@ -14,22 +14,27 @@ public class FlowField : MonoBehaviour
 	/// <summary>
 	/// The width of the flow field grid in cells.
 	/// </summary>
+	[Tooltip("The width of the flow field grid in cells.")]
 	public int width = 10;
 	/// <summary>
 	/// The height of the flow field grid in cells.
 	/// </summary>
+	[Tooltip("The height of the flow field grid in cells.")]
 	public int height = 10;
 	/// <summary>
 	/// The size of each cell in the flow field grid.
 	/// </summary>
+	[Tooltip("The size of each cell in the flow field grid.")]
 	public float cellSize = 1f;
 	/// <summary>
 	/// The radius around each cell for detecting colliders.
 	/// </summary>
+	[Tooltip("The radius around each cell for detecting colliders.")]
 	public float detectionRadius = 1f;
 	/// <summary>
 	/// Whether the flow field should be visualized in the scene view.
 	/// </summary>
+	[Tooltip("Whether the flow field should be visualized in the scene view.")]
 	public bool showFlowField = true;
 	
 	/// <summary>
@@ -55,7 +60,7 @@ public class FlowField : MonoBehaviour
 	private IEnumerator RegenerateFlowField()
 	{
 		while (Application.isPlaying) {
-			GenerateFlowField();
+			if (!GameManager.IsPaused) { GenerateFlowField(); }
 			yield return new WaitForSecondsRealtime(0.2f);
 		}
 	}
@@ -85,18 +90,18 @@ public class FlowField : MonoBehaviour
 		// Calculate bounds of the flow field in world space
 		bounds = new Rect(
 			transform.position.x - (width * cellSize * 0.5f),
-			transform.position.y + (height * cellSize * 0.5f),
+			transform.position.y - (height * cellSize * 0.5f),
 			width * cellSize, 
 			height * cellSize
 		);
-		Vector2 localPosition = Vector2.zero, transformPosition = transform.position;
-		
+		Vector2 normalizedPosition = Vector2.zero;
+		float fWidth = width, fHeight = height;
+
 		// Loop through all cells in the grid
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				localPosition.x = (x - width / 2) * cellSize;
-				localPosition.y = (y - height / 2) * cellSize;
-				flowField[x, y] = CalculateFlowVector(localPosition + transformPosition);
+				normalizedPosition.x = x / fWidth; normalizedPosition.y = y / fHeight;
+				flowField[x, y] = CalculateFlowVector(Rect.NormalizedToPoint(bounds, normalizedPosition));
 			}
 		}
 
@@ -129,11 +134,11 @@ public class FlowField : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Gets the flow field force at a given entity's position and radius.
+	/// Gets the flow field force at a given entity's position and radius multiplied by the entity's flowFieldMultiplier.
 	/// </summary>
 	/// <param name="entity">The entity whose position to check.</param>
 	/// <returns>The cumulative flow vector within the entity's radius.</returns>
-	public static Vector2 GetForce(Entity entity) { return GetForce(entity.Position, entity.Radius); }
+	public static Vector2 GetForce(Entity entity) { return GetForce(entity.Position, entity.Radius) * entity.flowFieldMultiplier; }
 	/// <summary>
 	/// Gets the flow field force at a given position and radius.
 	/// </summary>
@@ -143,20 +148,17 @@ public class FlowField : MonoBehaviour
 	public static Vector2 GetForce(Vector2 position, float radius) { return instance.M_GetForce(position, radius); }
 	public Vector2 M_GetForce(Vector2 position, float radius)
 	{
-		
-		// Check if the input position is within the flow field bounds
-		if (!bounds.Contains(position)) { return Vector2.zero; }
-
 		// Calculate grid coordinates of the center cell
 		Vector2 positionNormalized = Rect.PointToNormalized(bounds, position);
 		int centerX = Mathf.FloorToInt(positionNormalized.x * width);
-		int centerY = Mathf.FloorToInt(1f - (positionNormalized.y * height));
+		int centerY = Mathf.FloorToInt(positionNormalized.y * height);
 
 		// Calculate the number of cells to check in each direction based on the radius
 		int cellsToCheck = Mathf.CeilToInt(radius / cellSize);
 
 		// Initialize vectors
-		Vector2 cumulativeFlowVector = Vector2.zero, cellCenter;
+		Vector2 cumulativeFlowVector = Vector2.zero, cellCenter, normalizedPosition;
+		float fWidth = width, fHeight = height;
 
 		// Loop through the grid cells within the specified radius
 		for (int x = centerX - cellsToCheck; x <= centerX + cellsToCheck; x++) {
@@ -164,7 +166,8 @@ public class FlowField : MonoBehaviour
 				// Check if the grid coordinates are within the flow field bounds
 				if (x >= 0 && x < width && y >= 0 && y < height) {
 					// Calculate the world space position of the current cell's center
-					cellCenter = Rect.NormalizedToPoint(bounds, new Vector2(x / (float)width, 1f - (y / (float)height)));
+					normalizedPosition.x = x / fWidth; normalizedPosition.y = y / fHeight;
+					cellCenter = Rect.NormalizedToPoint(bounds, normalizedPosition);
 					// Check if the distance between the cell's center and the input position is within the radius
 					if (Vector2.Distance(position, cellCenter) <= radius) {
 						// Add the flow vector of the current cell to the cumulative flow vector
@@ -183,11 +186,15 @@ public class FlowField : MonoBehaviour
 	void DrawFlowField()
 	{
 		if (flowField == null) { return; }
-		Vector2 worldPosition; float duration = 0.24f * Time.timeScale;
+		Vector2 worldPosition, normalizedPosition; float duration = 0.24f * Time.timeScale;
+		float fWidth = width, fHeight = height;
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				worldPosition = new Vector2((x - width / 2) * cellSize, (y - height / 2) * cellSize) + (Vector2)transform.position;
-				Debug.DrawLine(worldPosition, worldPosition + flowField[x, y] * cellSize * 0.5f, Color.white, duration);
+				normalizedPosition.x = x / fWidth; normalizedPosition.y = y / fHeight;
+				worldPosition = Rect.NormalizedToPoint(bounds, normalizedPosition);
+				Debug.DrawLine(worldPosition, worldPosition + flowField[x, y] * cellSize * 0.5f, 
+					Color.HSVToRGB((Vector2.SignedAngle(Vector2.up, flowField[x, y]) + 180f) / 360f, 1f, 1f), duration
+				);
 			}
 		}
 	}

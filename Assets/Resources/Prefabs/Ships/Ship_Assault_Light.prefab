@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 2867127581348205316}
   - component: {fileID: 6178318782010305881}
   - component: {fileID: 6787694930414228711}
+  - component: {fileID: 5108345656176238424}
   m_Layer: 0
   m_Name: Ship_Assault_Light
   m_TagString: Untagged
@@ -760,9 +761,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51600c02f7891a44eac76e3b189508b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 64
   body: {fileID: 0}
   bounds: {fileID: 2867127581348205316}
+  separationBounds: {fileID: 0}
   target: {fileID: 0}
   drops:
   - prefab: {fileID: 9157298823971073651, guid: c891a4649215e26489d26485c2ce25df, type: 3}
@@ -777,6 +780,7 @@ MonoBehaviour:
   maxVelocity: 50
   maxAcceleration: 200
   turnSpeed: 300
+  flowFieldMultiplier: 4
   inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 8
@@ -793,12 +797,11 @@ MonoBehaviour:
   pathDirection: 1
   obstacleAvoidDistance: 20
   obstacleAvoidanceMultiplier: 3
-  obstacleCheckDistanceMultiplier: 1
-  debugObstacleAvoidance: 1
-  mainWhiskerLen: 1.25
-  sideWhiskerLen: 0.701
+  mainWhiskerLength: 25
+  sideWhiskerLength: 18
   sideWhiskerAngle: 45
-  distanceBetween: 10
+  debugObstacleAvoidance: 1
+  collisionDistanceBetween: 0
   collisionDetectionRadiusMultiplier: 4
   collisionAvoidanceMultiplier: 1.5
   fleePanicDistance: 3.5
@@ -813,6 +816,19 @@ MonoBehaviour:
   maxSepDist: 12
   fleeThreshold: 0
   fireWeapon: 1
+--- !u!114 &5108345656176238424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074287592748378555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a7de19ac09ca146ae415b18154141e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invulnerabilityTime: 0.5
 --- !u!1 &4316363279889817501
 GameObject:
   m_ObjectHideFlags: 0

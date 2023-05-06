@@ -24,18 +24,16 @@ public class EnemyAssault : Agent
 	[Tooltip("The agent can only fire its weapon if this is set to true")]
 	public bool fireWeapon = true;
 
-	private void Start() { 
-		// set a default path to the world origin
-		path = new LinePath(Position, Vector3.zero); 
-	}
-
+	/// <summary>
+	/// Execute the appropriate behavior based on the Agent's current state
+	/// </summary>
 	private void FixedUpdate()
 	{
 		
 		// try to target the player, otherwise wander
 
 		target = GameManager.Player;
-		if (!target) { Self_Flee(); return; }
+		if (!target) { state = State.Self_Flee; Self_Flee(); return; }
 
 		// set current agent state based on health percentage and fleeThreshold
 
@@ -49,6 +47,9 @@ public class EnemyAssault : Agent
 
 	}
 
+	/// <summary>
+	/// A pursuit behavior that maintains a certain distance from the target and fires at it if possible
+	/// </summary>
 	private void Enemy_Pursue()
 	{
 		
@@ -60,7 +61,7 @@ public class EnemyAssault : Agent
 		accel += GetInRange(target, 40f);
 		accel += AvoidObstacles();
 		accel += AvoidCollisionsWithAllies();
-		accel += FlowField.GetForce(this) * 3f;
+		accel += FlowField.GetForce(this);
 		Steer(accel);
 
 		// face target if within 50, else face heading
@@ -72,8 +73,10 @@ public class EnemyAssault : Agent
 
 	}
 
+	/// <summary>
+	/// A wandering behavior avoiding collisions and obstacles
+	/// </summary>
 	private void Self_Flee() {
-		// this combination is a wandering behavior avoiding collisions and obstacles
 		Steer(Wander() + AvoidObstacles() + AvoidCollisionsAll());
 		FaceHeading(); 
 	}

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1224486055290549898}
   - component: {fileID: 5056582451939254573}
   - component: {fileID: 5145217350644530750}
+  - component: {fileID: 5213307076784895556}
   m_Layer: 7
   m_Name: Ship_Assault_Orb
   m_TagString: Untagged
@@ -264,21 +265,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51600c02f7891a44eac76e3b189508b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 64
   body: {fileID: 0}
   bounds: {fileID: 5056582451939254573}
-  shapes: []
+  separationBounds: {fileID: 0}
   target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
-  wreckagePrefab: {fileID: 0}
+  drops: []
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 0
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
+  flowFieldMultiplier: 4
+  inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 5
   state: 0
@@ -294,28 +299,38 @@ MonoBehaviour:
   pathDirection: 1
   obstacleAvoidDistance: 0.5
   obstacleAvoidanceMultiplier: 4
-  obstacleCheckDistanceMultiplier: 1
-  debugObstacleAvoidance: 0
-  mainWhiskerLen: 1.25
-  sideWhiskerLen: 0.701
+  mainWhiskerLength: 12.5
+  sideWhiskerLength: 7
   sideWhiskerAngle: 45
-  distanceBetween: 0
+  debugObstacleAvoidance: 0
+  collisionDistanceBetween: 0
   collisionDetectionRadiusMultiplier: 4
   collisionAvoidanceMultiplier: 1.5
-  fleePanicDist: 3.5
-  fleeDecelerateOnStop: 1
+  fleePanicDistance: 3.5
   fleeTimeToTarget: 0.1
+  fleeDecelerateOnStop: 1
   evadeMaxPredictionTime: 1
   hideDistanceFromBoundary: 0.6
   wanderOffset: 1.5
   wanderRadius: 4
   wanderRate: 0.4
-  wander2Radius: 1.2
-  wander2Distance: 2
-  wander2Jitter: 40
   sepMaxAcceleration: 25
   maxSepDist: 1
   fleeThreshold: 0.5
+  fireWeapon: 1
+--- !u!114 &5213307076784895556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191185547667513190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a7de19ac09ca146ae415b18154141e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invulnerabilityTime: 0.5
 --- !u!1 &7319166930321926902
 GameObject:
   m_ObjectHideFlags: 0

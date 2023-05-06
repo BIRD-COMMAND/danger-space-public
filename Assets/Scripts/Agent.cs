@@ -37,20 +37,23 @@ public abstract class Agent : Entity
 	#endregion
 
 	/// <summary>
-	/// The current AI state of the agent
+	/// The current AI state of the Agent
 	/// </summary>
-	[Header("Agent")]
+	[Header("Agent"), Tooltip("The current AI state of the Agent")]
 	public State state;
-	
+
 	/// <summary>
 	/// The current path the agent is following
 	/// </summary>
+	[Tooltip("The current path the agent is following")]
 	public LinePath path;
 
+	/// <summary>
+	/// Set up Entity default path and hide distance.
+	/// </summary>
 	protected override void Awake() {
 		base.Awake();
-		mainWhiskerLen = obstacleAvoidDistance * obstacleCheckDistanceMultiplier;
-		sideWhiskerLen = obstacleAvoidDistance * obstacleCheckDistanceMultiplier * 0.75f;
+		path = new LinePath(Position, Vector3.zero);
 		hideDistanceFromBoundary = Radius * 1.5f;
 	}	
 
@@ -73,62 +76,57 @@ public abstract class Agent : Entity
 	/// <summary>
 	/// The radius from the target that means we are close enough and have arrived
 	/// </summary>
+	[Tooltip("The radius from the target that means we are close enough and have arrived")]
 	public float arriveTargetRadius = 0.005f;
 	/// <summary>
 	/// The radius from the target where we start to slow down
 	/// </summary>
+	[Tooltip("The radius from the target where we start to slow down")]
 	public float arriveSlowRadius = 1f;
 	/// <summary>
 	/// The time in which we want to achieve the targetSpeed
 	/// </summary>
+	[Tooltip("The time in which we want to achieve the targetSpeed")]
 	public float arriveTimeToTarget = 0.1f;
 
 	/// <summary>
 	/// A seek steering behavior. Will return the steering for the current game object to seek a given position
 	/// </summary>
-	public Vector2 Seek(Vector2 targetPosition, float maxSeekAccel)
+	public Vector2 Seek(Vector2 targetPosition, float maxSeekAcceleration)
 	{
-		/* Get the direction */
+		//Get the direction
 		Vector2 acceleration = targetPosition - Position;
-
-		acceleration.Normalize();
-
-		/* Accelerate to the target */
-		acceleration *= maxSeekAccel;
-
-		return acceleration;
+		//Accelerate to the target
+		return acceleration.normalized * maxSeekAcceleration;
 	}
 
 	/// <summary>
 	/// A seek steering behavior. Will return the steering for the current game object to seek a given position
 	/// </summary>
-	public Vector2 Seek(Vector2 targetPosition)
-	{
-		return Seek(targetPosition, maxAcceleration);
-	}
+	public Vector2 Seek(Vector2 targetPosition) { return Seek(targetPosition, maxAcceleration); }
 
 	/// <summary>
 	/// Returns the steering for a character so it arrives at the target
 	/// </summary>
 	public Vector2 Arrive(Vector2 targetPosition)
 	{
-		
+
 		//Debug.DrawLine(transform.position, targetPosition, Color.cyan, 0f, false);
 
-		/* Get the right direction for the linear acceleration */
-		Vector2 targetVelocity = targetPosition - Position;
-		//Debug.Log("Displacement " + targetVelocity.ToString("f4"));
+		//Get the right direction for the linear acceleration
 
-		/* Get the distance to the target */
+		Vector2 targetVelocity = targetPosition - Position;
+
+		//Get the distance to the target
 		float dist = targetVelocity.magnitude;
 
-		/* If we are within the stopping radius then stop */
+		//If we are within the stopping radius then stop
 		if (dist < arriveTargetRadius) {
 			Velocity = Vector2.zero;
 			return Vector2.zero;
 		}
 
-		/* Calculate the target speed, full speed at slowRadius distance and 0 speed at 0 distance */
+		//Calculate the target speed, full speed at slowRadius distance and 0 speed at 0 distance
 		float targetSpeed;
 		if (dist > arriveSlowRadius) {
 			targetSpeed = maxVelocity;
@@ -137,23 +135,24 @@ public abstract class Agent : Entity
 			targetSpeed = maxVelocity * (dist / arriveSlowRadius);
 		}
 
-		/* Give targetVelocity the correct speed */
+		//Give targetVelocity the correct speed
 		targetVelocity.Normalize();
 		targetVelocity *= targetSpeed;
 
-		/* Calculate the linear acceleration we want */
+		//Calculate the linear acceleration we want
 		Vector2 acceleration = targetVelocity - Velocity;
-		/* Rather than accelerate the character to the correct speed in 1 second, 
-            * accelerate so we reach the desired speed in timeToTarget seconds 
-            * (if we were to actually accelerate for the full timeToTarget seconds). */
+
+		// Rather than accelerate the character to the correct speed in 1 second, 
+		// accelerate so we reach the desired speed in arriveTimeToTarget seconds
+		// (if we were to actually accelerate for the full arriveTimeToTarget seconds).
 		acceleration *= 1 / arriveTimeToTarget;
 
-		/* Make sure we are accelerating at max acceleration */
+		//Make sure we are accelerating at max acceleration
 		if (acceleration.magnitude > maxAcceleration) {
 			acceleration.Normalize();
 			acceleration *= maxAcceleration;
 		}
-		//Debug.Log("Accel " + acceleration.ToString("f4"));
+		
 		return acceleration;
 	}
 
@@ -171,11 +170,13 @@ public abstract class Agent : Entity
 	/// <summary>
 	/// Maximum prediction time the pursue will predict in the future
 	/// </summary>
+	[Tooltip("Maximum prediction time the pursue will predict in the future")]
 	public float maxPredictionTime = 1f;
 
 	/// <summary>
 	/// Radius in which the pursuing agent will start to slow down
 	/// </summary>
+	[Tooltip("Radius in which the pursuing agent will start to slow down")]
 	public float pursuitSlowRadius = 10f;
 
 	/// <summary>
@@ -183,14 +184,14 @@ public abstract class Agent : Entity
 	/// </summary>
 	public Vector2 Pursue(Entity target)
 	{
-		/* Calculate the distance to the target */
+		//Calculate the distance to the target
 		Vector2 displacement = target.Position - Position;
 		float distance = displacement.magnitude;
 
-		/* Get the character's speed */
+		//Get the character's speed 
 		float speed = Velocity.magnitude;
 
-		/* Calculate the prediction time */
+		//Calculate the prediction time
 		float prediction;
 		if (speed <= distance / maxPredictionTime) {
 			prediction = maxPredictionTime;
@@ -199,7 +200,7 @@ public abstract class Agent : Entity
 			prediction = distance / speed;
 		}
 
-		/* Put the target together based on where we think the target will be */
+		//Put the target together based on where we think the target will be
 		Vector2 explicitTarget = target.Position + target.Velocity * prediction;
 
 		//Debug.DrawLine(transform.position, explicitTarget);
@@ -212,14 +213,14 @@ public abstract class Agent : Entity
 	/// </summary>
 	public Vector2 GetInRange(Entity target, float range)
 	{
-		/* Calculate the distance to the target */
+		//Calculate the distance to the target
 		Vector2 displacement = target.Position - Position;
 		float distance = displacement.magnitude;
 
-		/* Get the character's speed */
+		//Get the character's speed 
 		float speed = Velocity.magnitude;
 
-		/* Calculate the prediction time */
+		//Calculate the prediction time
 		float prediction;
 		if (speed <= distance / maxPredictionTime) {
 			prediction = maxPredictionTime;
@@ -228,7 +229,7 @@ public abstract class Agent : Entity
 			prediction = distance / speed;
 		}
 
-		/* Put the target together based on where we think the target will be */
+		//Put the target together based on where we think the target will be
 		Vector2 explicitTarget = target.Position + target.Velocity * prediction;
 
 		//Debug.DrawLine(transform.position, explicitTarget + ((Position - explicitTarget).normalized * range));
@@ -269,41 +270,49 @@ public abstract class Agent : Entity
 
 	#region Pathing
 
-	[Header("Pathing")]
+	/// <summary>
+	/// The radius at which the character will stop moving along the path.
+	/// </summary>
+	[Header("Pathing"), Tooltip("The radius at which the character will stop moving along the path.")]
+	public float stopRadius = 0.05f;
 
-	public float stopRadius = 0.005f;
-
+	/// <summary>
+	/// A float that modifies the distance from the path that the character will seek to.
+	/// </summary>
+	[Tooltip("A float that modifies the distance from the path that the character will seek to.")]
 	public float pathOffset = 0.71f;
 
+	/// <summary>
+	/// A float that modifies the direction of the path. 1 is forward, -1 is backward.
+	/// </summary>
+	[Tooltip("A float that modifies the direction of the path. 1 is forward, -1 is backward.")]
 	public float pathDirection = 1f;
 
-	public Vector2 FollowPath(LinePath path)
-	{
-		return FollowPath(path, false);
-	}
+	/// <summary>
+	/// Returns a steering force that will move the agent along the given path.
+	/// </summary>
+	public Vector2 FollowPath(LinePath path, bool pathLoop = false) { return FollowPath(path, pathLoop, out _); }
 
-	public Vector2 FollowPath(LinePath path, bool pathLoop)
-	{
-		Vector2 targetPosition;
-		return FollowPath(path, pathLoop, out targetPosition);
-	}
-
+	/// <summary>
+	/// Returns a steering force that will move the agent along the given path.
+	/// </summary>
 	public Vector2 FollowPath(LinePath path, bool pathLoop, out Vector2 targetPosition)
 	{
 
-		/* If the path has only one node then just go to that position. */
+		//If the path has only one node then just go to that position.
 		if (path.Length == 1) { targetPosition = path[0]; }
-		/* Else find the closest spot on the path to the character and go to that instead. */
+		//Else find the closest spot on the path to the character and go to that instead. 
 		else {
-			/* Get the param for the closest position point on the path given the character's position */
-			float param = path.GetParam(transform.position, this);
+			//Get the param for the closest position point on the path given the character's position 
+
+		   float param = path.GetParam(transform.position, this);
 
 			//Debug.DrawLine(transform.position, path.getPosition(param, pathLoop), Color.red, 0, false);
 
 			if (!pathLoop) {
 				Vector2 finalDestination;
 
-				/* If we are close enough to the final destination then stop moving */
+				//If we are close enough to the final destination then stop moving
 				if (IsAtEndOfPath(path, param, out finalDestination)) {
 					targetPosition = finalDestination;
 
@@ -312,10 +321,10 @@ public abstract class Agent : Entity
 				}
 			}
 
-			/* Move down the path */
+			//Move down the path
 			param += pathDirection * pathOffset;
 
-			/* Set the target position */
+			//Set the target position
 			targetPosition = path.GetPosition(param, pathLoop);
 
 			//Debug.DrawLine(transform.position, targetPosition, Color.red, 0, false);
@@ -325,20 +334,21 @@ public abstract class Agent : Entity
 	}
 
 	/// <summary> 
-	/// Will return true if the character is at the end of the given path 
+	/// Returns true if the character is at the end of the given path 
 	/// </summary>
 	public bool PathingComplete { 
 		get {
-			/* If the path has only one node then just check the distance to that node. */
+			//If the path has only one node then just check the distance to that node.
 			if (path.Length == 1) {
 				Vector2 endPos = path[0];
 				return Vector2.Distance(Position, endPos) < stopRadius;
 			}
-			/* Else see if the character is at the end of the path. */
+			//Else see if the character is at the end of the path. 
 			else {
 				Vector2 finalDestination;
 
-				/* Get the param for the closest position point on the path given the character's position */
+				//Get the param for the closest position point on the path given the character's position 
+
 				float param = path.GetParam(transform.position, this);
 
 				return IsAtEndOfPath(path, param, out finalDestination);
@@ -346,18 +356,21 @@ public abstract class Agent : Entity
 		}
 	}
 
+	/// <summary>
+	/// Returns true if the character is at the end of the given path
+	/// </summary>
 	bool IsAtEndOfPath(LinePath path, float param, out Vector2 finalDestination)
 	{
 		bool result;
 
-		/* Find the final destination of the character on this path */
+		//Find the final destination of the character on this path
 		finalDestination = (pathDirection > 0) ? path.Last : path.First;
 
-		/* If the param is closest to the last segment then check if we are at the final destination */
+		//If the param is closest to the last segment then check if we are at the final destination
 		if (param >= path.distances[path.Length - 2]) {
 			result = Vector2.Distance(Position, finalDestination) < stopRadius;
 		}
-		/* Else we are not at the end of the path */
+		//Else we are not at the end of the path
 		else { result = false; }
 
 		return result;
@@ -372,125 +385,98 @@ public abstract class Agent : Entity
 	/// <summary>
 	/// The distance away from the collision that we wish go
 	/// </summary>
-	public float obstacleAvoidDistance = 0.5f;
+	[Tooltip("The distance away from the collision that we wish go")]
+	public float obstacleAvoidDistance = 4f;
 
 	/// <summary>
 	/// Multiplier applied to the Seek vector produced by ObstacleAvoidance.
 	/// </summary>
+	[Tooltip("Multiplier applied to the Seek vector produced by ObstacleAvoidance.")]
 	public float obstacleAvoidanceMultiplier = 4f;
 
 	/// <summary>
-	/// Multiplier applied to the distance of the ray cast for obstacle avoidance.
+	/// The length of the main whisker ray
 	/// </summary>
-	public float obstacleCheckDistanceMultiplier = 1f;
+	[Range(0.125f, 40f), Tooltip("The length of the main whisker ray")]
+	public float mainWhiskerLength = 12.5f;
+	/// <summary>
+	/// The length of the whisker rays to the left and right of the main whisker
+	/// </summary>
+	[Range(0.07f, 40f), Tooltip("The length of the whisker rays to the left and right of the main whisker")]
+	public float sideWhiskerLength = 7f;
+	/// <summary>
+	/// The angle of the side whiskers
+	/// </summary>
+	[Range(1f, 90f), Tooltip("The angle of the side whiskers")]
+	public float sideWhiskerAngle = 45f;
 
 	/// <summary>
 	/// Draws debug visualizations for the obstacle avoidance algorithm when set to true.
 	/// </summary>
 	public bool debugObstacleAvoidance = false;
 
-	/// <summary>
-	/// How far ahead the ray should extend
-	/// </summary>
-	[HideInInspector] public float mainWhiskerLen = 1.25f;
-	[HideInInspector] public float sideWhiskerLen = 0.701f;
-	[HideInInspector] public float sideWhiskerAngle = 45f;
+	protected static readonly LayerMask LayerMask_EnvironmentAndLevelBoundsOnly = (1 << 9) | (1 << 3);
+	protected static List<RaycastHit2D> hits = new List<RaycastHit2D>();
+	protected static RaycastHit2D hit;
 
+	/// <summary>
+	/// Returns a steering vector that will avoid obstacles in front of the character.
+	/// </summary>
 	public Vector2 AvoidObstacles()
 	{
-		if (Velocity.magnitude > 0.005f) {
-			return AvoidObstacles(Velocity);
+		// Use either the velocity or the forward direction of the character to determine the facing direction
+		Vector2 facingDir = Velocity.magnitude > 0.01f ? Velocity.normalized : transform.up.normalized;
+
+		hits.Clear();
+		float closestDistance = float.PositiveInfinity;
+
+		// Check for obstacles in front of the character and to the left and right
+		if (DetectObstacles(facingDir, out hit, mainWhiskerLength)) { 
+			hits.Add(hit); closestDistance = Vector2.Distance(hit.point, Position); 
 		}
-		else {
-			return AvoidObstacles(RotationAsVector);
+		if (DetectObstacles(OrientationToVector(VectorToOrientation(facingDir) + sideWhiskerAngle * Mathf.Deg2Rad), out hit, sideWhiskerLength)) { 
+			if (Vector2.Distance(hit.point, Position) < closestDistance) { hits.Add(hit); closestDistance = Vector2.Distance(hit.point, Position); }
 		}
+		if (DetectObstacles(OrientationToVector(VectorToOrientation(facingDir) - sideWhiskerAngle * Mathf.Deg2Rad), out hit, sideWhiskerLength)) { 
+			if (Vector2.Distance(hit.point, Position) < closestDistance) { hits.Add(hit); }
+		}
+
+		// If there are no obstacles then return zero acceleration
+		if (hits.Count == 0) { return Vector2.zero; }
+
+		// base acceleration on the closest (last) raycast hit
+		hit = hits[hits.Count - 1];
+		Vector2 targetPosition = hit.point + hit.normal * obstacleAvoidDistance;
+		Vector2 acceleration = Seek(targetPosition, maxAcceleration * obstacleAvoidanceMultiplier);
+		if (debugObstacleAvoidance) { 
+			Debug.DrawLine(hit.point, targetPosition, Color.blue, Time.fixedDeltaTime, false);
+			Debug.DrawRay(Position, acceleration.normalized, Color.green, Time.fixedDeltaTime, false);
+		}
+		return acceleration;
+
 	}
 
-	public Vector2 AvoidObstacles(Vector2 facingDir)
-	{
-		Vector2 acceleration = Vector2.zero;
-
-		RaycastHit2D hit;
-
-		/* If no collision do nothing */
-		if (!FindObstacle(facingDir, out hit)) {
-			return acceleration;
-		}
-
-		/* Create a target away from the wall to seek */
-		Vector2 targetPostition = hit.point + hit.normal * obstacleAvoidDistance;
-
-		/* If velocity and the collision normal are parallel then move the target a bit to
-            * the left or right of the normal */
-		float angle = Vector2.Angle(Velocity, hit.normal);
-		if (angle > 165f) {
-			Vector2 perp = new Vector2(-hit.normal.y, hit.normal.x);
-			/* Add some perp displacement to the target position propotional to the angle between the wall normal
-                * and facing dir and propotional to the wall avoidance distance (with 2f being a magic constant that
-                * feels good) */
-			targetPostition = targetPostition + (perp * Mathf.Sin((angle - 165f) * Mathf.Deg2Rad) * 2f * obstacleAvoidDistance);
-		}
-
-		if (debugObstacleAvoidance) {
-			DebugCross(targetPostition, 0.5f, new Color(0.612f, 0.153f, 0.69f), 0.5f, false);
-		}
-
-		return Seek(targetPostition, maxAcceleration * obstacleAvoidanceMultiplier);
-	}
-
-	bool FindObstacle(Vector2 facingDir, out RaycastHit2D firstHit)
-	{
-		facingDir.Normalize();
-
-		/* Create the direction vectors */
-		Vector2[] dirs = new Vector2[3];
-		dirs[0] = facingDir;
-
-		float orientation = VectorToOrientation(facingDir);
-
-		dirs[1] = OrientationToVector(orientation + sideWhiskerAngle * Mathf.Deg2Rad);
-		dirs[2] = OrientationToVector(orientation - sideWhiskerAngle * Mathf.Deg2Rad);
-
-		return CastWhiskers(dirs, out firstHit);
-	}
-
-	bool CastWhiskers(Vector2[] dirs, out RaycastHit2D firstHit)
-	{
-		firstHit = new RaycastHit2D();
-		bool foundObs = false;
-
-		for (int i = 0; i < dirs.Length; i++) {
-			float dist = (i == 0) ? mainWhiskerLen : sideWhiskerLen;
-
-			RaycastHit2D hit;
-
-			if (GenericCast(dirs[i], out hit, dist)) {
-				foundObs = true;
-				firstHit = hit;
-				break;
-			}
-		}
-
-		return foundObs;
-	}
-
-	bool GenericCast(Vector2 direction, out RaycastHit2D hit, float distance = Mathf.Infinity)
+	/// <summary>
+	/// Returns true if the given direction is obstructed by an Environment or LevelBounds collider.
+	/// </summary>
+	bool DetectObstacles(Vector2 direction, out RaycastHit2D hit, float distance = Mathf.Infinity)
 	{
 		bool defaultQueriesStartInColliders = Physics2D.queriesStartInColliders;
 		Physics2D.queriesStartInColliders = false;
 
-		hit = Physics2D.CircleCast(ColliderPosition, (Radius * 0.5f), direction, distance, (1 << 9) | (1 << 3) /*Environment + LevelBounds*/ );
+		//TODO try this circlecast using radius instead of radius * 0.5f, see how that effects obstacle avoidance
+		hit = Physics2D.CircleCast(ColliderPosition, (Radius * 0.5f), direction, distance, LayerMask_EnvironmentAndLevelBoundsOnly);
 
 		Physics2D.queriesStartInColliders = defaultQueriesStartInColliders;
 
-		if (debugObstacleAvoidance) {
-			Debug.DrawLine(ColliderPosition, ColliderPosition + direction * distance, Color.cyan, 0f, false);
-		}
-		if (hit.collider != null) {
-			if (hit.collider.FindComponent(out Entity entity)) { return entity.IsStructure; }
-			else { return true; }
-		}
-		else { return false; }
+		if (debugObstacleAvoidance) { Debug.DrawLine(ColliderPosition, ColliderPosition + direction * distance, Color.cyan, Time.fixedDeltaTime, false); }
+
+		if (hit.collider == null) { return false; }				// no obstacle detected, return false
+		if (hit.collider.FindComponent(out Entity entity)) {	//
+			if (entity == target) { return false; }				// target is not an obstacle, return false
+			else { return entity.IsStructure; }					// structures are obstacles, other entities are not
+		}														//
+		else { return true; }									// a normal obstacle was detected, return true
 	}
 
 	#endregion
@@ -499,49 +485,65 @@ public abstract class Agent : Entity
 
 	[Header("Collision Avoidance")]
 
-	[Tooltip("How much space can be between two characters before they are considered colliding")]
 	/// <summary>
-	/// How much space can be between two characters before they are considered colliding
+	/// How much space can be between two entities before they are considered colliding
 	/// </summary>
-	public float distanceBetween;
+	[Tooltip("How much space can be between two entities before they are considered colliding")]
+	public float collisionDistanceBetween;
 
-	[Tooltip("Multiplier applied to collision detection radius")]
 	/// <summary>
 	/// Multiplier applied to collision detection radius.
 	/// </summary>
+	[Tooltip("Multiplier applied to collision detection radius")]
 	public float collisionDetectionRadiusMultiplier = 4f;
 
-	[Tooltip("Multiplier applied to the Seek vector produced by ObstacleAvoidance.")]
 	/// <summary>
 	/// Multiplier applied to the Seek vector produced by ObstacleAvoidance.
 	/// </summary>
+	[Tooltip("Multiplier applied to the Seek vector produced by ObstacleAvoidance.")]
 	public float collisionAvoidanceMultiplier = 1.5f;
 
+	/// <summary>
+	/// Returns a steering vector that avoids collisions with all friendly Entities in this Entity's Radius multiplied by the collisionDetectionRadiusMultiplier.
+	/// </summary>
 	public Vector2 AvoidCollisionsWithAllies() { return AvoidCollisionsWithAllies(Radius); }
+	/// <summary>
+	/// Returns a steering vector that avoids collisions with all friendly Entities in a given radius multiplied by the collisionDetectionRadiusMultiplier.
+	/// </summary>
 	public Vector2 AvoidCollisionsWithAllies(float radius)	{
-		return AvoidCollisions(GetAgentsInRadius(radius * collisionDetectionRadiusMultiplier).Where(a => IsFriendly(a))); 
+		return AvoidCollisions(GetEntities(radius * collisionDetectionRadiusMultiplier).Where(a => IsFriendly(a))); 
 	}
 
+	/// <summary>
+	/// Returns a steering vector that avoids collisions with all Entities in this Entity's Radius multiplied by the collisionDetectionRadiusMultiplier.
+	/// </summary>
 	public Vector2 AvoidCollisionsAll() { return AvoidCollisionsAll(Radius); }
-	public Vector2 AvoidCollisionsAll(float radius) { return AvoidCollisions(GetAgentsInRadius(radius * collisionDetectionRadiusMultiplier)); }
+	/// <summary>
+	/// Returns a steering vector that avoids collisions with all Entities in a given radius multiplied by the collisionDetectionRadiusMultiplier.
+	/// </summary>
+	public Vector2 AvoidCollisionsAll(float radius) { 
+		return AvoidCollisions(GetEntities(radius * collisionDetectionRadiusMultiplier)); 
+	}
 
+	/// <summary>
+	/// Returns a steering vector that avoids collisions with the given Entities.
+	/// </summary>
 	public Vector2 AvoidCollisions(IEnumerable<Entity> targets)
 	{
 		Vector2 acceleration = Vector2.zero;
 
-		/* 1. Find the target that the character will collide with first */
+		// 1.Find the target that the character will collide with first
 
-		/* The first collision time */
+		// The first collision time
 		float shortestTime = float.PositiveInfinity;
 
-		/* The first target that will collide and other data that
-            * we will need and can avoid recalculating */
+		// The first target that will collide and other data that we will need and can avoid recalculating
 		Entity firstTarget = null;
 		float firstMinSeparation = 0, firstDistance = 0, firstRadius = 0;
 		Vector2 firstRelativePos = Vector2.zero, firstRelativeVel = Vector2.zero;
 
 		foreach (Entity agent in targets) {
-			/* Calculate the time to collision */
+			//Calculate the time to collision
 			Vector2 relativePos = ColliderPosition - agent.ColliderPosition;
 			Vector2 relativeVel = Velocity - agent.Velocity;
 			float distance = relativePos.magnitude;
@@ -553,15 +555,15 @@ public abstract class Agent : Entity
 
 			float timeToCollision = -1 * Vector2.Dot(relativePos, relativeVel) / (relativeSpeed * relativeSpeed);
 
-			/* Check if they will collide at all */
+			//Check if they will collide at all
 			Vector2 separation = relativePos + relativeVel * timeToCollision;
 			float minSeparation = separation.magnitude;
 
-			if (minSeparation > Radius + agent.Radius + distanceBetween) {
+			if (minSeparation > Radius + agent.Radius + collisionDistanceBetween) {
 				continue;
 			}
 
-			/* Check if its the shortest */
+			//Check if it's the shortest 
 			if (timeToCollision > 0 && timeToCollision < shortestTime) {
 				shortestTime = timeToCollision;
 				firstTarget = agent;
@@ -573,60 +575,69 @@ public abstract class Agent : Entity
 			}
 		}
 
-		/* 2. Calculate the steering */
+		// 2. Calculate the steering
 
-		/* If we have no target then exit */
+		// If we have no target then exit 
 		if (firstTarget == null) {
 			return acceleration;
 		}
 
-		/* If we are going to collide with no separation or if we are already colliding then 
-            * steer based on current position */
-		if (firstMinSeparation <= 0 || firstDistance < Radius + firstRadius + distanceBetween) {
+		//If we are going to collide with no separation or if we are already colliding then steer based on current position 
+		if (firstMinSeparation <= 0 || firstDistance < Radius + firstRadius + collisionDistanceBetween) {
 			acceleration = ColliderPosition - firstTarget.ColliderPosition;
 		}
-		/* Else calculate the future relative position */
+		//Else calculate the future relative position 
 		else {
 			acceleration = firstRelativePos + firstRelativeVel * shortestTime;
 		}
 
-		/* Avoid the target */
+		//Avoid the target 
 		acceleration.Normalize();
 		acceleration *= maxAcceleration * collisionAvoidanceMultiplier;
 
 		return acceleration;
-	}
-
-	public IEnumerable<Entity> GetAgentsInRadius() { return GetAgentsInRadius(Radius); }
-	public IEnumerable<Entity> GetAgentsInRadius(float radius) {
-		return
-			Physics2D.OverlapCircleAll(ColliderPosition, radius)
-			.Where(c => c.FindComponent(out Entity entity) && entity != this )
-			.Select(c => c.FindComponent<Entity>()).Distinct();
-	}
+   }
 
 	#endregion
 
 	#region Flee
 
-	[Header("Flee")]
-
+	/// <summary>
+	/// The distance at which the entity will start to flee.
+	/// </summary>
+	[Header("Flee"), Tooltip("The distance at which the entity will start to flee.")]
 	public float fleePanicDistance = 3.5f;
 
+	/// <summary>
+	/// The time over which to achieve target speed.
+	/// </summary>
+	[Tooltip("The time over which to achieve target speed.")]
 	public float fleeTimeToTarget = 0.1f;
 
+	/// <summary>
+	/// If true then the entity will decelerate to zero velocity when it stops fleeing.
+	/// </summary>
+	[Tooltip("If true then the entity will decelerate to zero velocity when it stops fleeing.")]
 	public bool fleeDecelerateOnStop = true;
-
+	
+	/// <summary>
+	/// Returns a steering vector that flees from the given target.
+	/// </summary>
+	public Vector2 Flee(Entity entity) { return Flee(entity.Position); }
+	
+	/// <summary>
+	/// Returns a steering vector that flees from the given target.
+	/// </summary>
 	public Vector2 Flee(Vector2 targetPosition)
 	{
-		/* Get the direction */
+		//Get the direction
 		Vector2 acceleration = Position - targetPosition;
 
-		/* If the target is far way then don't flee */
+		//If the target is far way then don't flee 
 		if (acceleration.magnitude > fleePanicDistance) {
-			/* Slow down if we should decelerate on stop */
+			//Slow down if we should decelerate on stop
 			if (fleeDecelerateOnStop && Velocity.magnitude > 0.001f) {
-				/* Decelerate to zero velocity in time to target amount of time */
+				//Decelerate to zero velocity in time to target amount of time
 				acceleration = -Velocity / fleeTimeToTarget;
 
 				if (acceleration.magnitude > maxAcceleration) {
@@ -644,15 +655,10 @@ public abstract class Agent : Entity
 		return FleeGiveMaxAccel(acceleration);
 	}
 
-	Vector2 FleeGiveMaxAccel(Vector2 v)
-	{
-		v.Normalize();
-
-		/* Accelerate to the target */
-		v *= maxAcceleration;
-
-		return v;
-	}
+	/// <summary>
+	/// Returns the flee vector with the maximum acceleration applied.
+	/// </summary>
+	Vector2 FleeGiveMaxAccel(Vector2 v) { return v.normalized * maxAcceleration; }
 
 	#endregion
 
@@ -663,18 +669,22 @@ public abstract class Agent : Entity
 	/// <summary>
 	/// Maximum prediction time the pursue will predict in the future
 	/// </summary>
+	[Tooltip("Maximum prediction time the pursue will predict in the future")]
 	public float evadeMaxPredictionTime = 1f;
 
+	/// <summary>
+	/// Returns a steering vector that evades the given target.
+	/// </summary>
 	public Vector2 Evade(Entity target)
 	{
-		/* Calculate the distance to the target */
+		//Calculate the distance to the target
 		Vector2 displacement = target.Position - Position;
 		float distance = displacement.magnitude;
 
-		/* Get the targets's speed */
+		//Get the targets's speed 
 		float speed = target.Velocity.magnitude;
 
-		/* Calculate the prediction time */
+		//Calculate the prediction time
 		float prediction;
 		if (speed <= distance / evadeMaxPredictionTime) {
 			prediction = evadeMaxPredictionTime;
@@ -685,7 +695,7 @@ public abstract class Agent : Entity
 			prediction *= 0.9f;
 		}
 
-		/* Put the target together based on where we think the target will be */
+		//Put the target together based on where we think the target will be
 		Vector2 explicitTarget = target.Position + target.Velocity * prediction;
 
 		return Flee(explicitTarget);
@@ -696,50 +706,64 @@ public abstract class Agent : Entity
 	#region Hide
 
 	//[Header("Hide")]
-
+	/// <summary>
+	/// The distance from the boundary of the structure that the character will hide at.
+	/// </summary>
 	[HideInInspector] public float hideDistanceFromBoundary = 6f;
 
-	public Vector2 Hide(Entity target) { return Hide(target, GameManager.Structures); }
+	/// <summary>
+	/// Returns a steering vector that hides the character from the given danger behind one of the structures tracked by the GameManager.<br/>
+	/// If no valid hiding spot is found then the character will Evade() the danger.
+	/// </summary>
+	public Vector2 Hide(Entity danger) { return Hide(danger, GameManager.Structures); }
 
-	public Vector2 Hide(Entity target, ICollection<Entity> obstacles)
-	{
-		Vector2 bestHidingSpot;
-		return Hide(target, obstacles, out bestHidingSpot);
-	}
+	/// <summary>
+	/// Returns a steering vector that hides the character from the given danger behind one of the obstacles.<br/>
+	/// If no valid hiding spot is found then the character will Evade() the danger.
+	/// </summary>
+	public Vector2 Hide(Entity danger, ICollection<Entity> obstacles) { return Hide(danger, obstacles, out _); }
 
-	public Vector2 Hide(Entity target, ICollection<Entity> obstacles, out Vector2 bestHidingSpot)
+	/// <summary>
+	/// Returns a steering vector that hides the character from the given danger behind one of the obstacles.<br/>
+	/// If no valid hiding spot is found then the character will Evade() the danger.<br/>
+	/// If any valid hiding spots are found, <paramref name="bestHidingSpot"/> will be set to the best hiding spot.
+	/// </summary>
+	public Vector2 Hide(Entity danger, ICollection<Entity> obstacles, out Vector2 bestHidingSpot)
 	{
-		/* Find the closest hiding spot. */
+		
+		//Find the closest hiding spot.
+				
 		float distToClostest = Mathf.Infinity;
-		bestHidingSpot = Vector2.zero;
+		Vector2 hidingSpot; bestHidingSpot = Vector2.zero;		
 
-		foreach (Entity r in obstacles) {
-			Vector2 hidingSpot = GetHidingPosition(r, target);
-
-			float dist = Vector2.Distance(hidingSpot, transform.position);
+		foreach (Entity obstacle in obstacles) {
+			
+			hidingSpot = GetHidingPosition(obstacle, danger);
+			
+			float dist = Vector2.Distance(hidingSpot, Position);
 
 			if (dist < distToClostest) {
 				distToClostest = dist;
 				bestHidingSpot = hidingSpot;
 			}
+
 		}
 
-		/* If no hiding spot is found then just evade the enemy. */
-		if (distToClostest == Mathf.Infinity) {
-			return Evade(target);
-		}
+		//If no hiding spot is found then just evade the enemy. 
+		if (distToClostest == Mathf.Infinity) { return Evade(danger); }
 
 		//Debug.DrawLine(transform.position, bestHidingSpot);
-
 		return Arrive(bestHidingSpot);
 	}
 
-	Vector2 GetHidingPosition(Entity obstacle, Entity target)
+	/// <summary>
+	/// Get the hiding position behind the obstacle from the danger
+	/// </summary>
+	protected Vector2 GetHidingPosition(Entity obstacle, Entity danger)
 	{
-		float distAway = obstacle.Radius + hideDistanceFromBoundary;
+		float distAway = obstacle.Radius + Radius + hideDistanceFromBoundary;
 
-		Vector2 dir = obstacle.Position - target.Position;
-		dir.Normalize();
+		Vector2 dir = (obstacle.Position - danger.Position).normalized;
 
 		return obstacle.Position + dir * distAway;
 	}
@@ -753,45 +777,54 @@ public abstract class Agent : Entity
 	/// <summary>
 	/// The forward offset of the wander square
 	/// </summary>
+	[Tooltip("The forward offset of the wander square")]
 	public float wanderOffset = 16f;
 
 	/// <summary>
 	/// The radius of the wander square
 	/// </summary>
+	[Tooltip("The radius of the wander square")]
 	public float wanderRadius = 6;
 
 	/// <summary>
 	/// The rate at which the wander orientation can change in radians
 	/// </summary>
+	[Tooltip("The rate at which the wander orientation can change in radians")]
 	public float wanderRate = 1f;
 
+	/// <summary>
+	/// The current orientation of the wander behavior in radians
+	/// </summary>
 	float wanderOrientation = 0;
 
+	/// <summary>
+	/// Returns a steering vector that makes the Entity wander around
+	/// </summary>
 	public Vector2 Wander()
 	{
 		float characterOrientation = RotationInRadians;
 
-		/* Update the wander orientation */
-		wanderOrientation += RandomBinomial() * wanderRate;
+		//Update the wander orientation
+		wanderOrientation += RandomBinomial * wanderRate;
 
-		/* Calculate the combined target orientation */
+		//Calculate the combined target orientation
 		float targetOrientation = wanderOrientation + characterOrientation;
 
-		/* Calculate the center of the wander circle */
+		//Calculate the center of the wander circle
 		Vector2 targetPosition = Position + ((Vector2)transform.up * wanderOffset);
 
-		//debugRing.transform.position = targetPosition;
-
-		/* Calculate the target position */
+		//Calculate the target position
 		targetPosition = targetPosition + (OrientationToVector(targetOrientation) * wanderRadius);
 
-		Debug.DrawLine (transform.position, targetPosition);
+		// Debug.DrawLine (transform.position, targetPosition);
 
 		return Seek(targetPosition);
 	}
 
-	/* Returns a random number between -1 and 1. Values around zero are more likely. */
-	float RandomBinomial() { return Random.value - Random.value; }
+	/// <summary>
+	/// Returns a random number between -1 and 1. Values around zero are more likely.
+	/// </summary>
+	private float RandomBinomial => Random.value - Random.value;
 
 	#endregion
 
@@ -800,40 +833,55 @@ public abstract class Agent : Entity
 	/// <summary>
 	/// The maximum acceleration for separation
 	/// </summary>
-	public float sepMaxAcceleration = 25;
+	[Tooltip("The maximum acceleration for separation")]
+	public float maxSeparationAcceleration = 25;
 
 	/// <summary>
-	/// This should be the maximum separation distance possible between a
-	/// separation target and the character. So it should be: separation
-	/// sensor radius + max target radius
+	/// This should be the maximum separation distance possible between a separation target and the character
 	/// </summary>
-	public float maxSepDist = 1f;
+	[Tooltip("This should be the maximum separation distance possible between a separation target and the character")]
+	public float maxSeparationDistance = 1f;
 
+	/// <summary>
+	/// Returns a steering vector that separates the character from all friendly Entities in the Entity's Radius multiplied by the collisionDetectionRadiusMultiplier
+	/// </summary>
 	public Vector2 SeparationFromAllies() { return SeparationFromAllies(Radius); }
+	/// <summary>
+	/// Returns a steering vector that separates the character from all friendly Entities in a given radius multiplied by the collisionDetectionRadiusMultiplier
+	/// </summary>
 	public Vector2 SeparationFromAllies(float radius) {
-		return Separation(GetAgentsInRadius(radius * collisionDetectionRadiusMultiplier).Where(a => IsFriendly(a)));
+		return Separation(GetEntities(radius * collisionDetectionRadiusMultiplier).Where(a => IsFriendly(a)));
 	}
 
+	/// <summary>
+	/// Returns a steering vector that separates the character from all Entities in the Entity's Radius multiplied by the collisionDetectionRadiusMultiplier
+	/// </summary>
 	public Vector2 SeparationAll() { return SeparationAll(Radius * 4f); }
+	/// <summary>
+	/// Returns a steering vector that separates the character from all Entities in a given radius multiplied by the collisionDetectionRadiusMultiplier
+	/// </summary>
 	public Vector2 SeparationAll(float radius) {
-		return Separation(GetAgentsInRadius(radius * collisionDetectionRadiusMultiplier));
+		return Separation(GetEntities(radius * collisionDetectionRadiusMultiplier));
 	}
 
+	/// <summary>
+	/// Returns a steering vector that separates the character from the given targets
+	/// </summary>
 	public Vector2 Separation(IEnumerable<Entity> targets)
 	{
 		Vector2 acceleration = Vector2.zero;
 
-		foreach (Entity agent in targets) {
-			if (!IsFriendly(agent)) { continue; }
-			/* Get the direction and distance from the target */
-			Vector2 direction = ColliderPosition - agent.ColliderPosition;
+		foreach (Entity entity in targets) {
+			//if (!IsFriendly(entity)) { continue; }
+			//Get the direction and distance from the target
+			Vector2 direction = ColliderPosition - entity.ColliderPosition;
 			float dist = direction.magnitude;
 
-			if (dist < maxSepDist) {
-				/* Calculate the separation strength (can be changed to use inverse square law rather than linear) */
-				var strength = sepMaxAcceleration * (maxSepDist - dist) / (maxSepDist - Radius - agent.Radius);
+			if (dist < maxSeparationDistance) {
+				//Calculate the separation strength(can be changed to use inverse square law rather than linear)
+				float strength = maxSeparationAcceleration * (maxSeparationDistance - dist) / (maxSeparationDistance - Radius - entity.Radius);
 
-				/* Added separation acceleration to the existing steering */
+				//Added separation acceleration to the existing steering
 				direction.Normalize();
 				acceleration += direction * strength;
 			}
@@ -845,4 +893,3 @@ public abstract class Agent : Entity
 	#endregion
 
 }
-

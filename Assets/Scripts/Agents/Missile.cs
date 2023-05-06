@@ -35,7 +35,7 @@ public class Missile : Agent
 		accel += SeparationAll();
 		accel += AvoidObstacles();
 		accel += AvoidCollisionsWithAllies();
-		accel += FlowField.GetForce(this) * 6f;
+		accel += FlowField.GetForce(this);
 
 		// Apply the resulting acceleration
 		Steer(accel);
@@ -50,7 +50,7 @@ public class Missile : Agent
 	{
 		base.OnCollisionEnter2D(collision);
 		if (collision.ApproximateForce().magnitude < 1f) { return; }
-		OnWillBeDestroyed(); Destroy(gameObject);
+		OnWillBeDestroyed();
 	}
 
 }

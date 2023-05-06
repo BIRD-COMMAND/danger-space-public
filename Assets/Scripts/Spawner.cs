@@ -10,18 +10,34 @@ public class Spawner : MonoBehaviour
 	/// <summary>
 	/// The prefab to spawn.
 	/// </summary>
+	[Tooltip("The prefab to spawn.")]
 	public GameObject prefab;
 	/// <summary>
 	/// Minimum number of active spawned game objects.
 	/// </summary>
+	[Tooltip("Minimum number of active spawned game objects.")]
 	public int minimumActiveSpawns = 1;
+	/// <summary>
+	/// Minimum number of active spawned game objects.
+	/// </summary>
+	public int MinimumActiveSpawns { get => minimumActiveSpawns; set => minimumActiveSpawns = value; }
+	/// <summary>
+	/// Sets minimum number of active spawned game objects.
+	/// </summary>
+	public void SetMinimumActiveSpawns(float spawns) { minimumActiveSpawns = (int)spawns; }
 	/// <summary>
 	/// The cooldown time between spawns.
 	/// </summary>
+	[Tooltip("The cooldown time between spawns.")]
 	public float spawnCooldown = 3f;
+	/// <summary>
+	/// The cooldown time between spawns.
+	/// </summary>
+	public float SpawnCooldown { get => spawnCooldown; set => spawnCooldown = value; }
 	/// <summary>
 	/// The initial spawn delay.
 	/// </summary>
+	[Tooltip("The initial spawn delay.")]
 	public float initialSpawnDelay = 1f;
 	/// <summary>
 	/// The last spawn time.
@@ -46,12 +62,14 @@ public class Spawner : MonoBehaviour
 	/// </summary>
 	private void FixedUpdate()
 	{
-		// remove null references
-		spawned.RemoveAll(x => x == null);
+		// remove invalid references
+		spawned.RemoveAll(x => !x || !x.activeSelf);
 		
 		// spawn new if necessary
 		if (spawned.Count < minimumActiveSpawns && Time.time - lastSpawn > spawnCooldown) {
-			spawned.Add(Instantiate(prefab, transform.position, prefab.transform.rotation));
+			Entity ship = (Entity)PoolManager.Get(prefab);
+			spawned.Add(ship.gameObject);
+			ship.Activate(transform.position, prefab.transform.rotation);
 			lastSpawn = Time.time;
 		}
 		

@@ -34,6 +34,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static List<Collider2D> CollidersOnScreen = new List<Collider2D>();
 
+	/// <summary>
+	/// Whether the application is paused
+	/// </summary>
+	[Tooltip("Whether the application is paused")]
+	[SerializeField] private bool isPaused = false;
+	/// <summary>
+	/// Whether the application is paused
+	/// </summary>
+	public static bool IsPaused { get => instance.isPaused; set => instance.isPaused = value; }
+
+
 	[Header("Player")]
 	// Reference to the player prefab
 	[Tooltip("Reference to the player prefab")]
@@ -58,47 +69,67 @@ public class GameManager : MonoBehaviour
 	// Internal timer for player respawn
 	private float playerRespawnTimer = 2f;
 
+	// Whether the player is invulnerable
+	[Tooltip("Whether the player is invulnerable")]
+	[SerializeField] private bool playerInvulnerable = false;
+	/// <summary>
+	/// Whether the player is invulnerable
+	/// </summary>
+	public bool PlayerInvulnerable { get => playerInvulnerable; set => playerInvulnerable = value; }
+
+	// Whether the player has infinite energy
+	[Tooltip("Whether the player has infinite energy")]
+	[SerializeField] private bool infiniteEnergy = false;
+	/// <summary>
+	/// Whether the player has infinite energy
+	/// </summary>
+	public bool InfiniteEnergy { get => infiniteEnergy; set => infiniteEnergy = value; }
+
 	// Gets the slow time factor
 	/// <summary>
 	/// Gets the slow time factor
 	/// </summary>
-	public static float SlowTimeFactor => instance.slowTimeFactor;
+	public static float BulletTimeFactor => instance.bulletTimeFactor;
 
 	[Header("Bullet Time")]
 	// Factor by which the time slows down during bullet time
 	[Tooltip("Factor by which the time slows down during bullet time")]
-	[SerializeField] private float slowTimeFactor = 0.2f;
+	[SerializeField] private float bulletTimeFactor = 0.2f;
 
 	// Returns true if bullet time is active
 	/// <summary>
 	/// Returns true if bullet time is active
 	/// </summary>
-	public static bool BulletTime => instance.slowTime;
+	public static bool BulletTime { 
+		get => instance.bulletTime;
+		set {
+			if (value) { Time.timeScale = BulletTimeFactor; }
+			else { Time.timeScale = 1f; }
+			instance.bulletTime = value; 
+		}
+	}
 
 	// Internal flag for slow time status
 	[Tooltip("Internal flag for slow time status")]
-	[SerializeField] private bool slowTime = false;
+	[SerializeField] private bool bulletTime = false;
+
 
 	[Header("UI")]
 	// Text UI element for displaying player lives
 	[Tooltip("Text UI element for displaying player lives")]
 	[SerializeField] private Text livesText;
 
-	// Text UI element for displaying player health
-	[Tooltip("Text UI element for displaying player health")]
-	[SerializeField] private Text healthText; //■□
-
 	// Text UI element for displaying player score
 	[Tooltip("Text UI element for displaying player score")]
 	[SerializeField] private Text scoreText;
 
-	// Text UI element for displaying game over message
-	[Tooltip("Text UI element for displaying game over message")]
-	[SerializeField] private Text gameOverText;
+	// GameObject containing the Game Over screen UI Elements
+	[Tooltip("GameObject containing the Game Over screen UI Elements")]
+	[SerializeField] private GameObject gameOverScreen;
 
-	// Button UI element for retrying the game
-	[Tooltip("Button UI element for retrying the game")]
-	[SerializeField] private Button retryButton;
+	// GameObject containing the Pause Menu UI Elements
+	[Tooltip("GameObject containing the Pause Menu UI Elements")]
+	[SerializeField] private GameObject pauseMenu;
 
 	/// <summary>
 	/// Gets the player's score
@@ -120,33 +151,47 @@ public class GameManager : MonoBehaviour
 	
 	void Update() { 
 		UpdateUI(); 
-		HandleRespawn(); 
-		if (Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); } 
+		HandleRespawn();
+		if (Input.GetKeyDown(KeyCode.Escape)) { TogglePause(); }
 	}
 	
 	void FixedUpdate() { TrackStructuresOnScreen(); }
+
+	/// <summary>
+	/// Pause / Unpause the game
+	/// </summary>
+	public void TogglePause()
+	{
+		if (isPaused) {
+			pauseMenu.SetActive(false);
+			if (BulletTime) { Time.timeScale = bulletTimeFactor; }
+			else { Time.timeScale = 1f; }
+		}
+		else { 
+			pauseMenu.SetActive(true);
+			Time.timeScale = 0f;
+		}
+		isPaused = !isPaused;
+	}
+	/// <summary>
+	/// Quits the game
+	/// </summary>
+	public void QuitApplication() { Application.Quit(); }
 
 	/// <summary>
 	/// Updates the UI elements including the score, lives, and health texts.
 	/// </summary>
 	private void UpdateUI()
     {
+
 		// update UI score text
 		scoreText.text = ((int)playerScore).ToString();
 
 		// update UI lives text
 		livesText.text = playerLives.ToString();
-		if (playerLives == 0 && !gameOverText.isActiveAndEnabled) { gameOverText.enabled = true; retryButton.gameObject.SetActive(true); }
-		else if (playerLives > 0 && gameOverText.isActiveAndEnabled) { gameOverText.enabled = false; retryButton.gameObject.SetActive(false); }
+		if (playerLives == 0 && !gameOverScreen.activeSelf) { gameOverScreen.SetActive(true); }
+		else if (playerLives > 0 && gameOverScreen.activeSelf) { gameOverScreen.SetActive(false); }
 
-		// update UI player health text
-		if (Player) {
-			healthText.text = "";
-			for (float i = 0.1f; i < 1.1f; i += 0.1f) {
-				healthText.text += (i <= Player.HealthPercent || Mathf.Approximately(i, Player.HealthPercent)) ? "■" : "□";
-			}
-		}
-		else { healthText.text = "□□□□□□□□□□"; }
 	}
 
 	/// <summary>
@@ -155,13 +200,17 @@ public class GameManager : MonoBehaviour
 	private void HandleRespawn()
     {
 		if (!Player) {
-			if (slowTime) { Time.timeScale = 1f; slowTime = false; }
+			if (bulletTime) { Time.timeScale = 1f; bulletTime = false; }
 			if (playerLives == 0) { return; }
 			playerRespawnTimer -= Time.deltaTime;
 			if (playerRespawnTimer <= 0f) {
 				playerRespawnTimer = playerRespawnTime;
 				SpawnPlayer();
 			}
+		}
+		else {
+			if (Player.Invulnerable != playerInvulnerable) { Player.Invulnerable = playerInvulnerable; }
+			if (infiniteEnergy) { Player.CurrentEnergy = Player.MaxEnergy; }
 		}
 	}
 
@@ -174,9 +223,6 @@ public class GameManager : MonoBehaviour
 		// instantiate player prefab and flash green for 1 second
 		Player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity).GetComponent<PlayerController>();
         Player.FlashColor(Color.green, 1f);
-		// give player invulnerability for 1 second
-		Player.Invulnerable = true; 
-        Runtime.DoInSeconds(() => { Player.Invulnerable = false; }, 1f);
 	}
 
 	/// <summary>
@@ -194,29 +240,6 @@ public class GameManager : MonoBehaviour
 		.Where(c => c.GetComponent<Entity>() && c.GetComponent<Entity>().IsStructure)
 		.Select(c => c.GetComponent<Entity>()).Distinct().ToList();
 	}
-
-	#region BulletTime
-
-	public static void BulletTime_Start(float duration = 5f) { instance.M_BulletTime_Start(duration); }
-    private void M_BulletTime_Start(float duration = 5f) { 
-        if (bulletTime_End_Coroutine != null) { StopCoroutine(bulletTime_End_Coroutine); }
-        Time.timeScale = slowTimeFactor; slowTime = true;
-        bulletTime_End_Coroutine = StartCoroutine(BulletTime_End_Coroutine(duration));
-        if (Player) { Player.SetGlowColor(Color.cyan); }
-    }
-    public static void BulletTime_End() { instance.M_BulletTime_End(); }
-	private void M_BulletTime_End() { 
-        Time.timeScale = 1f; slowTime = false; 
-        if (Player) { Player.SetGlowColor(Color.white); }
-    }
-    private Coroutine bulletTime_End_Coroutine;
-    private IEnumerator BulletTime_End_Coroutine(float duration)
-    {
-        yield return new WaitForSecondsRealtime(duration);
-        M_BulletTime_End();
-    }
-
-	#endregion
 
     // draw spawn point indicator ring
 	private void OnDrawGizmosSelected() { Draw.Thickness = 0.3f; Draw.Ring(spawnPoint, 3f, Color.green); }

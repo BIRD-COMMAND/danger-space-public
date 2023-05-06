@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 using Shapes;
+using System.Linq;
 
 /// <summary>
 /// An Entity represents a physics-driven entity in the game world with properties facilitating basic gameplay interactions.<br/>
 /// Things like faction, health, damage, movement, and drops are all defined in the Entity class.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-public class Entity : MonoBehaviour
+public class Entity : Poolable
 {
 
 	#region General Fields and Properties (Component References, Drops, Health)
@@ -53,7 +54,7 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// An array of Drops that the Entity can drop when destroyed.
 	/// </summary>
-	[SerializeField]
+	[SerializeField, Tooltip("An array of Drops that the Entity can drop when destroyed.")]
 	protected Drop[] drops;
 	/// <summary>
 	/// An array of Drops that the Entity can drop when destroyed.
@@ -63,7 +64,7 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// The maximum health for the Entity.
 	/// </summary>
-	[SerializeField]
+	[SerializeField, Tooltip("The maximum health for the Entity.")]
 	protected float maxHealth = 10f;
 	/// <summary>
 	/// The maximum health for the Entity.
@@ -73,7 +74,7 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// The current health for the Entity.
 	/// </summary>
-	[SerializeField]
+	[SerializeField, Tooltip("The current health for the Entity.")]
 	protected float health = 10f;
 	/// <summary>
 	/// The current health for the Entity.
@@ -88,7 +89,7 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// The point value for the Entity.
 	/// </summary>
-	[SerializeField]
+	[SerializeField, Tooltip("The point value for the Entity.")]
 	protected float pointValue = 100f;
 	/// <summary>
 	/// The point value for the Entity.
@@ -104,6 +105,11 @@ public class Entity : MonoBehaviour
 	/// </summary>
 	public List<ShapeRenderer> Shapes => shapes;
 
+	/// <summary>
+	/// Returns true if the Entity has an associated Object Pool.
+	/// </summary>
+	public bool Poolable => pool != null;
+
 	#endregion
 
 	#region Damage and Destruction Fields and Properties
@@ -111,8 +117,7 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// The amount of damage the Entity deals on collision.
 	/// </summary>
-	[Header("Damage")]
-	[SerializeField]
+	[Header("Damage"), SerializeField, Tooltip("The amount of damage the Entity deals on collision.")]
 	protected float damageOnCollision = 2f;
 	/// <summary>
 	/// The amount of damage the Entity deals on collision.
@@ -122,7 +127,7 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// The effect prefab used when the Entity is destroyed.
 	/// </summary>
-	[SerializeField]
+	[SerializeField, Tooltip("The effect prefab used when the Entity is destroyed.")]
 	protected GameObject destroyEffectPrefab;
 	/// <summary>
 	/// The effect prefab used when the Entity is destroyed.
@@ -132,7 +137,7 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// The wreckage prefab used when the Entity is destroyed.
 	/// </summary>
-	[SerializeField]
+	[SerializeField, Tooltip("The wreckage prefab used when the Entity is destroyed.")]
 	protected GameObject wreckagePrefab;
 	/// <summary>
 	/// The wreckage prefab used when the Entity is destroyed.
@@ -142,7 +147,7 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// A boolean representing whether the Entity is currently invulnerable.
 	/// </summary>
-	[SerializeField]
+	[SerializeField, Tooltip("A boolean representing whether the Entity is currently invulnerable.")]
 	protected bool invulnerable;
 	/// <summary>
 	/// A boolean representing whether the Entity is currently invulnerable.
@@ -156,32 +161,39 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// The maximum velocity for the Entity.
 	/// </summary>
-	[Header("Movement")]
+	[Header("Movement"), Tooltip("The maximum velocity for the Entity.")]
 	public float maxVelocity = 3.5f;
 	/// <summary>
 	/// The maximum acceleration for the Entity.
 	/// </summary>
+	[Tooltip("The maximum acceleration for the Entity.")]
 	public float maxAcceleration = 10f;
 	/// <summary>
 	/// The maximum angular velocity for the Entity.
 	/// </summary>
+	[Tooltip("The maximum angular velocity for the Entity.")]
 	public float turnSpeed = 20f;
 	/// <summary>
-	/// A boolean representing whether the Entity is currently in Bullet Time.<br/>
-	/// A value of true means the Entity should move normally while GameManager.BulletTime is true.
+	/// The multiplier applied to the Entity's acceleration from the flow field.
 	/// </summary>
+	[Range(1f, 40f), Tooltip("The multiplier applied to the Entity's acceleration from the flow field.")]
+	public float flowFieldMultiplier = 4f;
+	/// <summary>
+	/// Whether the Entity is currently in Bullet Time. A value of true means the Entity should move normally while GameManager.BulletTime is true.
+	/// </summary>
+	[Tooltip("Whether the Entity is currently in Bullet Time. A value of true means the Entity should move normally while GameManager.BulletTime is true.")]
 	public bool inBulletTime = false;
 
 	[Header("Look Direction Smoothing")]
 	/// <summary>
-	/// Smoothing controls if the character's look direction should be an
-	/// average of its previous directions (to smooth out momentary changes
-	/// in directions)
+	/// Smoothing controls if the character's look direction should be an average of its previous directions (to smooth out momentary changes in directions)
 	/// </summary>
+	[Tooltip("Smoothing controls if the character's look direction should be an average of its previous directions (to smooth out momentary changes in directions)")]
 	public bool smoothing = true;
 	/// <summary>
 	/// The number of samples to use for smoothing the look direction.
 	/// </summary>
+	[Tooltip("The number of samples to use for smoothing the look direction.")]
 	public int numSamplesForSmoothing = 5;
 	/// <summary>
 	/// The samples used for smoothing the look direction.
@@ -257,12 +269,50 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// Attempt to automatically set up bounds when an Entity component is added to a GameObject with a RegularPolygon component.
 	/// </summary>
-	private void Reset()
+	protected virtual void Reset()
 	{
+		health = maxHealth;
 		if (!bounds && TryGetComponent(out RegularPolygon shape)) {
 			bounds = gameObject.AddComponent<CircleCollider2D>();
 			bounds.radius = shape.Radius; bounds.isTrigger = true;
 		}
+	}
+
+	/// <summary>
+	/// Activation logic for poolable Entities. Called by whatever spawns the poolable Entity.
+	/// </summary>
+	public override Poolable Activate(Vector3 position, Quaternion rotation)
+	{
+		transform.SetPositionAndRotation(position, rotation);
+		
+		// resolve any overlaps with other colliders
+		ResolveOverlaps();
+		
+		// enable the SpawnInvulnerability component if present
+		if (TryGetComponent(out SpawnInvulnerability component)) { component.enabled = true; }
+		
+		// set the gameobject to active
+		gameObject.SetActive(true);
+		
+		// clear TrailRenderer if present
+		if (gameObject.FindComponent(out TrailRenderer trail)) { trail.Clear(); }
+		
+		// fix any lingering color flashes
+		FlashColor(Color.white, 0.1f);
+		
+		return this;
+	}
+
+	/// <summary>
+	/// Return logic for poolable Entities. Called by OnWillBeDestroyed().<br/>
+	/// If the Entity has no associated pool, it will be Destroy()ed instead.
+	/// </summary>
+	public override Poolable Return()
+	{
+		health = maxHealth;				// reset health
+		gameObject.SetActive(false);	// disable the gameobject
+		pool.queue.Enqueue(this);		// return to the pool
+		return this;
 	}
 
 
@@ -419,7 +469,6 @@ public class Entity : MonoBehaviour
 		}
 		if (health <= 0) {
 			OnWillBeDestroyed();
-			Destroy(gameObject);
 		}
 	}
 	/// <summary>
@@ -436,6 +485,7 @@ public class Entity : MonoBehaviour
 	/// The default implementation spawns the destroyEffectPrefab and wreckagePrefab and adds to GameManager.score
 	/// </summary>
 	public virtual void OnWillBeDestroyed() {
+		
 		try {
 
 			// if there's a destroyEffectPrefab, get one from the Pool and Activate it
@@ -457,8 +507,11 @@ public class Entity : MonoBehaviour
 
 		}
 		catch { }
+
+		if (pool) { Return(); } 
+		else { Destroy(gameObject); }
+
 	}
-	protected virtual void OnDestroy() { }
 
 	/// <summary>
 	/// Event called when the entity collides with something.<br/>
@@ -466,7 +519,7 @@ public class Entity : MonoBehaviour
 	/// </summary>
 	protected virtual void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.transform.FindComponent(out Entity entity)) {
+		if (collision.gameObject.activeSelf && collision.transform.FindComponent(out Entity entity)) {
 			 entity.Damage(DamageOnCollision, this);
 		}
 	}
@@ -476,10 +529,69 @@ public class Entity : MonoBehaviour
 	#region Utility and Misc.
 
 	/// <summary>
+	/// Resolve all Collider2D overlaps between this Entity and other colliders<br/>
+	/// Overlaps are resolved by moving the Entity away from the world origin by the overlap distance plus a small buffer
+	/// </summary>
+	public void ResolveOverlaps()
+	{
+		bool overlapsResolved = false; float overlap;
+		while (!overlapsResolved) {			
+			overlaps = Physics2D.OverlapCircleAll(bounds.bounds.center, bounds.radius, LevelBoundsMask); overlapsResolved = true;
+			foreach (Collider2D collider in overlaps) {
+				if (collider.isTrigger || collider.transform.IsChildOf(transform)) { continue; }
+				overlap = bounds.radius + collider.bounds.extents.magnitude - Vector2.Distance(bounds.bounds.center, collider.bounds.center);
+				if (overlap > 0) { transform.position = transform.position + transform.position.normalized * (overlap * 1.2f); overlapsResolved = false; }
+			}
+		}
+	}
+	/// <summary>
+	/// Collider2D[] used to store overlaps in ResolveOverlaps()
+	/// </summary>
+	protected static Collider2D[] overlaps;
+	/// <summary>
+	/// LayerMask used to ignore the LevelBounds layer in ResolveOverlaps()
+	/// </summary>
+	protected static readonly LayerMask LevelBoundsMask = ~(1 << 3);
+
+
+	/// <summary>
+	/// Gets all entities other than the target within this Entity's Radius
+	/// </summary>
+	public IEnumerable<Entity> GetEntitiesExcludingTarget() { return GetEntitiesExcludingTarget(Radius); }
+	/// <summary>
+	/// Gets all entities other than the target within the given radius
+	/// </summary>
+	public IEnumerable<Entity> GetEntitiesExcludingTarget(float radius)
+	{
+		if (!float.IsNormal(radius) || radius < 0f) { radius = Radius; }
+		return
+			Physics2D.OverlapCircleAll(ColliderPosition, radius)
+			.Where(c => c.FindComponent(out Entity entity) && entity != this && entity != target)
+			.Select(c => c.FindComponent<Entity>()).Distinct();
+	}
+
+	/// <summary>
+	/// Gets all entities within this Entity's Radius
+	/// </summary>
+	public IEnumerable<Entity> GetEntities() { return GetEntities(Radius); }
+	/// <summary>
+	/// Gets all entities within the given radius
+	/// </summary>
+	public IEnumerable<Entity> GetEntities(float radius)
+	{
+		if (!float.IsNormal(radius) || radius < 0f) { radius = Radius; }
+		return
+			Physics2D.OverlapCircleAll(ColliderPosition, radius)
+			.Where(c => c.FindComponent(out Entity entity) && entity != this)
+			.Select(c => c.FindComponent<Entity>()).Distinct();
+	}
+
+	/// <summary>
 	/// Sets all Shapes on the Entity to a given color and smoothly fades them back over the specified duration
 	/// </summary>
 	public void FlashColor(Color color, float duration = 0.5f)
 	{
+		if (!gameObject.activeSelf) { return; }
 		foreach (ShapeRenderer shape in shapes) { shape.FlashColor(color, duration); }
 	}
 
@@ -505,6 +617,9 @@ public class Entity : MonoBehaviour
 
 	#region Faction
 
+	/// <summary>
+	/// An enum used to denote the Faction of an Entity.
+	/// </summary>
 	[Flags]
 	public enum Faction
 	{
@@ -512,8 +627,17 @@ public class Entity : MonoBehaviour
 		Alliance = 8, Rebellion = 16, Empire = 32, Raider = 64, Pirate = 128
 	}
 	
+	/// <summary>
+	/// Returns true if the Entity has the Player Faction flag.
+	/// </summary>
 	public bool IsPlayer => faction.HasFlag(Faction.Player);
+	/// <summary>
+	/// Returns true if the Entity has the Structure Faction flag.
+	/// </summary>
 	public bool IsStructure => faction.HasFlag(Faction.Structure);
+	/// <summary>
+	/// Returns true if the Entity has the Neutral Faction flag.
+	/// </summary>
 	public bool IsNeutral => faction.HasFlag(Faction.Neutral);
 	
 	/// <summary>

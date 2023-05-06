@@ -1,8 +1,10 @@
 using UnityEngine;
 
+
 /// <summary>
 /// BulletTimeScaler is a utility component intended to enable an Entity to move normally during BulletTime.
 /// </summary>
+[DisallowMultipleComponent]
 public class BulletTimeScaler : MonoBehaviour
 {
 
@@ -11,10 +13,10 @@ public class BulletTimeScaler : MonoBehaviour
     /// </summary>
     private bool velocityAdjusted = false;
 
-    // during Start we mark the entity as inBulletTime
-    // and adjust its velocity to compensate for BulletTime
-
-    void Start()
+	/// <summary>
+	/// Mark the entity as inBulletTime and adjust its velocity to compensate for BulletTime
+	/// </summary>
+	void Start()
     {
         if (GameManager.BulletTime && TryGetComponent(out Entity entity)) {
             entity.inBulletTime = true;
@@ -33,9 +35,10 @@ public class BulletTimeScaler : MonoBehaviour
         if (!GameManager.BulletTime) {
 			if (TryGetComponent(out Entity entity)) { 
                 entity.inBulletTime = false;
-                if (velocityAdjusted) { entity.Body.velocity *= GameManager.SlowTimeFactor; }
+                if (velocityAdjusted) { entity.Body.velocity *= GameManager.BulletTimeFactor; }
             }
 			Destroy(this);
         }
     }
+
 }

@@ -508,6 +508,7 @@ GameObject:
   - component: {fileID: 6024105540313166787}
   - component: {fileID: 1197746707973913351}
   - component: {fileID: 8521137323921410363}
+  - component: {fileID: -4780086982179537623}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -754,9 +755,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf5c47f97c8e094c89c5d9910352240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 4
   body: {fileID: 0}
   bounds: {fileID: 6024105540313166787}
+  separationBounds: {fileID: 0}
   target: {fileID: 0}
   drops: []
   maxHealth: 10
@@ -769,6 +772,7 @@ MonoBehaviour:
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
+  flowFieldMultiplier: 4
   inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 5
@@ -785,12 +789,11 @@ MonoBehaviour:
   pathDirection: 1
   obstacleAvoidDistance: 0.5
   obstacleAvoidanceMultiplier: 4
-  obstacleCheckDistanceMultiplier: 1
-  debugObstacleAvoidance: 0
-  mainWhiskerLen: 1.25
-  sideWhiskerLen: 0.701
+  mainWhiskerLength: 12.5
+  sideWhiskerLength: 7
   sideWhiskerAngle: 45
-  distanceBetween: 0
+  debugObstacleAvoidance: 0
+  collisionDistanceBetween: 0
   collisionDetectionRadiusMultiplier: 4
   collisionAvoidanceMultiplier: 1.5
   fleePanicDistance: 3.5
@@ -811,6 +814,8 @@ MonoBehaviour:
   brakeFactor: 0.1
   turnFactor: 0.3
   debugVisualizeAim: 0
+  maxEnergy: 100
+  currentEnergy: 100
 --- !u!114 &8521137323921410363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,6 +845,19 @@ MonoBehaviour:
   projectileAmmoPerShot: 1
   projectileReloadTime: 3
   projectileReloadTimeCurrent: 0
+--- !u!114 &-4780086982179537623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3515856047047001512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a7de19ac09ca146ae415b18154141e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invulnerabilityTime: 1
 --- !u!1 &4298825948045765230
 GameObject:
   m_ObjectHideFlags: 0
