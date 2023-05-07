@@ -43,24 +43,12 @@ public class AsteroidCluster : Entity
 	private void FixedUpdate()
 	{
 
-		// the code below handles the destruction/disbanding of the cluster when the core is destroyed or missing
-		// currently there is no way for this to happen during normal gameplay (asteroids are currently invulnerable)
-		
-		// this code is here to futureproof the class, it's likely that eventually asteroids will be destructible
+		// remove invalid asteroids from the cluster list
+		asteroids.RemoveAll(a => a == null);
 
-		// if the core is missing, disable each asteroid's SpringJoint2D, set its connectedBody to null
-		// and set its parent transform to the cluster's parent transform (gameobject serving as a general asteroids pool)
-		// then destroy this gameobject
+		// if the core is missing, destroy the cluster
+		if (!core) { OnWillBeDestroyed(); }
 
-		if (!core) {
-			foreach (Asteroid item in asteroids) {
-				if (item && item.FindComponent(out SpringJoint2D spring)) {
-					spring.enabled = false; spring.connectedBody = null;
-					item.transform.SetParent(transform.parent);
-				}
-			}
-			Destroy(gameObject);
-		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -85,6 +73,33 @@ public class AsteroidCluster : Entity
 			}
 		}
 
+	}
+
+	/// <summary>
+	/// Do not allow entire Asteroid Clusters to be duplicated
+	/// </summary>
+	public override Entity Duplicate() { return this; }
+
+	/// <summary>
+	/// Disband the cluster before destroying it
+	/// </summary>
+	public override void OnWillBeDestroyed()
+	{
+		DisbandCluster();
+		base.OnWillBeDestroyed();
+	}
+
+	/// <summary>
+	/// Disband the cluster, releasing all asteroids from the core's gravitational pull
+	/// </summary>
+	public void DisbandCluster()
+	{
+		// disable each asteroid's SpringJoint2D, set its connectedBody to null
+		foreach (Asteroid item in asteroids) {
+			if (item && item.FindComponent(out SpringJoint2D spring)) {
+				spring.enabled = false; spring.connectedBody = null;
+			}
+		}
 	}
 
 }

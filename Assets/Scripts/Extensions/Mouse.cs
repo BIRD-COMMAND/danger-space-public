@@ -282,6 +282,20 @@ namespace Extensions
 		}
 
 		/// <summary>
+		/// Returns the first item of type <typeparamref name="T"/> under the mouse attached to any non-Trigger Collider2D, or null if none are found.
+		/// </summary>
+		public static T HoveredItemWithCollider<T>() where T : Component
+		{
+			bool queriesHitTriggers = Physics2D.queriesHitTriggers;
+			Physics2D.queriesHitTriggers = false;
+			IEnumerable<Collider2D> filtered =
+				Physics2D.OverlapPointAll(WorldPosition)
+				.Where(c => !c.isTrigger && c.attachedRigidbody != Body && c.transform.GetComponent<T>());
+			Physics2D.queriesHitTriggers = queriesHitTriggers;
+			return filtered.Select(c => c.transform.GetComponent<T>()).FirstOrDefault();
+		}
+
+		/// <summary>
 		/// Returns all items of type <typeparamref name="T"/> under the mouse attached to any non-Trigger Collider2D.
 		/// </summary>
 		public static List<T> HoveredItemsWithCollider<T>() where T : Component
@@ -290,9 +304,23 @@ namespace Extensions
 			Physics2D.queriesHitTriggers = false;
 			IEnumerable<Collider2D> filtered =
 				Physics2D.OverlapPointAll(WorldPosition)
-				.Where(c => !c.isTrigger && c.attachedRigidbody != Body && c.transform.root.GetComponentInChildren<T>());
+				.Where(c => !c.isTrigger && c.attachedRigidbody != Body && c.GetComponent<T>());
 			Physics2D.queriesHitTriggers = queriesHitTriggers;
-			return filtered.SelectMany(c => c.transform.root.GetComponentsInChildren<T>()).ToList();
+			return filtered.SelectMany(c => c.GetComponents<T>()).ToList();
+		}
+
+		/// <summary>
+		/// Returns the first item of type <typeparamref name="T"/> under the mouse attached to any Trigger Collider2D, or null if none are found.
+		/// </summary>
+		public static T HoveredItemWithTrigger<T>() where T : Component
+		{
+			bool queriesHitTriggers = Physics2D.queriesHitTriggers;
+			Physics2D.queriesHitTriggers = true;
+			IEnumerable<Collider2D> filtered =
+				Physics2D.OverlapPointAll(WorldPosition)
+				.Where(c => c.isTrigger && c.attachedRigidbody != Body && c.transform.GetComponent<T>());
+			Physics2D.queriesHitTriggers = queriesHitTriggers;
+			return filtered.Select(c => c.transform.GetComponent<T>()).FirstOrDefault();
 		}
 
 		/// <summary>
@@ -304,9 +332,23 @@ namespace Extensions
 			Physics2D.queriesHitTriggers = true;
 			IEnumerable<Collider2D> filtered =
 				Physics2D.OverlapPointAll(WorldPosition)
-				.Where(c => c.isTrigger && c.attachedRigidbody != Body && c.transform.root.GetComponentInChildren<T>());
+				.Where(c => c.isTrigger && c.attachedRigidbody != Body && c.GetComponent<T>());
 			Physics2D.queriesHitTriggers = queriesHitTriggers;
-			return filtered.SelectMany(c => c.transform.root.GetComponentsInChildren<T>()).ToList();
+			return filtered.SelectMany(c => c.GetComponents<T>()).ToList();
+		}
+
+		/// <summary>
+		/// Returns the first item of type <typeparamref name="T"/> under the mouse attached to any type of Collider2D, or null if none are found.
+		/// </summary>
+		public static T HoveredItem<T>() where T : Component
+		{
+			bool queriesHitTriggers = Physics2D.queriesHitTriggers;
+			Physics2D.queriesHitTriggers = true;
+			IEnumerable<Collider2D> filtered =
+				Physics2D.OverlapPointAll(WorldPosition)
+				.Where(c => c.attachedRigidbody != Body && c.transform.GetComponent<T>());
+			Physics2D.queriesHitTriggers = queriesHitTriggers;
+			return filtered.Select(c => c.transform.GetComponent<T>()).FirstOrDefault();
 		}
 
 		/// <summary>
@@ -318,9 +360,9 @@ namespace Extensions
 			Physics2D.queriesHitTriggers = true;
 			IEnumerable<Collider2D> filtered =
 				Physics2D.OverlapPointAll(WorldPosition)
-				.Where(c => c.attachedRigidbody != Body && c.transform.root.GetComponentInChildren<T>());
+				.Where(c => c.attachedRigidbody != Body && c.GetComponent<T>());
 			Physics2D.queriesHitTriggers = queriesHitTriggers;
-			return filtered.SelectMany(c => c.transform.root.GetComponentsInChildren<T>()).ToList();
+			return filtered.SelectMany(c => c.GetComponents<T>()).ToList();
 		}
 
 		#endregion

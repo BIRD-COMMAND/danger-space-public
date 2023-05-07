@@ -50,7 +50,7 @@ public class Missile : Agent
 	{
 		base.OnCollisionEnter2D(collision);
 		if (collision.ApproximateForce().magnitude < 1f) { return; }
-		OnWillBeDestroyed();
+		Damage(MaxHealth, this);
 	}
 
 }

@@ -69,4 +69,11 @@ public class PoolManager : MonoBehaviour
 		return pools[prefab].Get();
 	}
 
+	/// <summary>
+	/// Returns true if the specified prefab has an object pool.
+	/// </summary>
+	public static bool CanGet(GameObject prefab) {
+		return prefab && instance.pools.ContainsKey(prefab);
+	}
+
 }

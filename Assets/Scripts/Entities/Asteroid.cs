@@ -39,4 +39,19 @@ public class Asteroid : Entity
 		if (!collision.collider.FindComponent<Asteroid>()) { base.OnCollisionEnter2D(collision); }
 	}
 
+	/// <summary>
+	/// Edit mode draw logic
+	/// </summary>
+	public override void OnEditModeDisplay() { DrawSpring(Color.white); }
+
+	/// <summary>
+	/// Reposition spring when moved
+	/// </summary>
+	public override void OnEditModeMoved(Vector2 oldPosition)
+	{
+		if (isCore) { return; } SpringJoint2D spring = GetComponent<SpringJoint2D>(); if (!spring) { return; }
+		if (spring.connectedBody) { spring.connectedAnchor = spring.connectedBody.transform.InverseTransformPoint(Position); }
+		else { spring.connectedAnchor = Vector2.zero; }
+	}
+
 }

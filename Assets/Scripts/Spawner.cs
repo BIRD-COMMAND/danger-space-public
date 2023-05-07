@@ -62,6 +62,9 @@ public class Spawner : MonoBehaviour
 	/// </summary>
 	private void FixedUpdate()
 	{
+
+		if (GameManager.EditMode) { return; }
+
 		// remove invalid references
 		spawned.RemoveAll(x => !x || !x.activeSelf);
 		

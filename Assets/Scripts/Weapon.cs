@@ -29,10 +29,6 @@ public class Weapon : MonoBehaviour
 	/// </summary>
 	public GameObject projectilePrefab;
 	/// <summary>
-	/// Prefab for the impact effect spawned when a projectile hits something.
-	/// </summary>
-	public GameObject impactEffectPrefab;
-	/// <summary>
 	/// Transform used as the spawn point for projectiles fired by the weapon.
 	/// </summary>
 	public Transform projectileSpawn;
@@ -137,6 +133,7 @@ public class Weapon : MonoBehaviour
 				shot = PoolManager.Get(projectilePrefab) as Projectile;
 				shot.shooter = shooter;
 				shot.weapon = this;
+				shot.damage = projectileDamage;
 				if (projectileSpawnRadius > 0f) {
 					bool overlap = true;
 					for (float j = 1f; j < 2.5f; j += 0.05f) {

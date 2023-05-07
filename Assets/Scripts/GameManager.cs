@@ -44,6 +44,15 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public static bool IsPaused { get => instance.isPaused; set => instance.isPaused = value; }
 
+	/// <summary>
+	/// Whether the application is in edit mode
+	/// </summary>
+	[Tooltip("Whether the application is in edit mode")]
+	[SerializeField] private bool editMode = false;
+	/// <summary>
+	/// Whether the application is in edit mode
+	/// </summary>
+	public static bool EditMode { get => instance.editMode; set => instance.editMode = value; }
 
 	[Header("Player")]
 	// Reference to the player prefab
@@ -75,7 +84,7 @@ public class GameManager : MonoBehaviour
 	/// <summary>
 	/// Whether the player is invulnerable
 	/// </summary>
-	public bool PlayerInvulnerable { get => playerInvulnerable; set => playerInvulnerable = value; }
+	public static bool PlayerInvulnerable { get => instance.playerInvulnerable; set => instance.playerInvulnerable = value; }
 
 	// Whether the player has infinite energy
 	[Tooltip("Whether the player has infinite energy")]
@@ -123,6 +132,10 @@ public class GameManager : MonoBehaviour
 	[Tooltip("Text UI element for displaying player score")]
 	[SerializeField] private Text scoreText;
 
+	// GameObject containing the Player Stats UI Elements
+	[Tooltip("GameObject containing the Player Stats UI Elements")]
+	[SerializeField] private GameObject playerStats;
+
 	// GameObject containing the Game Over screen UI Elements
 	[Tooltip("GameObject containing the Game Over screen UI Elements")]
 	[SerializeField] private GameObject gameOverScreen;
@@ -130,6 +143,10 @@ public class GameManager : MonoBehaviour
 	// GameObject containing the Pause Menu UI Elements
 	[Tooltip("GameObject containing the Pause Menu UI Elements")]
 	[SerializeField] private GameObject pauseMenu;
+
+	// GameObject containing the Edit Mode Overlay UI Elements
+	[Tooltip("GameObject containing the Edit Mode Overlay UI Elements")]
+	[SerializeField] private GameObject editModeOverlay;
 
 	/// <summary>
 	/// Gets the player's score
@@ -147,12 +164,16 @@ public class GameManager : MonoBehaviour
 
 	private void Awake() { instance = this; SpawnPlayer(); }
 
-	private void Start() { if (SceneManager.loadedSceneCount == 1) { SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive); } }
+	private void Start() { 
+		if (SceneManager.loadedSceneCount == 1) { SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive); }
+		TogglePause();
+	}
 	
 	void Update() { 
+		if (Input.GetKeyDown(KeyCode.Tab)) { TogglePause(); }
+		if (EditMode) { return; }
 		UpdateUI(); 
 		HandleRespawn();
-		if (Input.GetKeyDown(KeyCode.Escape)) { TogglePause(); }
 	}
 	
 	void FixedUpdate() { TrackStructuresOnScreen(); }
@@ -162,16 +183,34 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public void TogglePause()
 	{
+		if (editMode) { ToggleEditMode(); return; }
 		if (isPaused) {
-			pauseMenu.SetActive(false);
 			if (BulletTime) { Time.timeScale = bulletTimeFactor; }
 			else { Time.timeScale = 1f; }
 		}
-		else { 
-			pauseMenu.SetActive(true);
+		else { Time.timeScale = 0f; }
+		isPaused = !isPaused;
+		pauseMenu.SetActive(isPaused);
+	}
+	/// <summary>
+	/// Toggle Edit Mode
+	/// </summary>
+	public void ToggleEditMode()
+	{
+		if (editMode) {
+			GetComponent<EditModeManager>().StopEditMode();
+			Destroy(GetComponent<CameraController>());
 			Time.timeScale = 0f;
 		}
-		isPaused = !isPaused;
+		else {
+			GetComponent<EditModeManager>().StartEditMode();			
+			gameObject.AddComponent<CameraController>();
+			Time.timeScale = 1f;
+		}
+		editMode = !editMode;
+		pauseMenu.SetActive(!editMode);
+		playerStats.SetActive(!editMode);
+		editModeOverlay.SetActive(editMode);
 	}
 	/// <summary>
 	/// Quits the game

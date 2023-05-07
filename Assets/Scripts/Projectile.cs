@@ -11,6 +11,15 @@ public class Projectile : Poolable
 	/// </summary>
 	public GameObject poolableTrailPrefab;
 	/// <summary>
+	/// Prefab for the impact effect spawned when the projectile hits something.
+	/// </summary>
+	public GameObject impactEffectPrefab;
+	/// <summary>
+	/// The damage the projectile deals
+	/// </summary>
+	public float damage = 0f;
+
+	/// <summary>
 	/// The entity that fired the projectile
 	/// </summary>
 	[HideInInspector] public Entity shooter;
@@ -86,14 +95,18 @@ public class Projectile : Poolable
 	}
 
 	/// <summary>
+	/// The entity that was hit by the projectile.
+	/// </summary>
+	protected static Entity hitEntity;
+	/// <summary>
 	/// OnCollisionEnter2D is called when the projectile collides with another object.
 	/// Handles damaging the collided entity and creating an impact effect.
 	/// </summary>
 	/// <param name="collision">The collision data.</param>
 	protected virtual void OnCollisionEnter2D(Collision2D collision)
 	{ 
-		if (collision.transform.FindComponent(out Entity entity)) { entity.Damage(weapon.projectileDamage, shooter); }
-		if (weapon.impactEffectPrefab) { PoolManager.Get(weapon.impactEffectPrefab).Activate(transform.position, transform.rotation); }
+		if (collision.transform.FindComponent(out hitEntity)) { hitEntity.Damage(damage, shooter); }
+		if (impactEffectPrefab) { PoolManager.Get(impactEffectPrefab).Activate(transform.position, transform.rotation); }
 		Return();
 	}
 

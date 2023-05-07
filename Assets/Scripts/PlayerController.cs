@@ -85,7 +85,7 @@ public class PlayerController : Agent
 	private void Update()
 	{
 		// return if the game is paused
-		if (GameManager.IsPaused) { return; }
+		if (GameManager.IsPaused || GameManager.EditMode) { return; }
 
 		// reposition thrusters based on whether current velocity is moving toward or away from mouse
 		foreach (ThrustRepositioning item in GetComponentsInChildren<ThrustRepositioning>()) { 
@@ -102,6 +102,8 @@ public class PlayerController : Agent
 	void FixedUpdate()
 	{
 
+		if (GameManager.EditMode) { return; }
+
 		// Lerp up vector toward mouse position in worldspace
 		body.LookAt(Mouse.WorldPosition, inBulletTime ? Mathf.Max(turnFactor, 0.6f) : turnFactor);
 		
@@ -117,7 +119,7 @@ public class PlayerController : Agent
 		for (float increment = Time.timeScale; !inBulletTime || increment < 1f; increment += Time.timeScale) {
 
 			// get input from WASD and apply as a force to body
-			body.AddForce(MoveVector * maxThrust / Time.timeScale);
+			if (Time.timeScale != 0f) { body.AddForce(MoveVector * maxThrust / Time.timeScale); }
 
 			// reduce vertical velocity if relevant key is not held down
 			if (!KeyW && body.velocity.y > 0f) { body.velocity = Vector2.Lerp(body.velocity, body.velocity.WithY(0f), brakeFactor); }
@@ -165,5 +167,10 @@ public class PlayerController : Agent
 		glow.GetComponent<Disc>().ColorInner = color.WithAlpha(0.6f);
 		glow.GetComponent<Disc>().ColorOuter = color.WithAlpha(0f);
 	}
-	
+
+	/// <summary>
+	/// Do not allow the player to be duplicated
+	/// </summary>
+	public override Entity Duplicate() { return this; }
+
 }

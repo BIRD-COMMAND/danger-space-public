@@ -284,9 +284,9 @@ public class Entity : Poolable
 	public override Poolable Activate(Vector3 position, Quaternion rotation)
 	{
 		transform.SetPositionAndRotation(position, rotation);
-		
+
 		// resolve any overlaps with other colliders
-		ResolveOverlaps();
+		if (!GameManager.EditMode) { ResolveOverlaps(); }
 		
 		// enable the SpawnInvulnerability component if present
 		if (TryGetComponent(out SpawnInvulnerability component)) { component.enabled = true; }
@@ -315,6 +315,41 @@ public class Entity : Poolable
 		return this;
 	}
 
+	/// <summary>
+	/// Duplicates the Entity and returns the duplicate.
+	/// </summary>
+	public virtual Entity Duplicate()
+	{
+		Entity duplicate;
+		if (pool) { duplicate = pool.Get().Activate(transform.position, transform.rotation) as Entity; }
+		else { duplicate = Instantiate(this, transform.position, transform.rotation, transform.parent); }
+		return duplicate;
+	}
+
+
+	#region Edit Mode Callbacks
+
+	/// <summary>
+	/// Override this method to add custom logic for drawing visualizations for Edit Mode.
+	/// </summary>
+	public virtual void OnEditModeDisplay() { }
+
+	/// <summary>
+	/// Override this method to add custom logic for when Edit Mode is started
+	/// </summary>
+	public virtual void OnEditModeStarted() { }
+
+	/// <summary>
+	/// Override this method to add custom logic for when Edit Mode is stopped
+	/// </summary>
+	public virtual void OnEditModeStopped() { }
+
+	/// <summary>
+	/// Override this method to add custom logic for when the Entity is moved in Edit Mode.
+	/// </summary>
+	public virtual void OnEditModeMoved(Vector2 oldPosition) { }
+
+	#endregion
 
 	#region Angle and Orientation
 
@@ -594,6 +629,27 @@ public class Entity : Poolable
 		if (!gameObject.activeSelf) { return; }
 		foreach (ShapeRenderer shape in shapes) { shape.FlashColor(color, duration); }
 	}
+
+	/// <summary>
+	/// Draws a circle representing the Entity's Radius CircleCollider2D.
+	/// </summary>
+	public void DrawRadius(Color color) {
+		using (Draw.Command(Camera.main)) { Draw.Ring(Position, Radius, 0.3f, color); }
+	}
+
+	/// <summary>
+	/// Draws a line representing the SpringJoint2D attached to the Entity.
+	/// </summary>
+	public void DrawSpring(Color color)
+	{
+		drawSpring = GetComponent<SpringJoint2D>();
+		if (!drawSpring) { return; }
+		using (Draw.Command(Camera.main)) {
+			if (drawSpring.connectedBody) { Draw.Line(transform.TransformPoint(drawSpring.anchor), drawSpring.connectedBody.transform.TransformPoint(drawSpring.connectedAnchor), color); }
+			else { Draw.Line(transform.TransformPoint(drawSpring.anchor), transform.TransformPoint(drawSpring.connectedAnchor), color); }			 
+		}
+	}
+	private static SpringJoint2D drawSpring;
 
 	/// <summary>
 	/// Creates a debug cross at the given position in the scene view to help with debugging.

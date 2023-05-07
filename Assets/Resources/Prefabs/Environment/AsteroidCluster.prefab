@@ -299,22 +299,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 1
   body: {fileID: 0}
   bounds: {fileID: 6722098431486721267}
-  drops: []
-  shapes: []
   target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 0}
-  wreckagePrefab: {fileID: 0}
+  drops: []
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 0
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
+  flowFieldMultiplier: 4
+  inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 5
   isCore: 0
@@ -617,22 +619,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 1
   body: {fileID: 0}
   bounds: {fileID: 646035447729616263}
-  drops: []
-  shapes: []
   target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 0}
-  wreckagePrefab: {fileID: 0}
+  drops: []
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 0
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
+  flowFieldMultiplier: 4
+  inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 5
   isCore: 1
@@ -752,22 +756,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313ae81f8ee703c4fa0c8872356de16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 1
   body: {fileID: 0}
   bounds: {fileID: 4415285533684612313}
-  drops: []
-  shapes: []
   target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 0}
-  wreckagePrefab: {fileID: 0}
+  drops: []
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 0}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 1
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
+  flowFieldMultiplier: 4
+  inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 5
   core: {fileID: 5139206681582535442}
@@ -1070,22 +1076,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 1
   body: {fileID: 0}
   bounds: {fileID: 6983560730106000569}
-  drops: []
-  shapes: []
   target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 0}
-  wreckagePrefab: {fileID: 0}
+  drops: []
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 0
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
+  flowFieldMultiplier: 4
+  inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 5
   isCore: 0
@@ -1388,22 +1396,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 1
   body: {fileID: 0}
   bounds: {fileID: 4189101952714732297}
-  drops: []
-  shapes: []
   target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 0}
-  wreckagePrefab: {fileID: 0}
+  drops: []
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 0
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
+  flowFieldMultiplier: 4
+  inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 5
   isCore: 0
@@ -1706,22 +1716,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 1
   body: {fileID: 0}
   bounds: {fileID: 2808210666121898736}
-  drops: []
-  shapes: []
   target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 0}
-  wreckagePrefab: {fileID: 0}
+  drops: []
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 0
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
+  flowFieldMultiplier: 4
+  inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 5
   isCore: 0
@@ -2024,22 +2036,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 1
   body: {fileID: 0}
   bounds: {fileID: 5858512789862828283}
-  drops: []
-  shapes: []
   target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 0}
-  wreckagePrefab: {fileID: 0}
+  drops: []
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 0
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
+  flowFieldMultiplier: 4
+  inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 5
   isCore: 0
@@ -2342,22 +2356,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738bc76c895215544a5c21a865bdc86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool: {fileID: 0}
   faction: 1
   body: {fileID: 0}
   bounds: {fileID: 9083060256319166774}
-  drops: []
-  shapes: []
   target: {fileID: 0}
-  destroyEffectPrefab: {fileID: 0}
-  wreckagePrefab: {fileID: 0}
+  drops: []
   maxHealth: 10
   health: 10
   pointValue: 100
   damageOnCollision: 2
+  destroyEffectPrefab: {fileID: 7513590308433949138, guid: 45846bc51aa6ff64fa86e62febc598a7, type: 3}
+  wreckagePrefab: {fileID: 0}
   invulnerable: 0
   maxVelocity: 3.5
   maxAcceleration: 10
   turnSpeed: 20
+  flowFieldMultiplier: 4
+  inBulletTime: 0
   smoothing: 1
   numSamplesForSmoothing: 5
   isCore: 0

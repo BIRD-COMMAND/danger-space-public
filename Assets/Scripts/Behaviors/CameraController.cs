@@ -11,17 +11,20 @@ using Extensions;
 public class CameraController : MonoBehaviour
 {
 
-	public bool panEnabled = false;
-	public bool zoomEnabled = false;
+	public bool panEnabled = true;
+	public bool zoomEnabled = true;
 
 	[Range(1f, 1024f)]
-	public int scrollZoomFactor = 512;
+	public int scrollZoomFactor = 10;
 
 	private Camera cam;
 
 	private bool currentlyMousePanning = false;
+	private Vector2 lastMousePosition;
 
 	void Awake() { cam = GetComponent<Camera>(); }
+
+	private void Start() { lastMousePosition = Mouse.WorldPosition; }
 
 	void Update()
 	{
@@ -34,10 +37,13 @@ public class CameraController : MonoBehaviour
 			// Start middle-click camera panning
 			if (!currentlyMousePanning && Mouse.MiddleDown) { currentlyMousePanning = true; }
 			// If middle-click is pressed perform camera panning
-			else if (Mouse.MiddleDown) { transform.position -= (Vector3)Mouse.DeltaFrame; }
+			else if (Mouse.MiddleDown) { transform.position -= (Vector3)(Mouse.WorldPosition - lastMousePosition); }
 			// If middle-click is not pressed, panning = false
 			else { currentlyMousePanning = false; }
 		}
+
+		// Record last mouse position
+		lastMousePosition = Mouse.WorldPosition;
 
 	}
 

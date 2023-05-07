@@ -9,6 +9,7 @@ public class ScreenTrigger : MonoBehaviour
 {
 	
 	private static ScreenTrigger instance;
+	private static Vector2 min, max;
 
 	/// <summary>
 	/// The BoxCollider2D for the ScreenTrigger.
@@ -26,6 +27,21 @@ public class ScreenTrigger : MonoBehaviour
 			float width = height * cam.aspect;
 			screenTrigger = GetComponent<BoxCollider2D>();
 			screenTrigger.size = new Vector2(width, height);
+			min = screenTrigger.bounds.min;
+			max = screenTrigger.bounds.max;
+		}
+	}
+
+	/// <summary>
+	/// Draws the bounds of the ScreenTrigger.
+	/// </summary>
+	public static void DrawScreenBounds()
+	{
+		using (Shapes.Draw.Command(Camera.main)) {
+			Shapes.Draw.Line(min, new Vector2(min.x, max.y), Color.white);
+			Shapes.Draw.Line(min, new Vector2(max.x, min.y), Color.white);
+			Shapes.Draw.Line(max, new Vector2(max.x, min.y), Color.white);
+			Shapes.Draw.Line(max, new Vector2(min.x, max.y), Color.white);
 		}
 	}
 

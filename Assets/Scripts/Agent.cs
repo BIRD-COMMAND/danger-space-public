@@ -892,4 +892,23 @@ public abstract class Agent : Entity
 
 	#endregion
 
+	#region EditMode Callbacks
+
+	/// <summary>
+	/// When Edit Mode starts, constrain the Entity's position and make it invulnerable.
+	/// </summary>
+	public override void OnEditModeStarted() {
+		Body.constraints = RigidbodyConstraints2D.FreezePosition; Invulnerable = true;
+		if (TryGetComponent(out SpawnInvulnerability spawn)) { spawn.enabled = false; }
+	}
+
+	/// <summary>
+	/// When Edit Mode stops, un-constrain the Entity's position and make it vulnerable.
+	/// </summary>
+	public override void OnEditModeStopped() {
+		Body.constraints = RigidbodyConstraints2D.None; Invulnerable = false;
+	}
+
+	#endregion
+
 }
