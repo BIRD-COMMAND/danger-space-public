@@ -39,7 +39,7 @@ public class EditModeManager : MonoBehaviour
 		foreach (Entity entity in FindObjectsByType<Entity>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) { entity.OnEditModeStarted(); }
 
 		// zoom camera out
-		GetComponent<Camera>().orthographicSize *= 1.75f;
+		GetComponent<Camera>().orthographicSize *= 1.25f;
 	}
 
 	public void StopEditMode()
@@ -65,11 +65,14 @@ public class EditModeManager : MonoBehaviour
 	{
 		
 		if (!GameManager.EditMode) { return; }
-		
-		ScreenTrigger.DrawScreenBounds();
 
 		// draw visualizations for all entities that have one
+		Draw.ResetStyle();
 		foreach (Entity entity in entities) { if (entity) { entity.OnEditModeDisplay(); } }
+
+		// draw visualizations for all spawners and Screen Bounds
+		Draw.ResetStyle();
+		ScreenTrigger.DrawScreenBounds();
 
 		// try to get the entity the mouse is currently hovering over
 		if (!draggingEntity) { mouseEntity = Mouse.HoveredItems<Entity>().OrderBy(x => x.Radius).FirstOrDefault(); }
@@ -77,14 +80,15 @@ public class EditModeManager : MonoBehaviour
 
 		// try to start mouse drag
 		if (Mouse.LeftClick && !draggingEntity && mouseEntity) {
-			// duplicate entity if control is held down
-			if (Input.GetKey(KeyCode.LeftControl)) { mouseEntity = mouseEntity.Duplicate(); mouseEntity.OnEditModeStarted(); }
+			// duplicate entity if either shift key is held down
+			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) { 
+				mouseEntity = mouseEntity.Duplicate(); mouseEntity.OnEditModeStarted(); 
+			}
 			draggingEntity = true; dragOffset = mouseEntity.Position - Mouse.WorldPosition;
 		}
 
 		// stop mouse drag
-		if (draggingEntity && !Mouse.LeftDown) { draggingEntity = false; }
-		if (draggingEntity && !mouseEntity) { draggingEntity = false; }
+		if (draggingEntity && (!Mouse.LeftDown || !mouseEntity)) { draggingEntity = false; }
 
 		// do mouse drag
 		if (draggingEntity && mouseEntity) { 

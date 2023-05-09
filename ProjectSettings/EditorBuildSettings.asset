@@ -8,8 +8,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DefaultScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/AlexLab.unity
-    guid: 3fe0197dfb572704ea0709145942fb2c
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

@@ -164,10 +164,7 @@ public class GameManager : MonoBehaviour
 
 	private void Awake() { instance = this; SpawnPlayer(); }
 
-	private void Start() { 
-		if (SceneManager.loadedSceneCount == 1) { SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive); }
-		TogglePause();
-	}
+	private void Start() { TogglePause(); }
 	
 	void Update() { 
 		if (Input.GetKeyDown(KeyCode.Tab)) { TogglePause(); }

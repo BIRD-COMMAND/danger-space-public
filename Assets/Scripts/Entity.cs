@@ -645,8 +645,8 @@ public class Entity : Poolable
 		drawSpring = GetComponent<SpringJoint2D>();
 		if (!drawSpring) { return; }
 		using (Draw.Command(Camera.main)) {
-			if (drawSpring.connectedBody) { Draw.Line(transform.TransformPoint(drawSpring.anchor), drawSpring.connectedBody.transform.TransformPoint(drawSpring.connectedAnchor), color); }
-			else { Draw.Line(transform.TransformPoint(drawSpring.anchor), transform.TransformPoint(drawSpring.connectedAnchor), color); }			 
+			if (drawSpring.connectedBody) { Draw.Line(transform.TransformPoint(drawSpring.anchor), drawSpring.connectedBody.transform.TransformPoint(drawSpring.connectedAnchor), 0.6f, color); }
+			else { Draw.Line(transform.TransformPoint(drawSpring.anchor), transform.TransformPoint(drawSpring.connectedAnchor), 0.6f, color); }			 
 		}
 	}
 	private static SpringJoint2D drawSpring;

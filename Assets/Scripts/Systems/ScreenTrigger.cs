@@ -38,10 +38,12 @@ public class ScreenTrigger : MonoBehaviour
 	public static void DrawScreenBounds()
 	{
 		using (Shapes.Draw.Command(Camera.main)) {
-			Shapes.Draw.Line(min, new Vector2(min.x, max.y), Color.white);
-			Shapes.Draw.Line(min, new Vector2(max.x, min.y), Color.white);
-			Shapes.Draw.Line(max, new Vector2(max.x, min.y), Color.white);
-			Shapes.Draw.Line(max, new Vector2(min.x, max.y), Color.white);
+			Shapes.Draw.UseDashes = true;
+			Shapes.Draw.Line(min, new Vector2(min.x, max.y), 0.6f, Color.white);
+			Shapes.Draw.Line(min, new Vector2(max.x, min.y), 0.6f, Color.white);
+			Shapes.Draw.Line(max, new Vector2(max.x, min.y), 0.6f, Color.white);
+			Shapes.Draw.Line(max, new Vector2(min.x, max.y), 0.6f, Color.white);
+			Shapes.Draw.UseDashes = false;
 		}
 	}
 

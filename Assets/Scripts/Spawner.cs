@@ -86,6 +86,21 @@ public class Spawner : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Draws visual indicators for the spawner
+	/// </summary>
+	public void EditModeDrawSpawner()
+	{
+		Shapes.Draw.Ring(transform.position, 1f, 0.6f, Color.white);
+		if (TryGetComponent(out LerpPosition lerp)) {
+			Shapes.Draw.Ring(lerp.startPosition, 0.3f, 0.6f, Color.white);
+			Shapes.Draw.Ring(lerp.endPosition, 0.3f, 0.6f, Color.white);
+			Shapes.Draw.UseDashes = true;
+			Shapes.Draw.Line(lerp.startPosition, lerp.endPosition, 0.6f, Color.white);
+			Shapes.Draw.UseDashes = false;
+		}
+	}
+
+	/// <summary>
 	/// Draws a spawn point indicator ring
 	/// </summary>
 	private void OnDrawGizmos()
