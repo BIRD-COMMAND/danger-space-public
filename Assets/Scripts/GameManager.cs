@@ -6,6 +6,7 @@ using Extensions;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using NUnit.Framework.Api;
 
 /// <summary>
 /// The GameManager class is responsible for managing the game state, handling UI updates,
@@ -54,31 +55,49 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public static bool EditMode { get => instance.editMode; set => instance.editMode = value; }
 
+	/// <summary>
+	/// Reference to the player prefab
+	/// </summary>
 	[Header("Player")]
-	// Reference to the player prefab
 	[Tooltip("Reference to the player prefab")]
 	[SerializeField] private GameObject playerPrefab;
 
-	// Spawn point for the player
+	/// <summary>
+	/// Spawn point for the player
+	/// </summary>
 	[Tooltip("Spawn point for the player")]
 	[SerializeField] private Vector2 spawnPoint;
 
-	// Player's score
+	/// <summary>
+	/// Player's score
+	/// </summary>
 	[Tooltip("Player's score")]
 	[SerializeField] private float playerScore = 0f;
 
-	// Number of player lives
+	/// <summary>
+	/// Number of player lives
+	/// </summary>
 	[Tooltip("Number of player lives")]
-	[SerializeField] private int playerLives = 4;
+	[SerializeField] private int playerLives = 3;
+	/// <summary>
+	/// Number of player lives
+	/// </summary>
+	public static int PlayerLives { get => instance.playerLives; set => instance.playerLives = value; }
 
-	// Time it takes for the player to respawn
+	/// <summary>
+	/// Time it takes for the player to respawn
+	/// </summary>
 	[Tooltip("Time it takes for the player to respawn")]
 	[SerializeField] private float playerRespawnTime = 2f;
 
-	// Internal timer for player respawn
+	/// <summary>
+	/// Internal timer for player respawn
+	/// </summary>
 	private float playerRespawnTimer = 2f;
 
-	// Whether the player is invulnerable
+	/// <summary>
+	/// Whether the player is invulnerable
+	/// </summary>
 	[Tooltip("Whether the player is invulnerable")]
 	[SerializeField] private bool playerInvulnerable = false;
 	/// <summary>
@@ -86,7 +105,9 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public static bool PlayerInvulnerable { get => instance.playerInvulnerable; set => instance.playerInvulnerable = value; }
 
-	// Whether the player has infinite energy
+	/// <summary>
+	/// Whether the player has infinite energy
+	/// </summary>
 	[Tooltip("Whether the player has infinite energy")]
 	[SerializeField] private bool infiniteEnergy = false;
 	/// <summary>
@@ -94,18 +115,18 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public bool InfiniteEnergy { get => infiniteEnergy; set => infiniteEnergy = value; }
 
-	// Gets the slow time factor
 	/// <summary>
 	/// Gets the slow time factor
 	/// </summary>
 	public static float BulletTimeFactor => instance.bulletTimeFactor;
 
+	/// <summary>
+	/// Factor by which the time slows down during bullet time
+	/// </summary>
 	[Header("Bullet Time")]
-	// Factor by which the time slows down during bullet time
 	[Tooltip("Factor by which the time slows down during bullet time")]
 	[SerializeField] private float bulletTimeFactor = 0.2f;
 
-	// Returns true if bullet time is active
 	/// <summary>
 	/// Returns true if bullet time is active
 	/// </summary>
@@ -118,33 +139,47 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	// Internal flag for slow time status
+	/// <summary>
+	/// Internal flag for slow time status
+	/// </summary>
 	[Tooltip("Internal flag for slow time status")]
 	[SerializeField] private bool bulletTime = false;
 
 
+	/// <summary>
+	/// Text UI element for displaying player lives
+	/// </summary>
 	[Header("UI")]
-	// Text UI element for displaying player lives
 	[Tooltip("Text UI element for displaying player lives")]
 	[SerializeField] private Text livesText;
 
-	// Text UI element for displaying player score
+	/// <summary>
+	/// Text UI element for displaying player score
+	/// </summary>
 	[Tooltip("Text UI element for displaying player score")]
 	[SerializeField] private Text scoreText;
 
-	// GameObject containing the Player Stats UI Elements
+	/// <summary>
+	/// GameObject containing the Player Stats UI Elements
+	/// </summary>
 	[Tooltip("GameObject containing the Player Stats UI Elements")]
 	[SerializeField] private GameObject playerStats;
 
-	// GameObject containing the Game Over screen UI Elements
+	/// <summary>
+	/// GameObject containing the Game Over screen UI Elements
+	/// </summary>
 	[Tooltip("GameObject containing the Game Over screen UI Elements")]
 	[SerializeField] private GameObject gameOverScreen;
 
-	// GameObject containing the Pause Menu UI Elements
+	/// <summary>
+	/// GameObject containing the Pause Menu UI Elements
+	/// </summary>
 	[Tooltip("GameObject containing the Pause Menu UI Elements")]
 	[SerializeField] private GameObject pauseMenu;
 
-	// GameObject containing the Edit Mode Overlay UI Elements
+	/// <summary>
+	/// GameObject containing the Edit Mode Overlay UI Elements
+	/// </summary>
 	[Tooltip("GameObject containing the Edit Mode Overlay UI Elements")]
 	[SerializeField] private GameObject editModeOverlay;
 
@@ -181,6 +216,7 @@ public class GameManager : MonoBehaviour
 	public void TogglePause()
 	{
 		if (editMode) { ToggleEditMode(); return; }
+		if (playerLives == 0 && !isPaused) { return; }
 		if (isPaused) {
 			if (BulletTime) { Time.timeScale = bulletTimeFactor; }
 			else { Time.timeScale = 1f; }
@@ -224,7 +260,7 @@ public class GameManager : MonoBehaviour
 		scoreText.text = ((int)playerScore).ToString();
 
 		// update UI lives text
-		livesText.text = playerLives.ToString();
+		livesText.text = Mathf.Max(playerLives - 1, 0).ToString();
 		if (playerLives == 0 && !gameOverScreen.activeSelf) { gameOverScreen.SetActive(true); }
 		else if (playerLives > 0 && gameOverScreen.activeSelf) { gameOverScreen.SetActive(false); }
 
@@ -237,7 +273,7 @@ public class GameManager : MonoBehaviour
     {
 		if (!Player) {
 			if (bulletTime) { Time.timeScale = 1f; bulletTime = false; }
-			if (playerLives == 0) { return; }
+			if (playerLives == 0) { playerRespawnTimer = 0f; return; }
 			playerRespawnTimer -= Time.deltaTime;
 			if (playerRespawnTimer <= 0f) {
 				playerRespawnTimer = playerRespawnTime;
@@ -255,16 +291,22 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	private void SpawnPlayer()
     {
-		playerLives--; if (playerLives == 0) { return; }
+		if (playerLives == 0) { return; }
 		// instantiate player prefab and flash green for 1 second
 		Player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity).GetComponent<PlayerController>();
         Player.FlashColor(Color.green, 1f);
 	}
 
 	/// <summary>
-	/// Resets the game by setting player lives and score to their initial values.
+	/// Resets the game by clearing enemies/pickups and setting player lives and score to their initial values.
 	/// </summary>
-	public void ResetGame() { playerLives = 4; playerScore = 0; }
+	public void ResetGame() { 
+		// clean up remaining AI fighters and pickups
+        foreach (Agent agent in FindObjectsByType<Agent>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) { agent.OnWillBeDestroyed(); }
+		foreach (Pickup pickup in FindObjectsByType<Pickup>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) { pickup.Return(); }
+		// reset player lives and score
+		playerLives = 3; playerScore = 0; 
+	}
 	
 	/// <summary>
 	/// Tracks the structures on the screen.

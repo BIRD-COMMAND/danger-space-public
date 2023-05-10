@@ -173,4 +173,13 @@ public class PlayerController : Agent
 	/// </summary>
 	public override Entity Duplicate() { return this; }
 
+	/// <summary>
+	/// Decrement player lives before destroying
+	/// </summary>
+	public override void OnWillBeDestroyed()
+	{
+		GameManager.PlayerLives--;
+		base.OnWillBeDestroyed();
+	}
+
 }
