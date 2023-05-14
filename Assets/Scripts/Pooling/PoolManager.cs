@@ -72,11 +72,15 @@ public class PoolManager : MonoBehaviour
 	/// </summary>
 	/// <param name="prefab">The prefab to get an instance of.</param>
 	/// <returns>A Poolable instance of the specified prefab.</returns>
-	public static Poolable Get(GameObject prefab) { return CanGet(prefab) ? instance.pools[prefab].Get() : null; }
+	public static Poolable Get(GameObject prefab) { 
+		return CanGet(prefab) ? instance.pools[prefab].Get() : null; 
+	}
 
 	/// <summary>
 	/// Returns true if the specified prefab exists and has an object pool.
 	/// </summary>
-	public static bool CanGet(GameObject prefab) { return prefab && instance.pools.ContainsKey(prefab); }
+	public static bool CanGet(GameObject prefab) { 
+		return prefab && instance.pools.ContainsKey(prefab); 
+	}
 
 }

@@ -19,13 +19,16 @@ public class ObjectPool : MonoBehaviour
 	[HideInInspector] public Queue<Poolable> queue = new Queue<Poolable>();
 
 	/// <summary>
-	/// Retrieves an available object from the pool. If there are no available objects, a new one is created.
-	/// </summary>
-	/// <returns>An available Poolable object.</returns>
+	/// Retrieves an available object from the pool.
+	/// If there are no available objects, a new one is created.
+	/// </summary> <returns>An available Poolable object.</returns>
 	public Poolable Get()
 	{
 		// If the queue is empty, create a new object and add it to the pool
-		if (queue.Count == 0) { Instantiate(prefab, transform).GetComponent<Poolable>().Initialize(this); }
+		if (queue.Count == 0) { 
+			Instantiate(prefab, transform)
+				.GetComponent<Poolable>().Initialize(this);
+		}
 		// Return the next available object from the queue
 		return queue.Dequeue();
 	}
