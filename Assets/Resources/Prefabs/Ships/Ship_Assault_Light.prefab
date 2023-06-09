@@ -733,8 +733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emanation: 0
-  projectilePrefab: {fileID: 2946081766507428005, guid: d44e66c788fda0b40a3787fa00c52d46, type: 3}
-  impactEffectPrefab: {fileID: 6847970898024345062, guid: e2035873a38851f408a9acc81c68aa43, type: 3}
+  projectilePrefab: {fileID: 2946081766507428005, guid: e98e4715651cf8741811577f958802db, type: 3}
   projectileSpawn: {fileID: 7264131024865671819}
   projectilesPerShot: 1
   projectileSpawnRadius: 1
@@ -765,7 +764,6 @@ MonoBehaviour:
   faction: 64
   body: {fileID: 0}
   bounds: {fileID: 2867127581348205316}
-  separationBounds: {fileID: 0}
   target: {fileID: 0}
   drops:
   - prefab: {fileID: 9157298823971073651, guid: c891a4649215e26489d26485c2ce25df, type: 3}
@@ -812,8 +810,8 @@ MonoBehaviour:
   wanderOffset: 16
   wanderRadius: 6
   wanderRate: 1
-  sepMaxAcceleration: 25
-  maxSepDist: 12
+  maxSeparationAcceleration: 25
+  maxSeparationDistance: 1
   fleeThreshold: 0
   fireWeapon: 1
 --- !u!114 &5108345656176238424
